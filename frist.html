@@ -5,75 +5,320 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>你爱我吗 💕 香槟金玫瑰</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        html,body{width:100%;min-height:100vh;overflow:hidden}
-        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;overflow:hidden;position:relative;transition:background .6s ease}
-        body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            padding: 16px;
+            background: radial-gradient(ellipse at center, #fff5f7, #ffe8ee, #ffdce6);
+            background-size: 100% 100%;
+            overflow: hidden;
+            position: relative;
+            transition: background .6s ease;
+        }
+        body.dark-bg {
+            background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #040408) !important;
+        }
 
-        .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;box-shadow:0 30px 60px rgba(200,100,120,.12);text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
-        .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:2px solid #d4a86a!important;box-shadow:0 30px 60px rgba(180,130,80,.2),inset 0 0 40px rgba(212,168,106,.1)!important}
-        .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
-        .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
-        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-        .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
-        .hint{color:rgba(90,61,74,.6);font-size:14px;margin-bottom:20px}
-        .love-verse{color:rgba(90,61,74,.5);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(200,100,120,.1);padding-top:14px;font-style:italic;line-height:1.6}
-        .love-verse .highlight{color:#d47a8a;font-weight:500}
-        .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-        .btn{padding:14px 32px;border:none;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;min-width:100px;touch-action:manipulation;user-select:none}
-        .btn:active{transform:scale(.94)}
-        .btn-love{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;box-shadow:0 6px 30px rgba(232,128,144,.25)}
-        .btn-hate{background:rgba(200,150,160,.15);color:rgba(90,61,74,.5);border:1px solid rgba(200,150,160,.15)}
-        .btn-primary{background:linear-gradient(135deg,#e8b0c0,#d490a0);color:#fff;box-shadow:0 6px 30px rgba(212,144,160,.25)}
-        .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
-        .card-stage2{display:none}.card-stage2.active{display:block}
+        .card {
+            position: relative;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 32px 20px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.12);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin: 0 auto;
+            transition: all .5s ease;
+        }
+        .card.champagne {
+            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 2px solid #d4a86a !important;
+            box-shadow: 0 30px 60px rgba(180, 130, 80, 0.2), inset 0 0 40px rgba(212, 168, 106, 0.1) !important;
+        }
+        .card.hide {
+            opacity: 0;
+            transform: scale(.9) translateY(20px);
+            pointer-events: none;
+        }
+
+        .big-heart {
+            font-size: 56px;
+            animation: pulse 1.6s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+        .question {
+            font-size: 24px;
+            font-weight: 700;
+            color: #5a3d4a;
+            margin: 10px 0 4px;
+        }
+        .hint {
+            color: rgba(90, 61, 74, 0.6);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .love-verse {
+            color: rgba(90, 61, 74, 0.5);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-top: 14px;
+            border-top: 1px solid rgba(200, 100, 120, 0.1);
+            padding-top: 14px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .love-verse .highlight {
+            color: #d47a8a;
+            font-weight: 500;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            min-width: 100px;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active {
+            transform: scale(.94);
+        }
+        .btn-love {
+            background: linear-gradient(135deg, #f5a0b0, #e88090);
+            color: #fff;
+            box-shadow: 0 6px 30px rgba(232, 128, 144, 0.25);
+        }
+        .btn-hate {
+            background: rgba(200, 150, 160, 0.15);
+            color: rgba(90, 61, 74, 0.5);
+            border: 1px solid rgba(200, 150, 160, 0.15);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #e8b0c0, #d490a0);
+            color: #fff;
+            box-shadow: 0 6px 30px rgba(212, 144, 160, 0.25);
+        }
+        .result {
+            margin-top: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #5a3d4a;
+            min-height: 44px;
+        }
+        .card-stage2 {
+            display: none;
+        }
+        .card-stage2.active {
+            display: block;
+        }
 
         /* ===== 祝福语：靠左 + 均匀分散 ===== */
-        .bless{
-            position:fixed;
-            pointer-events:none;
-            z-index:25;
-            font-size:16px;
-            font-weight:600;
-            color:#5a3d4a;
-            padding:10px 22px;
-            border-radius:30px;
-            background:linear-gradient(145deg,#fce4ec,#f8d4de,#f5c8d4);
-            border:1px solid rgba(255,255,255,.3);
-            box-shadow:0 4px 20px rgba(200,100,120,.15);
-            white-space:nowrap;
-            animation:floatBless linear forwards;
-            opacity:0;
-            transition:all .4s ease;
-            /* 靠左对齐 */
-            left:3% !important;
-            transform:translateX(0) translateY(0);
+        .bless {
+            position: fixed;
+            pointer-events: none;
+            z-index: 25;
+            font-size: 16px;
+            font-weight: 600;
+            color: #5a3d4a;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: linear-gradient(145deg, #fce4ec, #f8d4de, #f5c8d4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(200, 100, 120, 0.15);
+            white-space: nowrap;
+            animation: floatBless linear forwards;
+            opacity: 0;
+            transition: all .4s ease;
+            left: 3% !important;
+            transform: translateX(0) translateY(0);
         }
-        .bless.champagne{
-            background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;
-            border:2px solid #d4a86a!important;
-            box-shadow:0 4px 20px rgba(180,130,80,.2)!important;
-            color:#5a3d2a!important;
+        .bless.champagne {
+            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
+            border: 2px solid #d4a86a !important;
+            box-shadow: 0 4px 20px rgba(180, 130, 80, 0.2) !important;
+            color: #5a3d2a !important;
         }
-        @keyframes floatBless{
-            0%{opacity:0;transform:translateX(0) translateY(20px) scale(.9)}
-            12%{opacity:1;transform:translateX(0) translateY(0) scale(1)}
-            85%{opacity:1;transform:translateX(0) translateY(-100px) scale(1)}
-            100%{opacity:0;transform:translateX(0) translateY(-160px) scale(.9)}
+        @keyframes floatBless {
+            0% {
+                opacity: 0;
+                transform: translateX(0) translateY(20px) scale(.9);
+            }
+            12% {
+                opacity: 1;
+                transform: translateX(0) translateY(0) scale(1);
+            }
+            85% {
+                opacity: 1;
+                transform: translateX(0) translateY(-100px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(0) translateY(-160px) scale(.9);
+            }
         }
 
-        #roseContainer{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:30;display:none;justify-content:center;align-items:center}
-        #roseContainer.active{display:flex}
-        #roseWrapper{position:relative;width:80vmin;height:80vmin;transition:transform .8s cubic-bezier(.34,1.56,.64,1);cursor:pointer}
-        #roseWrapper.zoomed{transform:scale(1.2)}
+        #roseContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 30;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        #roseContainer.active {
+            display: flex;
+        }
+        #roseWrapper {
+            position: relative;
+            width: 80vmin;
+            height: 80vmin;
+            transition: transform .8s cubic-bezier(.34, 1.56, .64, 1);
+            cursor: pointer;
+        }
+        #roseWrapper.zoomed {
+            transform: scale(1.2);
+        }
 
-        .dust-particle{position:absolute;border-radius:50%;pointer-events:none;will-change:transform,opacity;animation:dustTwinkle var(--dur) ease-in-out infinite alternate}
-        @keyframes dustTwinkle{0%{opacity:.05;transform:scale(.1)}100%{opacity:1;transform:scale(1.5)}}
-        .halo-star{position:absolute;border-radius:50%;pointer-events:none;animation:orbitStar linear infinite;box-shadow:0 0 20px currentColor}
-        @keyframes orbitStar{0%{transform:rotate(0deg) translateX(var(--radius)) rotate(0deg);opacity:.2}50%{opacity:1}100%{transform:rotate(360deg) translateX(var(--radius)) rotate(-360deg);opacity:.2}}
+        .dust-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation: dustTwinkle var(--dur) ease-in-out infinite alternate;
+        }
+        @keyframes dustTwinkle {
+            0% {
+                opacity: .05;
+                transform: scale(.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+        .halo-star {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbitStar linear infinite;
+            box-shadow: 0 0 20px currentColor;
+        }
+        @keyframes orbitStar {
+            0% {
+                transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+                opacity: .2;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+                opacity: .2;
+            }
+        }
 
-        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px;left:2%!important}.love-verse{font-size:12px}#roseWrapper{width:85vmin;height:85vmin}}
-        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px;left:2%!important}.love-verse{font-size:11px}#roseWrapper{width:90vmin;height:90vmin}}
+        @media (max-width: 420px) {
+            .card {
+                padding: 24px 16px;
+                max-width: 100%;
+            }
+            .big-heart {
+                font-size: 44px;
+            }
+            .question {
+                font-size: 20px;
+            }
+            .btn {
+                padding: 12px 20px;
+                font-size: 16px;
+                min-width: 80px;
+            }
+            .bless {
+                font-size: 13px;
+                padding: 8px 16px;
+                left: 2% !important;
+            }
+            .love-verse {
+                font-size: 12px;
+            }
+            #roseWrapper {
+                width: 85vmin;
+                height: 85vmin;
+            }
+        }
+        @media (max-width: 370px) {
+            .card {
+                padding: 20px 12px;
+            }
+            .big-heart {
+                font-size: 36px;
+            }
+            .question {
+                font-size: 18px;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 14px;
+                min-width: 70px;
+            }
+            .bless {
+                font-size: 11px;
+                padding: 6px 12px;
+                left: 2% !important;
+            }
+            .love-verse {
+                font-size: 11px;
+            }
+            #roseWrapper {
+                width: 90vmin;
+                height: 90vmin;
+            }
+        }
     </style>
 </head>
 <body>
@@ -227,7 +472,7 @@
         });
 
         // ============================================================
-        //  祝福语（靠左 + 均匀分散在全屏）
+        //  祝福语
         // ============================================================
         const blessings = [
             '✨ 愿所有美好都如期而至',
@@ -258,7 +503,7 @@
             return usedBlessings.pop();
         }
 
-        // ===== 均匀分散在全屏（6行×2列 = 12个位置） =====
+        // ===== 均匀分散在全屏 =====
         const gridRows = 6;
         const gridCols = 2;
         let availableGrids = [];
@@ -276,11 +521,9 @@
         function getGridPosition() {
             if (availableGrids.length === 0) initGrids();
             const grid = availableGrids.pop();
-            // 垂直均匀分布（从顶部到底部）
             const marginTop = 8;
             const marginBottom = 8;
             const rowHeight = (100 - marginTop - marginBottom) / gridRows;
-            // 水平靠左（col=0 靠左，col=1 稍微偏右一点但不影响靠左效果）
             const leftBase = 3 + grid.col * 25;
             let top = marginTop + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.3;
             let left = leftBase + (Math.random() - 0.5) * 4;
@@ -338,7 +581,7 @@
         }
 
         // ============================================================
-        //  平面玫瑰（80%居中）
+        //  玫瑰生成
         // ============================================================
 
         function generateRoseParticles() {
@@ -346,7 +589,7 @@
             const h = window.innerHeight;
             const cx = w / 2;
             const cy = h / 2;
-            const baseSize = Math.min(w, h) * 0.40; // 80% 占屏幕
+            const baseSize = Math.min(w, h) * 0.40;
 
             const particles = [];
             const petals = 5;
@@ -370,7 +613,6 @@
                     const angle = t + baseAngle * Math.PI / 180 + (Math.random() - 0.5) * 0.1;
                     const x = cx + finalR * Math.cos(angle);
                     const y = cy + finalR * Math.sin(angle) * 0.7;
-
                     const color = layer.colors[Math.floor(Math.random() * layer.colors.length)];
                     particles.push({
                         x: x,
@@ -543,7 +785,7 @@
             await createRose();
         }
 
-        console.log('💕 祝福语靠左+均匀分散+80%玫瑰已加载！');
+        console.log('💕 完整版已加载！');
     </script>
 
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>你爱我吗 💕</title>
+    <title>你爱我吗 💕 香槟金玫瑰</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         html,body{width:100%;min-height:100vh;overflow:hidden}
@@ -30,7 +30,6 @@
         .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
         .card-stage2{display:none}.card-stage2.active{display:block}
 
-        /* 祝福语 */
         .bless{position:fixed;pointer-events:none;z-index:25;font-size:16px;font-weight:600;color:#5a3d4a;padding:10px 22px;border-radius:30px;background:linear-gradient(145deg,#fce4ec,#f8d4de,#f5c8d4);border:1px solid rgba(255,255,255,.3);white-space:nowrap;animation:floatBless linear forwards;opacity:0;left:3%!important}
         .bless.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;border:2px solid #d4a86a!important;color:#5a3d2a!important}
         @keyframes floatBless{0%{opacity:0;transform:translateY(20px) scale(.9)}12%{opacity:1;transform:translateY(0) scale(1)}85%{opacity:1;transform:translateY(-100px) scale(1)}100%{opacity:0;transform:translateY(-160px) scale(.9)}}
@@ -40,7 +39,7 @@
         #roseWrapper{position:relative;width:80vmin;height:80vmin}
 
         .dust-particle{position:absolute;border-radius:50%;pointer-events:none;animation:dustTwinkle var(--dur) ease-in-out infinite alternate}
-        @keyframes dustTwinkle{0%{opacity:.05;transform:scale(.1)}100%{opacity:1;transform:scale(1.5)}}
+        @keyframes dustTwinkle{0%{opacity:.3;transform:scale(.6)}100%{opacity:1;transform:scale(1.2)}}
 
         @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px;left:2%!important}}
         @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px;left:2%!important}}
@@ -103,7 +102,6 @@
             btnHate.style.display = 'none';
             btnLove.disabled = true;
             btnLove.style.opacity = '0.7';
-            // 跳转到第二阶段
             stage1.style.display = 'none';
             stage2.classList.add('active');
         });
@@ -148,7 +146,6 @@
             btnNo.style.display = 'none';
             btnYes.disabled = true;
             btnYes.style.opacity = '0.7';
-            // 开始完整旅程
             startFullJourney();
         });
 
@@ -169,7 +166,7 @@
         });
 
         // ============================================================
-        //  祝福语（简化版）
+        //  祝福语
         // ============================================================
         const blessings = [
             '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
@@ -194,7 +191,6 @@
             return usedBlessings.pop();
         }
 
-        // ===== 12个位置均匀分布 =====
         const positions = [];
         for (let row = 0; row < 6; row++) {
             for (let col = 0; col < 2; col++) {
@@ -254,7 +250,7 @@
         }
 
         // ============================================================
-        //  玫瑰生成（简化版）
+        //  玫瑰生成（保持形状）
         // ============================================================
 
         function generateRoseParticles() {
@@ -393,7 +389,9 @@
                             el.remove();
                             placed++;
                             if (placed === total) {
-                                setTimeout(resolve, 200);
+                                // 玫瑰保持形状，不消失
+                                console.log('🌹 玫瑰形成完成，保持形状！');
+                                resolve();
                             }
                         }, 30);
                     }, 10 + index * 1.5);
@@ -406,28 +404,23 @@
         // ============================================================
         async function startFullJourney() {
             console.log('开始旅程...');
-            // 1. 背景变黑 + 卡片变香槟金
             document.body.classList.add('dark-bg');
             document.querySelectorAll('.card').forEach(c => {
                 c.classList.add('champagne');
             });
 
-            // 2. 卡片消失
             await new Promise(r => setTimeout(r, 300));
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
 
-            // 3. 祝福语飘落
             console.log('祝福语开始...');
             await startBlessingRain();
 
-            // 4. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
             console.log('祝福语结束...');
 
-            // 5. 玫瑰形成
             console.log('玫瑰开始形成...');
             await createRose();
-            console.log('玫瑰形成完成！');
+            console.log('🌹 玫瑰已完美呈现！');
         }
 
         console.log('💕 页面已加载！点击"愿意"开始');

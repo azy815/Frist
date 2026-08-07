@@ -181,19 +181,19 @@
         @keyframes floatBless {
             0% {
                 opacity: 0;
-                transform: translateY(40px) scale(0.85) rotate(-4deg);
+                transform: translateY(30px) scale(0.85) rotate(-3deg);
             }
-            12% {
+            10% {
                 opacity: 1;
                 transform: translateY(0) scale(1) rotate(0deg);
             }
-            80% {
+            85% {
                 opacity: 1;
-                transform: translateY(-100px) scale(1) rotate(0deg);
+                transform: translateY(-120px) scale(1) rotate(0deg);
             }
             100% {
                 opacity: 0;
-                transform: translateY(-180px) scale(0.9) rotate(4deg);
+                transform: translateY(-200px) scale(0.9) rotate(3deg);
             }
         }
 
@@ -337,7 +337,7 @@
 </head>
 <body>
 
-    <!-- 第一阶段：你爱我吗？ -->
+    <!-- ===== 第一阶段：你爱我吗？ ===== -->
     <div class="card" id="stage1">
         <div class="big-heart" id="bigHeart">❤️</div>
         <div class="question" id="questionEl">你爱我吗？</div>
@@ -349,7 +349,7 @@
         <div class="result" id="resultMsg"></div>
     </div>
 
-    <!-- 第二阶段：愿意继续看吗？ -->
+    <!-- ===== 第二阶段：愿意继续看吗？ ===== -->
     <div class="card card-stage2" id="stage2">
         <div class="big-heart" id="bigHeart2">💕</div>
         <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
@@ -362,7 +362,10 @@
     </div>
 
     <script>
-        // ===== 第一阶段：你爱我吗？ =====
+        // ============================================================
+        //  第一阶段：你爱我吗？
+        // ============================================================
+
         const btnLove = document.getElementById('btnLove');
         const btnHate = document.getElementById('btnHate');
         const resultMsg = document.getElementById('resultMsg');
@@ -405,7 +408,10 @@
             });
         }
 
-        // ===== 祝福语系统（彻底解决堆叠） =====
+        // ============================================================
+        //  祝福语系统（均匀散落版）
+        // ============================================================
+
         const blessings = [
             '✨ 愿所有美好都如期而至',
             '🌸 你是我藏在微风里的喜欢',
@@ -421,7 +427,7 @@
             '💕 爱意随风起，风止意难平'
         ];
 
-        // 打乱数组，让祝福语顺序随机
+        // 打乱数组
         function shuffleArray(arr) {
             for (let i = arr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -439,51 +445,80 @@
             return usedBlessings.pop();
         }
 
+        // ===== 核心：均匀分布算法 =====
+        // 把屏幕分成 3 列（左、中、右）× 5 行 = 15 个网格
+        // 每个网格内最多放 1 条，彻底避免重叠
+
+        const gridCols = 3;
+        const gridRows = 5;
+        const totalGrids = gridCols * gridRows;
+        let availableGrids = [];
+
+        function initGrids() {
+            availableGrids = [];
+            for (let row = 0; row < gridRows; row++) {
+                for (let col = 0; col < gridCols; col++) {
+                    availableGrids.push({ row, col });
+                }
+            }
+            // 打乱网格顺序，让出现位置随机但不重叠
+            availableGrids = shuffleArray(availableGrids);
+        }
+
+        function getGridPosition() {
+            if (availableGrids.length === 0) {
+                // 如果网格用完，重新初始化（但保留一些随机性）
+                initGrids();
+                // 再打乱一次
+                availableGrids = shuffleArray(availableGrids);
+            }
+            const grid = availableGrids.pop();
+
+            // 计算网格的中心位置，并加入随机偏移（不超过网格大小的 60%）
+            const colWidth = 100 / gridCols;
+            const rowHeight = 100 / gridRows;
+
+            // 列偏移：左列偏左，中列居中，右列偏右
+            let baseLeft = grid.col * colWidth + colWidth / 2;
+            // 加入随机偏移，让位置更自然
+            const offsetX = (Math.random() - 0.5) * colWidth * 0.6;
+            const offsetY = (Math.random() - 0.5) * rowHeight * 0.6;
+
+            let left = baseLeft + offsetX;
+            // 边界保护
+            left = Math.max(2, Math.min(98, left));
+
+            let top = grid.row * rowHeight + rowHeight / 2 + offsetY;
+            top = Math.max(2, Math.min(98, top));
+
+            return { left, top };
+        }
+
         let blessInterval = null;
-        let activeBlessCount = 0;
-        const MAX_BLESS = 14; // 同时存在最多14条
+        let activeBlessElements = [];
+        const MAX_BLESS = 12;
 
         function createBless() {
             // 控制同时存在的数量
-            if (activeBlessCount >= MAX_BLESS) return;
+            if (activeBlessElements.length >= MAX_BLESS) return;
+
+            // 获取均匀分布的位置
+            const pos = getGridPosition();
 
             const el = document.createElement('div');
             el.className = 'bless';
             el.textContent = getNextBlessing();
 
-            // 将屏幕分成 4 个象限，分散分布
-            const quadrant = Math.floor(Math.random() * 4);
-            let left, top;
-
-            switch (quadrant) {
-                case 0: // 左上
-                    left = 3 + Math.random() * 40;
-                    top = 3 + Math.random() * 40;
-                    break;
-                case 1: // 右上
-                    left = 55 + Math.random() * 40;
-                    top = 3 + Math.random() * 40;
-                    break;
-                case 2: // 左下
-                    left = 3 + Math.random() * 40;
-                    top = 50 + Math.random() * 40;
-                    break;
-                case 3: // 右下
-                    left = 55 + Math.random() * 40;
-                    top = 50 + Math.random() * 40;
-                    break;
-            }
-
-            el.style.left = left + 'vw';
-            el.style.top = top + 'vh';
+            el.style.left = pos.left + 'vw';
+            el.style.top = pos.top + 'vh';
 
             // 随机大小
-            const scale = 0.75 + Math.random() * 0.6;
-            el.style.fontSize = (13 + Math.random() * 12) + 'px';
+            const scale = 0.75 + Math.random() * 0.5;
+            el.style.fontSize = (13 + Math.random() * 11) + 'px';
             el.style.transform = `scale(${scale})`;
 
-            // 飘落速度：10~18秒，更慢更优雅
-            const duration = 10 + Math.random() * 8;
+            // 飘落速度：12~20秒，很慢很优雅
+            const duration = 12 + Math.random() * 8;
             el.style.animationDuration = duration + 's';
 
             // 边框颜色柔和
@@ -492,41 +527,42 @@
             el.style.background = `rgba(255, 255, 255, ${0.15 + Math.random() * 0.25})`;
 
             document.body.appendChild(el);
-            activeBlessCount++;
+            activeBlessElements.push(el);
 
             // 动画结束后移除
             setTimeout(() => {
                 if (el.parentNode) {
                     el.parentNode.removeChild(el);
-                    activeBlessCount--;
+                    const index = activeBlessElements.indexOf(el);
+                    if (index > -1) {
+                        activeBlessElements.splice(index, 1);
+                    }
                 }
             }, duration * 1000 + 300);
         }
 
         function startBlessingRain() {
             // 清空旧祝福语
-            document.querySelectorAll('.bless').forEach(el => {
-                if (el.parentNode) {
-                    el.parentNode.removeChild(el);
-                }
+            activeBlessElements.forEach(el => {
+                if (el.parentNode) el.parentNode.removeChild(el);
             });
-            activeBlessCount = 0;
-            usedBlessings = [];
+            activeBlessElements = [];
+            initGrids();
 
             if (blessInterval) {
                 clearInterval(blessInterval);
                 blessInterval = null;
             }
 
-            // 初始生成 10 条，间隔 500ms
+            // 初始生成 10 条，间隔 600ms，让它们逐渐出现
             for (let i = 0; i < 10; i++) {
-                setTimeout(() => createBless(), i * 500);
+                setTimeout(() => createBless(), i * 600);
             }
 
-            // 持续补充：每 7 秒补 1 条
+            // 持续补充：每 8 秒补 1 条
             blessInterval = setInterval(() => {
                 createBless();
-            }, 7000);
+            }, 8000);
         }
 
         // ===== 点击「爱你」 =====
@@ -568,7 +604,10 @@
             }
         });
 
-        // ===== 第二阶段：愿意继续往下看吗？ =====
+        // ============================================================
+        //  第二阶段：愿意继续往下看吗？
+        // ============================================================
+
         const btnYes = document.getElementById('btnYes');
         const btnNo = document.getElementById('btnNo');
         const resultMsg2 = document.getElementById('resultMsg2');
@@ -620,7 +659,7 @@
             }
         });
 
-        console.log('💕 两阶段问答已加载（祝福语稀疏版）！');
+        console.log('💕 祝福语均匀散落版已加载！');
     </script>
 
 </body>

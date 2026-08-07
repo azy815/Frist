@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>你爱我吗 💕 星尘玫瑰</title>
+    <title>你爱我吗 💕 粉金玫瑰</title>
     <style>
         * {
             margin: 0;
@@ -23,50 +23,37 @@
             align-items: center;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             padding: 16px;
-            background: #fff0f5;
-            background: linear-gradient(145deg, #fff5f7, #ffe8ee, #ffdee8, #fff0f5);
-            background-size: 400% 400%;
-            animation: bgShift 20s ease infinite;
+            background: radial-gradient(ellipse at center, #fff5f7, #ffe8ee, #ffdce6);
+            background-size: 100% 100%;
             overflow: hidden;
             position: relative;
-            transition: background 1.2s ease, background-color 1.2s ease;
+            transition: background 0.8s ease;
         }
         body.dark-bg {
-            background: #0a0a0f !important;
-            background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #050508) !important;
-            animation: none !important;
+            background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #040408) !important;
+            transition: background 0.8s ease;
         }
 
-        @keyframes bgShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
+        /* ===== 卡片 ===== */
         .card {
             position: relative;
             z-index: 20;
-            background: #fce4ec;
-            background: linear-gradient(145deg, #fce4ec, #f8d4de, #f5c8d4);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 32px 20px;
             border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.12);
             text-align: center;
             max-width: 400px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             margin: 0 auto;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .card.hide {
             opacity: 0;
-            transform: scale(0.9);
+            transform: scale(0.9) translateY(20px);
             pointer-events: none;
         }
 
@@ -102,7 +89,7 @@
             font-weight: 300;
             letter-spacing: 2px;
             margin-top: 14px;
-            border-top: 1px solid rgba(200, 100, 120, 0.15);
+            border-top: 1px solid rgba(200, 100, 120, 0.1);
             padding-top: 14px;
             font-style: italic;
             line-height: 1.6;
@@ -139,9 +126,9 @@
             box-shadow: 0 6px 30px rgba(232, 128, 144, 0.25);
         }
         .btn-hate {
-            background: rgba(200, 150, 160, 0.2);
+            background: rgba(200, 150, 160, 0.15);
             color: rgba(90, 61, 74, 0.5);
-            border: 1px solid rgba(200, 150, 160, 0.2);
+            border: 1px solid rgba(200, 150, 160, 0.15);
         }
         .btn-primary {
             background: linear-gradient(135deg, #e8b0c0, #d490a0);
@@ -162,20 +149,20 @@
             display: block;
         }
 
-        /* ===== 祝福语 ===== */
+        /* ===== 祝福语（居中均匀分布） ===== */
         .bless {
             position: fixed;
             pointer-events: none;
             z-index: 25;
             font-size: 16px;
-            font-weight: 600;
-            color: rgba(180, 100, 120, 0.8);
+            font-weight: 500;
+            color: rgba(90, 61, 74, 0.7);
             padding: 8px 18px;
-            border-radius: 32px;
-            background: rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             white-space: nowrap;
             animation: floatBless linear forwards;
             opacity: 0;
@@ -183,23 +170,23 @@
         @keyframes floatBless {
             0% {
                 opacity: 0;
-                transform: translateY(30px) scale(0.85);
+                transform: translateY(20px) scale(0.9);
             }
-            10% {
-                opacity: 0.9;
+            12% {
+                opacity: 0.95;
                 transform: translateY(0) scale(1);
             }
             85% {
-                opacity: 0.9;
-                transform: translateY(-120px) scale(1);
+                opacity: 0.95;
+                transform: translateY(-100px) scale(1);
             }
             100% {
                 opacity: 0;
-                transform: translateY(-200px) scale(0.9);
+                transform: translateY(-160px) scale(0.9);
             }
         }
 
-        /* ===== 玫瑰容器 - 全屏 ===== */
+        /* ===== 玫瑰容器 ===== */
         #roseContainer {
             position: fixed;
             top: 0;
@@ -227,7 +214,7 @@
             transform: scale(1.1);
         }
 
-        /* ===== 发光极细星尘粒子 ===== */
+        /* ===== 超级细粉尘粒子 ===== */
         .dust-particle {
             position: absolute;
             border-radius: 50%;
@@ -242,7 +229,7 @@
             }
             100% {
                 opacity: 1;
-                transform: scale(1.3);
+                transform: scale(1.5);
             }
         }
 
@@ -470,7 +457,7 @@
         });
 
         // ============================================================
-        //  祝福语
+        //  祝福语（居中均匀分布）
         // ============================================================
         const blessings = [
             '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
@@ -495,8 +482,9 @@
             return usedBlessings.pop();
         }
 
+        // ===== 居中均匀分布：缩小范围到屏幕中央 70% 区域 =====
         const gridCols = 3,
-            gridRows = 5;
+            gridRows = 4;
         let availableGrids = [];
 
         function initGrids() {
@@ -512,11 +500,13 @@
         function getGridPosition() {
             if (availableGrids.length === 0) initGrids();
             const grid = availableGrids.pop();
-            const colWidth = 100 / gridCols,
-                rowHeight = 100 / gridRows;
-            let left = grid.col * colWidth + colWidth / 2 + (Math.random() - 0.5) * colWidth * 0.6;
-            let top = grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.6;
-            return { left: Math.max(2, Math.min(98, left)), top: Math.max(2, Math.min(98, top)) };
+            // 缩小范围：只占屏幕中央 70%
+            const margin = 15;
+            const colWidth = (100 - margin * 2) / gridCols;
+            const rowHeight = (100 - margin * 2) / gridRows;
+            let left = margin + grid.col * colWidth + colWidth / 2 + (Math.random() - 0.5) * colWidth * 0.5;
+            let top = margin + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.5;
+            return { left: Math.max(5, Math.min(95, left)), top: Math.max(5, Math.min(95, top)) };
         }
 
         let activeBlessElements = [];
@@ -532,10 +522,10 @@
             el.textContent = getNextBlessing();
             el.style.left = pos.left + 'vw';
             el.style.top = pos.top + 'vh';
-            const scale = 0.75 + Math.random() * 0.5;
-            el.style.fontSize = (13 + Math.random() * 11) + 'px';
+            const scale = 0.8 + Math.random() * 0.4;
+            el.style.fontSize = (14 + Math.random() * 10) + 'px';
             el.style.transform = `scale(${scale})`;
-            const duration = 12 + Math.random() * 8;
+            const duration = 10 + Math.random() * 6;
             el.style.animationDuration = duration + 's';
             document.body.appendChild(el);
             activeBlessElements.push(el);
@@ -555,19 +545,19 @@
                 activeBlessElements = [];
                 initGrids();
                 for (let i = 0; i < TOTAL_BLESS; i++) {
-                    setTimeout(() => createBless(), i * 600);
+                    setTimeout(() => createBless(), i * 500);
                 }
                 const checkDone = setInterval(() => {
                     if (blessCount >= TOTAL_BLESS && activeBlessElements.length === 0) {
                         clearInterval(checkDone);
-                        setTimeout(resolve, 500);
+                        setTimeout(resolve, 400);
                     }
-                }, 500);
+                }, 400);
             });
         }
 
         // ============================================================
-        //  全屏发光极细星尘玫瑰
+        //  超级细粉尘玫瑰（0.2~0.8px）
         // ============================================================
 
         function getRoseDustData() {
@@ -575,25 +565,24 @@
             const h = window.innerHeight;
             const cx = w / 2;
             const cy = h / 2 - 10;
-            // 玫瑰占屏幕 85%
             const baseSize = Math.min(w, h) * 0.42;
 
             const particles = [];
             const layers = [
-                { count: 180, radius: 1.0, size: 0.5, color: 'pink-dark' },
-                { count: 220, radius: 0.85, size: 0.4, color: 'pink' },
-                { count: 260, radius: 0.7, size: 0.35, color: 'pink-light' },
-                { count: 300, radius: 0.55, size: 0.3, color: 'pink' },
-                { count: 340, radius: 0.4, size: 0.25, color: 'pink-light' },
-                { count: 380, radius: 0.25, size: 0.2, color: 'pink' }
+                { count: 200, radius: 1.0, size: 0.6, color: 'pink-dark' },
+                { count: 250, radius: 0.85, size: 0.5, color: 'pink' },
+                { count: 300, radius: 0.7, size: 0.4, color: 'pink-light' },
+                { count: 350, radius: 0.55, size: 0.35, color: 'pink' },
+                { count: 400, radius: 0.4, size: 0.3, color: 'pink-light' },
+                { count: 450, radius: 0.25, size: 0.25, color: 'pink' }
             ];
 
             const colorMap = {
-                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ff9eb5'],
-                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80', '#ffc8b0'],
-                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a', '#c06080'],
-                'gold': ['#ffd700', '#f0a030', '#ffb347', '#ffe066'],
-                'green': ['#7ddfa0', '#5ccf8a', '#3da86a', '#90e8b0']
+                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ff9eb5', '#ff7fa8'],
+                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80', '#ffc8b0', '#ffb8a0'],
+                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a', '#c06080', '#d06080'],
+                'gold': ['#ffd700', '#f0a030', '#ffb347', '#ffe066', '#ffcc44'],
+                'green': ['#7ddfa0', '#5ccf8a', '#3da86a', '#90e8b0', '#6ae0a0']
             };
 
             layers.forEach((layer, li) => {
@@ -608,17 +597,17 @@
                     particles.push({
                         x: x,
                         y: y,
-                        size: 0.3 + Math.random() * 1.0,
+                        size: 0.2 + Math.random() * 0.6,
                         color: colors[Math.floor(Math.random() * colors.length)],
-                        twinkleSpeed: 1 + Math.random() * 2.5,
-                        glowIntensity: 6 + Math.random() * 14,
+                        twinkleSpeed: 0.8 + Math.random() * 2.5,
+                        glowIntensity: 4 + Math.random() * 12,
                         layer: li
                     });
                 }
             });
 
             // 金色点缀
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 180; i++) {
                 const angle = Math.random() * 360;
                 const rad = angle * Math.PI / 180;
                 const r = (0.05 + Math.random() * 1.15) * baseSize;
@@ -627,10 +616,10 @@
                 particles.push({
                     x: x,
                     y: y,
-                    size: 0.3 + Math.random() * 0.8,
-                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44'][Math.floor(Math.random() * 4)],
-                    twinkleSpeed: 1.3 + Math.random() * 2.5,
-                    glowIntensity: 8 + Math.random() * 18,
+                    size: 0.2 + Math.random() * 0.5,
+                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44', '#ffdd77'][Math.floor(Math.random() * 5)],
+                    twinkleSpeed: 1 + Math.random() * 2.8,
+                    glowIntensity: 5 + Math.random() * 16,
                     layer: 6,
                     isGold: true
                 });
@@ -648,7 +637,7 @@
                 const r = lc.dist * baseSize * 0.65;
                 const cx2 = cx + r * Math.cos(rad);
                 const cy2 = cy + r * Math.sin(rad) * 0.6 + 12;
-                for (let i = 0; i < 80; i++) {
+                for (let i = 0; i < 100; i++) {
                     const angleOff = (Math.random() - 0.5) * 50;
                     const radOff = angleOff * Math.PI / 180;
                     const distOff = (0.2 + Math.random() * 0.5) * baseSize * 0.35;
@@ -657,10 +646,10 @@
                     particles.push({
                         x: x,
                         y: y,
-                        size: 0.3 + Math.random() * 0.9,
-                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0'][Math.floor(Math.random() * 4)],
-                        twinkleSpeed: 0.8 + Math.random() * 2,
-                        glowIntensity: 5 + Math.random() * 12,
+                        size: 0.2 + Math.random() * 0.5,
+                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0', '#90e8b0'][Math.floor(Math.random() * 5)],
+                        twinkleSpeed: 0.7 + Math.random() * 2.2,
+                        glowIntensity: 4 + Math.random() * 10,
                         layer: 7,
                         isLeaf: true
                     });
@@ -690,14 +679,15 @@
                     el.style.height = size + 'px';
                     el.style.background = d.color;
                     const glow = d.glowIntensity || 8;
-                    el.style.boxShadow = `0 0 ${glow}px ${d.color}, 0 0 ${glow*2}px ${d.color}40`;
+                    el.style.boxShadow = `0 0 ${glow}px ${d.color}, 0 0 ${glow*2}px ${d.color}30`;
                     el.style.setProperty('--dur', d.twinkleSpeed + 's');
+                    el.style.borderRadius = '50%';
 
-                    const startX = 5 + Math.random() * 90;
-                    const startY = 5 + Math.random() * 90;
+                    const startX = 10 + Math.random() * 80;
+                    const startY = 10 + Math.random() * 80;
                     el.style.left = startX + 'vw';
                     el.style.top = startY + 'vh';
-                    el.style.opacity = '0.3';
+                    el.style.opacity = '0.2';
 
                     document.body.appendChild(el);
 
@@ -721,9 +711,10 @@
                             cloned.style.background = d.color;
                             const glow2 = d.glowIntensity || 8;
                             cloned.style.boxShadow =
-                                `0 0 ${glow2}px ${d.color}, 0 0 ${glow2*2}px ${d.color}40`;
+                                `0 0 ${glow2}px ${d.color}, 0 0 ${glow2*2}px ${d.color}30`;
                             cloned.style.animation =
                                 `dustTwinkle ${d.twinkleSpeed}s ease-in-out infinite alternate`;
+                            cloned.style.borderRadius = '50%';
                             wrapper.appendChild(cloned);
                             el.remove();
                             placed++;
@@ -737,7 +728,7 @@
                                 }, 400);
                             }
                         }, 120);
-                    }, 80 + index * 10);
+                    }, 80 + index * 8);
                 });
             });
         }
@@ -745,7 +736,7 @@
         // ===== 星星光环 =====
         function createHaloStars(wrapper, container) {
             const colors = ['#ffb6d9', '#ffd700', '#ff8eb5', '#ffffff', '#ff6b9d', '#a8d8ff', '#ff69b4', '#ffcc44'];
-            const count = 30 + Math.floor(Math.random() * 25);
+            const count = 35 + Math.floor(Math.random() * 30);
             const rect = container.getBoundingClientRect();
             const cx = rect.width / 2;
             const cy = rect.height / 2;
@@ -761,6 +752,7 @@
                 star.style.background = color;
                 star.style.color = color;
                 star.style.boxShadow = `0 0 ${12+Math.random()*25}px ${color}`;
+                star.style.borderRadius = '50%';
                 const radius = baseRadius * (0.65 + Math.random() * 0.35);
                 star.style.setProperty('--radius', radius + 'px');
                 star.style.left = (cx - size / 2) + 'px';
@@ -773,29 +765,27 @@
         }
 
         // ============================================================
-        //  完整旅程
+        //  完整旅程（背景同步变黑）
         // ============================================================
         async function startFullJourney() {
-            // 1. 祝福语飘落
+            // 1. 背景变黑 + 祝福语飘落（同步进行）
+            document.body.classList.add('dark-bg');
             await startBlessingRain();
 
             // 2. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
 
-            // 3. 弹窗消失
+            // 3. 背景板消失
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
 
-            // 4. 等待弹窗淡出
-            await new Promise(r => setTimeout(r, 500));
+            // 4. 等待淡出
+            await new Promise(r => setTimeout(r, 400));
 
-            // 5. 背景变黑（在玫瑰形成前）
-            document.body.classList.add('dark-bg');
-
-            // 6. 星尘粒子汇聚成玫瑰
+            // 5. 粉尘汇聚成玫瑰
             await createDustRose();
         }
 
-        console.log('💕 全屏发光星尘玫瑰已加载！');
+        console.log('💕 超级粉尘玫瑰已加载！');
     </script>
 
 </body>

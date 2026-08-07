@@ -27,7 +27,7 @@
             background-size: 100% 100%;
             overflow: hidden;
             position: relative;
-            transition: background .6s ease;
+            transition: background 0.6s ease;
         }
         body.dark-bg {
             background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #040408) !important;
@@ -47,7 +47,7 @@
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.4);
             margin: 0 auto;
-            transition: all .5s ease;
+            transition: all 0.5s ease;
         }
         .card.champagne {
             background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
@@ -58,7 +58,7 @@
         }
         .card.hide {
             opacity: 0;
-            transform: scale(.9) translateY(20px);
+            transform: scale(0.9) translateY(20px);
             pointer-events: none;
         }
 
@@ -115,14 +115,13 @@
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            transition: all .2s;
+            transition: all 0.2s;
             min-width: 100px;
             touch-action: manipulation;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
         .btn:active {
-            transform: scale(.94);
+            transform: scale(0.94);
         }
         .btn-love {
             background: linear-gradient(135deg, #f5a0b0, #e88090);
@@ -153,7 +152,7 @@
             display: block;
         }
 
-        /* ===== 祝福语：靠左 + 均匀分散 ===== */
+        /* ===== 祝福语 - 靠左 ===== */
         .bless {
             position: fixed;
             pointer-events: none;
@@ -169,7 +168,7 @@
             white-space: nowrap;
             animation: floatBless linear forwards;
             opacity: 0;
-            transition: all .4s ease;
+            transition: all 0.4s ease;
             left: 3% !important;
             transform: translateX(0) translateY(0);
         }
@@ -182,7 +181,7 @@
         @keyframes floatBless {
             0% {
                 opacity: 0;
-                transform: translateX(0) translateY(20px) scale(.9);
+                transform: translateX(0) translateY(20px) scale(0.9);
             }
             12% {
                 opacity: 1;
@@ -194,7 +193,7 @@
             }
             100% {
                 opacity: 0;
-                transform: translateX(0) translateY(-160px) scale(.9);
+                transform: translateX(0) translateY(-160px) scale(0.9);
             }
         }
 
@@ -217,7 +216,7 @@
             position: relative;
             width: 80vmin;
             height: 80vmin;
-            transition: transform .8s cubic-bezier(.34, 1.56, .64, 1);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
         #roseWrapper.zoomed {
@@ -233,14 +232,15 @@
         }
         @keyframes dustTwinkle {
             0% {
-                opacity: .05;
-                transform: scale(.1);
+                opacity: 0.05;
+                transform: scale(0.1);
             }
             100% {
                 opacity: 1;
                 transform: scale(1.5);
             }
         }
+
         .halo-star {
             position: absolute;
             border-radius: 50%;
@@ -251,14 +251,14 @@
         @keyframes orbitStar {
             0% {
                 transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
-                opacity: .2;
+                opacity: 0.2;
             }
             50% {
                 opacity: 1;
             }
             100% {
                 transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
-                opacity: .2;
+                opacity: 0.2;
             }
         }
 
@@ -503,34 +503,24 @@
             return usedBlessings.pop();
         }
 
-        // ===== 均匀分散在全屏 =====
-        const gridRows = 6;
-        const gridCols = 2;
-        let availableGrids = [];
+        const gridRows = 4;
+        let availableRows = [];
 
-        function initGrids() {
-            availableGrids = [];
+        function initRows() {
+            availableRows = [];
             for (let row = 0; row < gridRows; row++) {
-                for (let col = 0; col < gridCols; col++) {
-                    availableGrids.push({ row, col });
-                }
+                availableRows.push(row);
             }
-            availableGrids = shuffleArray(availableGrids);
+            availableRows = shuffleArray(availableRows);
         }
 
-        function getGridPosition() {
-            if (availableGrids.length === 0) initGrids();
-            const grid = availableGrids.pop();
-            const marginTop = 8;
-            const marginBottom = 8;
-            const rowHeight = (100 - marginTop - marginBottom) / gridRows;
-            const leftBase = 3 + grid.col * 25;
-            let top = marginTop + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.3;
-            let left = leftBase + (Math.random() - 0.5) * 4;
-            return {
-                left: Math.max(2, Math.min(50, left)),
-                top: Math.max(5, Math.min(95, top))
-            };
+        function getVerticalPosition() {
+            if (availableRows.length === 0) initRows();
+            const row = availableRows.pop();
+            const margin = 18;
+            const rowHeight = (100 - margin * 2) / gridRows;
+            let top = margin + row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.3;
+            return Math.max(12, Math.min(88, top));
         }
 
         let activeBlessElements = [];
@@ -540,12 +530,11 @@
 
         function createBless() {
             if (activeBlessElements.length >= MAX_BLESS || blessCount >= TOTAL_BLESS) return;
-            const pos = getGridPosition();
+            const top = getVerticalPosition();
             const el = document.createElement('div');
             el.className = 'bless champagne';
             el.textContent = getNextBlessing();
-            el.style.left = pos.left + 'vw';
-            el.style.top = pos.top + 'vh';
+            el.style.top = top + 'vh';
             const scale = 0.85 + Math.random() * 0.3;
             el.style.fontSize = (14 + Math.random() * 8) + 'px';
             el.style.transform = `scale(${scale})`;
@@ -567,9 +556,9 @@
             return new Promise((resolve) => {
                 blessCount = 0;
                 activeBlessElements = [];
-                initGrids();
+                initRows();
                 for (let i = 0; i < TOTAL_BLESS; i++) {
-                    setTimeout(() => createBless(), i * 400);
+                    setTimeout(() => createBless(), i * 350);
                 }
                 const checkDone = setInterval(() => {
                     if (blessCount >= TOTAL_BLESS && activeBlessElements.length === 0) {
@@ -581,212 +570,22 @@
         }
 
         // ============================================================
-        //  玫瑰生成
+        //  平面玫瑰（精确绘制）
         // ============================================================
 
         function generateRoseParticles() {
             const w = window.innerWidth;
             const h = window.innerHeight;
             const cx = w / 2;
-            const cy = h / 2;
-            const baseSize = Math.min(w, h) * 0.40;
+            const cy = h / 2 - 10;
+            const baseSize = Math.min(w, h) * 0.38;
 
             const particles = [];
             const petals = 5;
 
+            // 使用玫瑰线公式 r = a * cos(k * θ) 生成花瓣
+            // 多层叠加形成完整玫瑰
             const layers = [
-                { radius: 1.0, count: 150, size: 0.8, colors: ['#ff6b9d', '#ff8eb5', '#ff9eb5'] },
-                { radius: 0.85, count: 160, size: 0.7, colors: ['#ffb6d9', '#ff7fa8', '#ffa0b8'] },
-                { radius: 0.7, count: 170, size: 0.6, colors: ['#ffd1e8', '#ffb09a', '#ffc0d0'] },
-                { radius: 0.55, count: 180, size: 0.55, colors: ['#ff8a80', '#ffc8b0', '#ffd0dc'] },
-                { radius: 0.4, count: 190, size: 0.5, colors: ['#ffb6d9', '#ff8eb5', '#ff6b9d'] },
-                { radius: 0.25, count: 200, size: 0.45, colors: ['#ffd1e8', '#ffb09a', '#ff8a80'] }
-            ];
-
-            layers.forEach((layer, li) => {
-                const baseAngle = (li * 30) % 360;
-                for (let i = 0; i < layer.count; i++) {
-                    const t = (i / layer.count) * Math.PI * 2;
-                    const r = layer.radius * baseSize * Math.abs(Math.cos(petals * t / 2));
-                    const offset = 1 + (Math.random() - 0.5) * 0.15;
-                    const finalR = r * offset;
-                    const angle = t + baseAngle * Math.PI / 180 + (Math.random() - 0.5) * 0.1;
-                    const x = cx + finalR * Math.cos(angle);
-                    const y = cy + finalR * Math.sin(angle) * 0.7;
-                    const color = layer.colors[Math.floor(Math.random() * layer.colors.length)];
-                    particles.push({
-                        x: x,
-                        y: y,
-                        size: layer.size * (0.6 + Math.random() * 0.6),
-                        color: color,
-                        twinkleSpeed: 0.8 + Math.random() * 1.8,
-                        glowIntensity: 5 + Math.random() * 12
-                    });
-                }
-            });
-
-            // 金色花蕊
-            for (let i = 0; i < 100; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const dist = baseSize * (0.05 + Math.random() * 0.2);
-                const x = cx + dist * Math.cos(angle);
-                const y = cy + dist * Math.sin(angle) * 0.7;
-                particles.push({
-                    x: x,
-                    y: y,
-                    size: 0.3 + Math.random() * 0.6,
-                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44'][Math.floor(Math.random() * 4)],
-                    twinkleSpeed: 1 + Math.random() * 2,
-                    glowIntensity: 6 + Math.random() * 14
-                });
-            }
-
-            // 叶子
-            const leafColors = ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0', '#90e8b0'];
-            for (let i = 0; i < 150; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const dist = baseSize * (0.45 + Math.random() * 0.3);
-                const x = cx + dist * Math.cos(angle + 1.2);
-                const y = cy + dist * Math.sin(angle + 1.2) * 0.7 + baseSize * 0.2;
-                particles.push({
-                    x: x,
-                    y: y,
-                    size: 0.3 + Math.random() * 0.7,
-                    color: leafColors[Math.floor(Math.random() * leafColors.length)],
-                    twinkleSpeed: 0.7 + Math.random() * 1.8,
-                    glowIntensity: 4 + Math.random() * 10
-                });
-            }
-
-            return particles;
-        }
-
-        function createRose() {
-            return new Promise((resolve) => {
-                const container = document.getElementById('roseContainer');
-                const wrapper = document.getElementById('roseWrapper');
-                container.innerHTML = '';
-                wrapper.innerHTML = '';
-                container.classList.add('active');
-
-                const particles = generateRoseParticles();
-                const total = particles.length;
-                let placed = 0;
-
-                particles.forEach((p, index) => {
-                    const el = document.createElement('div');
-                    el.className = 'dust-particle';
-                    const size = p.size;
-                    el.style.width = size + 'px';
-                    el.style.height = size + 'px';
-                    el.style.background = p.color;
-                    const glow = p.glowIntensity || 8;
-                    el.style.boxShadow = `0 0 ${glow}px ${p.color}, 0 0 ${glow*2}px ${p.color}30`;
-                    el.style.setProperty('--dur', p.twinkleSpeed + 's');
-                    el.style.borderRadius = '50%';
-
-                    const startX = 10 + Math.random() * 80;
-                    const startY = 10 + Math.random() * 80;
-                    el.style.left = startX + 'vw';
-                    el.style.top = startY + 'vh';
-                    el.style.opacity = '0.2';
-
-                    document.body.appendChild(el);
-
-                    setTimeout(() => {
-                        el.style.transition =
-                            `all ${0.2+Math.random()*0.2}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
-                        el.style.left = p.x + 'px';
-                        el.style.top = p.y + 'px';
-                        el.style.opacity = '1';
-
-                        setTimeout(() => {
-                            const cloned = el.cloneNode(true);
-                            cloned.style.transition = 'none';
-                            const rect = container.getBoundingClientRect();
-                            cloned.style.left = (p.x - rect.left) + 'px';
-                            cloned.style.top = (p.y - rect.top) + 'px';
-                            cloned.style.position = 'absolute';
-                            cloned.style.opacity = '1';
-                            cloned.style.width = size + 'px';
-                            cloned.style.height = size + 'px';
-                            cloned.style.background = p.color;
-                            const glow2 = p.glowIntensity || 8;
-                            cloned.style.boxShadow =
-                                `0 0 ${glow2}px ${p.color}, 0 0 ${glow2*2}px ${p.color}30`;
-                            cloned.style.animation =
-                                `dustTwinkle ${p.twinkleSpeed}s ease-in-out infinite alternate`;
-                            cloned.style.borderRadius = '50%';
-                            wrapper.appendChild(cloned);
-                            el.remove();
-                            placed++;
-                            if (placed === total) {
-                                setTimeout(() => {
-                                    wrapper.onclick = function() {
-                                        wrapper.classList.toggle('zoomed');
-                                    };
-                                    createHaloStars(wrapper, container);
-                                    resolve();
-                                }, 200);
-                            }
-                        }, 30);
-                    }, 10 + index * 1.5);
-                });
-            });
-        }
-
-        // ===== 星星光环 =====
-        function createHaloStars(wrapper, container) {
-            const colors = ['#ffb6d9', '#ffd700', '#ff8eb5', '#ffffff', '#ff6b9d', '#a8d8ff', '#ff69b4', '#ffcc44'];
-            const count = 30 + Math.floor(Math.random() * 25);
-            const rect = container.getBoundingClientRect();
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const baseRadius = Math.min(rect.width, rect.height) * 0.44;
-
-            for (let i = 0; i < count; i++) {
-                const star = document.createElement('div');
-                star.className = 'halo-star';
-                const size = 1.5 + Math.random() * 3.5;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                const color = colors[Math.floor(Math.random() * colors.length)];
-                star.style.background = color;
-                star.style.color = color;
-                star.style.boxShadow = `0 0 ${12+Math.random()*20}px ${color}`;
-                star.style.borderRadius = '50%';
-                const radius = baseRadius * (0.65 + Math.random() * 0.35);
-                star.style.setProperty('--radius', radius + 'px');
-                star.style.left = (cx - size / 2) + 'px';
-                star.style.top = (cy - size / 2) + 'px';
-                const duration = 8 + Math.random() * 12;
-                star.style.animationDuration = duration + 's';
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                wrapper.appendChild(star);
-            }
-        }
-
-        // ============================================================
-        //  完整旅程
-        // ============================================================
-        async function startFullJourney() {
-            document.body.classList.add('dark-bg');
-            document.querySelectorAll('.card').forEach(c => {
-                c.classList.add('champagne');
-            });
-
-            await new Promise(r => setTimeout(r, 300));
-            document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
-
-            await startBlessingRain();
-
-            document.querySelectorAll('.bless').forEach(el => el.remove());
-
-            await createRose();
-        }
-
-        console.log('💕 完整版已加载！');
-    </script>
-
-</body>
-</html>
+                { radius: 1.0, count: 120, size: 0.8, colors: ['#ff6b9d', '#ff8eb5', '#ff9eb5'] },
+                { radius: 0.85, count: 130, size: 0.7, colors: ['#ffb6d9', '#ff7fa8', '#ffa0b8'] },
+                { radius: 0.7, count

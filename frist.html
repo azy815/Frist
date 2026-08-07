@@ -48,12 +48,30 @@
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.4);
             margin: 0 auto;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease, background 0.5s ease;
+        }
+        /* ===== 香槟金色卡片 ===== */
+        .card.champagne {
+            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid rgba(200, 160, 130, 0.3) !important;
+            box-shadow: 0 30px 60px rgba(150, 100, 70, 0.15) !important;
         }
         .card.hide {
             opacity: 0;
             transform: scale(0.9) translateY(20px);
             pointer-events: none;
+        }
+
+        /* ===== 香槟金色祝福语 ===== */
+        .bless.champagne {
+            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
+            border: 1px solid rgba(200, 160, 130, 0.3) !important;
+            box-shadow: 0 4px 20px rgba(150, 100, 70, 0.15) !important;
+            color: #5a3d2a !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
         }
 
         .big-heart {
@@ -148,7 +166,7 @@
             display: block;
         }
 
-        /* ===== 祝福语（实心粉色背景 + 居中） ===== */
+        /* ===== 祝福语 ===== */
         .bless {
             position: fixed;
             pointer-events: none;
@@ -165,6 +183,7 @@
             white-space: nowrap;
             animation: floatBless linear forwards;
             opacity: 0;
+            transition: background 0.5s ease, border 0.5s ease, box-shadow 0.5s ease;
         }
         @keyframes floatBless {
             0% {
@@ -204,16 +223,16 @@
 
         #roseWrapper {
             position: relative;
-            width: 100vw;
-            height: 100vh;
+            width: 80vmin;
+            height: 80vmin;
             transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
         #roseWrapper.zoomed {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
 
-        /* ===== 超级细粉尘粒子 ===== */
+        /* ===== 粉尘粒子 ===== */
         .dust-particle {
             position: absolute;
             border-radius: 50%;
@@ -278,6 +297,10 @@
             .love-verse {
                 font-size: 12px;
             }
+            #roseWrapper {
+                width: 85vmin;
+                height: 85vmin;
+            }
         }
         @media (max-width: 370px) {
             .card {
@@ -300,6 +323,10 @@
             }
             .love-verse {
                 font-size: 11px;
+            }
+            #roseWrapper {
+                width: 90vmin;
+                height: 90vmin;
             }
         }
     </style>
@@ -428,7 +455,7 @@
 
         btnYes.addEventListener('click', function() {
             resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
-            resultMsg2.style.color = '#d490a0';
+            resultMsg2.style.color = '#8a6a5a';
             bigHeart2.textContent = '🌟';
             questionEl2.textContent = '你真好！';
             hintEl2.textContent = '💫 愿所有的美好都属于你 💫';
@@ -456,7 +483,7 @@
         });
 
         // ============================================================
-        //  祝福语（实心粉色 + 居中）
+        //  祝福语
         // ============================================================
         const blessings = [
             '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
@@ -499,7 +526,6 @@
         function getGridPosition() {
             if (availableGrids.length === 0) initGrids();
             const grid = availableGrids.pop();
-            // 屏幕中央 50% 区域
             const margin = 25;
             const colWidth = (100 - margin * 2) / gridCols;
             const rowHeight = (100 - margin * 2) / gridRows;
@@ -524,7 +550,7 @@
             const scale = 0.85 + Math.random() * 0.3;
             el.style.fontSize = (14 + Math.random() * 8) + 'px';
             el.style.transform = `scale(${scale})`;
-            const duration = 10 + Math.random() * 6;
+            const duration = 8 + Math.random() * 4;
             el.style.animationDuration = duration + 's';
             document.body.appendChild(el);
             activeBlessElements.push(el);
@@ -544,19 +570,19 @@
                 activeBlessElements = [];
                 initGrids();
                 for (let i = 0; i < TOTAL_BLESS; i++) {
-                    setTimeout(() => createBless(), i * 500);
+                    setTimeout(() => createBless(), i * 400);
                 }
                 const checkDone = setInterval(() => {
                     if (blessCount >= TOTAL_BLESS && activeBlessElements.length === 0) {
                         clearInterval(checkDone);
-                        setTimeout(resolve, 400);
+                        setTimeout(resolve, 300);
                     }
-                }, 400);
+                }, 300);
             });
         }
 
         // ============================================================
-        //  超级细粉尘玫瑰
+        //  香槟金玫瑰（高密度 + 快速形成）
         // ============================================================
 
         function getRoseDustData() {
@@ -564,30 +590,30 @@
             const h = window.innerHeight;
             const cx = w / 2;
             const cy = h / 2 - 10;
-            const baseSize = Math.min(w, h) * 0.42;
+            const baseSize = Math.min(w, h) * 0.38;
 
             const particles = [];
             const layers = [
-                { count: 200, radius: 1.0, size: 0.6, color: 'pink-dark' },
-                { count: 250, radius: 0.85, size: 0.5, color: 'pink' },
-                { count: 300, radius: 0.7, size: 0.4, color: 'pink-light' },
-                { count: 350, radius: 0.55, size: 0.35, color: 'pink' },
-                { count: 400, radius: 0.4, size: 0.3, color: 'pink-light' },
-                { count: 450, radius: 0.25, size: 0.25, color: 'pink' }
+                { count: 350, radius: 1.0, size: 0.6, color: 'pink-dark' },
+                { count: 420, radius: 0.85, size: 0.5, color: 'pink' },
+                { count: 480, radius: 0.7, size: 0.4, color: 'pink-light' },
+                { count: 520, radius: 0.55, size: 0.35, color: 'pink' },
+                { count: 560, radius: 0.4, size: 0.3, color: 'pink-light' },
+                { count: 600, radius: 0.25, size: 0.25, color: 'pink' }
             ];
 
             const colorMap = {
-                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ff9eb5', '#ff7fa8'],
-                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80', '#ffc8b0', '#ffb8a0'],
-                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a', '#c06080', '#d06080'],
-                'gold': ['#ffd700', '#f0a030', '#ffb347', '#ffe066', '#ffcc44'],
-                'green': ['#7ddfa0', '#5ccf8a', '#3da86a', '#90e8b0', '#6ae0a0']
+                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ff9eb5', '#ff7fa8', '#ffa0b8'],
+                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80', '#ffc8b0', '#ffb8a0', '#ffd0b8'],
+                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a', '#c06080', '#d06080', '#c85878'],
+                'gold': ['#ffd700', '#f0a030', '#ffb347', '#ffe066', '#ffcc44', '#ffdd77'],
+                'green': ['#7ddfa0', '#5ccf8a', '#3da86a', '#90e8b0', '#6ae0a0', '#b0f0c0']
             };
 
             layers.forEach((layer, li) => {
-                const baseAngle = (li * 25) % 360;
+                const baseAngle = (li * 22) % 360;
                 for (let i = 0; i < layer.count; i++) {
-                    const angle = (i / layer.count) * 360 + baseAngle + (Math.random() - 0.5) * 18;
+                    const angle = (i / layer.count) * 360 + baseAngle + (Math.random() - 0.5) * 15;
                     const rad = angle * Math.PI / 180;
                     const r = layer.radius * baseSize * (0.78 + Math.random() * 0.22);
                     const x = cx + r * Math.cos(rad);
@@ -596,17 +622,17 @@
                     particles.push({
                         x: x,
                         y: y,
-                        size: 0.2 + Math.random() * 0.6,
+                        size: 0.3 + Math.random() * 0.8,
                         color: colors[Math.floor(Math.random() * colors.length)],
-                        twinkleSpeed: 0.8 + Math.random() * 2.5,
-                        glowIntensity: 4 + Math.random() * 12,
+                        twinkleSpeed: 0.8 + Math.random() * 2.2,
+                        glowIntensity: 5 + Math.random() * 15,
                         layer: li
                     });
                 }
             });
 
-            // 金色点缀
-            for (let i = 0; i < 180; i++) {
+            // 金色点缀（更密）
+            for (let i = 0; i < 300; i++) {
                 const angle = Math.random() * 360;
                 const rad = angle * Math.PI / 180;
                 const r = (0.05 + Math.random() * 1.15) * baseSize;
@@ -615,16 +641,17 @@
                 particles.push({
                     x: x,
                     y: y,
-                    size: 0.2 + Math.random() * 0.5,
-                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44', '#ffdd77'][Math.floor(Math.random() * 5)],
-                    twinkleSpeed: 1 + Math.random() * 2.8,
-                    glowIntensity: 5 + Math.random() * 16,
+                    size: 0.3 + Math.random() * 0.6,
+                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44', '#ffdd77', '#f5c842'][Math.floor(Math.random() *
+                        6)],
+                    twinkleSpeed: 1 + Math.random() * 2.5,
+                    glowIntensity: 6 + Math.random() * 18,
                     layer: 6,
                     isGold: true
                 });
             }
 
-            // 叶子
+            // 叶子（更密）
             const leafCenters = [
                 { angle: -42, dist: 1.25 },
                 { angle: -18, dist: 1.3 },
@@ -636,7 +663,7 @@
                 const r = lc.dist * baseSize * 0.65;
                 const cx2 = cx + r * Math.cos(rad);
                 const cy2 = cy + r * Math.sin(rad) * 0.6 + 12;
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 150; i++) {
                     const angleOff = (Math.random() - 0.5) * 50;
                     const radOff = angleOff * Math.PI / 180;
                     const distOff = (0.2 + Math.random() * 0.5) * baseSize * 0.35;
@@ -645,10 +672,11 @@
                     particles.push({
                         x: x,
                         y: y,
-                        size: 0.2 + Math.random() * 0.5,
-                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0', '#90e8b0'][Math.floor(Math.random() * 5)],
-                        twinkleSpeed: 0.7 + Math.random() * 2.2,
-                        glowIntensity: 4 + Math.random() * 10,
+                        size: 0.3 + Math.random() * 0.6,
+                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0', '#90e8b0', '#b8f0c8'][Math.floor(Math
+                        .random() * 6)],
+                        twinkleSpeed: 0.7 + Math.random() * 2,
+                        glowIntensity: 4 + Math.random() * 12,
                         layer: 7,
                         isLeaf: true
                     });
@@ -690,9 +718,10 @@
 
                     document.body.appendChild(el);
 
+                    // 汇聚速度加快
                     setTimeout(() => {
                         el.style.transition =
-                            `all ${0.7+Math.random()*0.8}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
+                            `all ${0.5+Math.random()*0.5}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
                         el.style.left = d.x + 'px';
                         el.style.top = d.y + 'px';
                         el.style.opacity = '1';
@@ -724,10 +753,10 @@
                                     };
                                     createHaloStars(wrapper, container);
                                     resolve();
-                                }, 400);
+                                }, 300);
                             }
-                        }, 120);
-                    }, 80 + index * 8);
+                        }, 80);
+                    }, 40 + index * 5);
                 });
             });
         }
@@ -735,7 +764,7 @@
         // ===== 星星光环 =====
         function createHaloStars(wrapper, container) {
             const colors = ['#ffb6d9', '#ffd700', '#ff8eb5', '#ffffff', '#ff6b9d', '#a8d8ff', '#ff69b4', '#ffcc44'];
-            const count = 35 + Math.floor(Math.random() * 30);
+            const count = 40 + Math.floor(Math.random() * 35);
             const rect = container.getBoundingClientRect();
             const cx = rect.width / 2;
             const cy = rect.height / 2;
@@ -764,30 +793,32 @@
         }
 
         // ============================================================
-        //  完整旅程（正确顺序）
+        //  完整旅程
         // ============================================================
         async function startFullJourney() {
-            // 1. 背景变黑 + 卡片消失（同步）
+            // 1. 背景变黑
             document.body.classList.add('dark-bg');
+
+            // 2. 卡片变成香槟金
+            document.querySelectorAll('.card').forEach(c => {
+                c.classList.add('champagne');
+            });
+
+            // 3. 等待0.3秒后卡片消失
+            await new Promise(r => setTimeout(r, 300));
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
 
-            // 2. 等待卡片淡出
-            await new Promise(r => setTimeout(r, 500));
-
-            // 3. 祝福语飘落
+            // 4. 祝福语变成香槟金 + 开始飘落
             await startBlessingRain();
 
-            // 4. 清空祝福语
+            // 5. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
 
-            // 5. 等待片刻
-            await new Promise(r => setTimeout(r, 300));
-
-            // 6. 粉尘汇聚成玫瑰
+            // 6. 快速形成玫瑰
             await createDustRose();
         }
 
-        console.log('💕 超级粉尘玫瑰已加载！');
+        console.log('💕 香槟金玫瑰已加载！');
     </script>
 
 </body>

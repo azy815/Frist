@@ -42,26 +42,25 @@
             }
         }
 
-        /* ===== 卡片 ===== */
+        /* ===== 不透明粉色背景板 ===== */
         .card {
             position: relative;
             z-index: 20;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: #fce4ec;
+            background: linear-gradient(145deg, #fce4ec, #f8d4de, #f5c8d4);
             padding: 32px 20px;
             border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.12);
+            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
             text-align: center;
             max-width: 400px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             margin: 0 auto;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .card.hide {
             opacity: 0;
-            transform: scale(0.95);
+            transform: scale(0.9);
             pointer-events: none;
         }
 
@@ -97,7 +96,7 @@
             font-weight: 300;
             letter-spacing: 2px;
             margin-top: 14px;
-            border-top: 1px solid rgba(200, 100, 120, 0.1);
+            border-top: 1px solid rgba(200, 100, 120, 0.15);
             padding-top: 14px;
             font-style: italic;
             line-height: 1.6;
@@ -134,9 +133,9 @@
             box-shadow: 0 6px 30px rgba(232, 128, 144, 0.25);
         }
         .btn-hate {
-            background: rgba(200, 150, 160, 0.15);
+            background: rgba(200, 150, 160, 0.2);
             color: rgba(90, 61, 74, 0.5);
-            border: 1px solid rgba(200, 150, 160, 0.15);
+            border: 1px solid rgba(200, 150, 160, 0.2);
         }
         .btn-primary {
             background: linear-gradient(135deg, #e8b0c0, #d490a0);
@@ -167,8 +166,9 @@
             color: rgba(180, 100, 120, 0.8);
             padding: 8px 18px;
             border-radius: 32px;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             white-space: nowrap;
             animation: floatBless linear forwards;
@@ -765,17 +765,22 @@
         }
 
         // ============================================================
-        //  完整旅程（卡片快速消失）
+        //  完整旅程（弹窗提前消失）
         // ============================================================
         async function startFullJourney() {
+            // 1. 祝福语飘落
             await startBlessingRain();
+
+            // 2. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
 
-            // 卡片快速淡出（0.5秒）
+            // 3. 弹窗消失（在星辰出现之前）
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
 
-            // 等卡片淡出后再显示玫瑰
+            // 4. 等待弹窗淡出完成
             await new Promise(r => setTimeout(r, 500));
+
+            // 5. 星尘粒子汇聚成玫瑰
             await createDustRose();
         }
 

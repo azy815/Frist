@@ -12,21 +12,26 @@
             box-sizing: border-box;
         }
 
-        /* ===== 页面主体 ===== */
+        html, body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
         body {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
-            padding: 20px;
-            /* 🌈 渐变背景 + 慢速动画 */
+            padding: 16px;
             background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb);
             background-size: 400% 400%;
             animation: bgShift 20s ease infinite;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* ===== 背景流动动画 ===== */
         @keyframes bgShift {
             0%   { background-position: 0% 50%; }
             50%  { background-position: 100% 50%; }
@@ -35,22 +40,24 @@
 
         /* ===== 卡片 ===== */
         .card {
+            position: relative;
+            z-index: 10;
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            padding: 40px 28px;
-            border-radius: 48px;
+            padding: 32px 20px;
+            border-radius: 40px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
             text-align: center;
             max-width: 400px;
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.4);
-            transition: all 0.3s;
+            transition: all 0.4s ease;
+            margin: 0 auto;
         }
 
-        /* ===== 大爱心 ===== */
         .big-heart {
-            font-size: 64px;
+            font-size: 56px;
             line-height: 1.2;
             animation: pulse 1.6s ease-in-out infinite;
             display: inline-block;
@@ -61,85 +68,131 @@
             50% { transform: scale(1.15); }
         }
 
-        /* ===== 问题文字 ===== */
         .question {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: #4a2a33;
-            margin: 12px 0 6px;
-            letter-spacing: 1px;
+            margin: 10px 0 4px;
+            letter-spacing: 0.5px;
+            line-height: 1.3;
         }
 
-        /* ===== 小提示 ===== */
         .hint {
             color: #6b4a57;
-            font-size: 15px;
-            margin-bottom: 24px;
+            font-size: 14px;
+            margin-bottom: 20px;
             opacity: 0.8;
             font-weight: 500;
         }
 
-        /* ===== 按钮容器 ===== */
         .btn-group {
             display: flex;
-            gap: 16px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
 
-        /* ===== 通用按钮 ===== */
         .btn {
-            padding: 16px 40px;
+            padding: 14px 32px;
             border: none;
             border-radius: 60px;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             flex: 0 1 auto;
-            min-width: 120px;
+            min-width: 100px;
             touch-action: manipulation;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
 
-        /* ===== "爱你" 按钮 ===== */
+        .btn:active {
+            transform: scale(0.94);
+        }
+
         .btn-love {
             background: #ff6b81;
             color: #fff;
         }
-        .btn-love:active {
-            transform: scale(0.94);
-            box-shadow: 0 4px 12px rgba(255, 107, 129, 0.4);
-        }
 
-        /* ===== "不爱" 按钮 ===== */
         .btn-hate {
             background: #e8e0e0;
             color: #6b5a5a;
         }
-        .btn-hate:active {
-            transform: scale(0.94);
-            background: #d5cccc;
+
+        .btn-primary {
+            background: #a18cd1;
+            color: #fff;
         }
 
-        /* ===== 结果文字 ===== */
         .result {
-            margin-top: 22px;
-            font-size: 20px;
+            margin-top: 18px;
+            font-size: 18px;
             font-weight: 600;
             color: #4a2a33;
-            min-height: 48px;
+            min-height: 44px;
             transition: all 0.3s;
+            line-height: 1.4;
         }
 
-        /* ===== 飘浮爱心 ===== */
+        /* ===== 第二阶段卡片（隐藏） ===== */
+        .card-stage2 {
+            display: none;
+        }
+        .card-stage2.active {
+            display: block;
+        }
+
+        /* ===== 🎉 飘浮祝福语 ===== */
+        .bless {
+            position: fixed;
+            pointer-events: none;
+            z-index: 999;
+            font-size: 16px;
+            font-weight: 600;
+            color: #4a2a33;
+            padding: 8px 16px;
+            border-radius: 32px;
+            background: rgba(255, 255, 255, 0.30);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, 0.55);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            white-space: nowrap;
+            animation: floatBless 8s linear forwards;
+            transform-origin: center;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes floatBless {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.92) rotate(-2deg);
+            }
+            8% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            85% {
+                opacity: 1;
+                transform: translateY(-120px) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-180px) scale(0.95) rotate(3deg);
+            }
+        }
+
+        /* ===== 爱心飘浮 ===== */
         .float-heart {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
-            font-size: 28px;
+            font-size: 26px;
             animation: floatUp 2s ease-out forwards;
         }
 
@@ -154,33 +207,153 @@
             }
         }
 
-        /* ===== 响应式：小屏手机 ===== */
-        @media (max-width: 480px) {
+        /* ============================================================ */
+        /*  📱 手机专用适配（更小屏、触摸优化） */
+        /* ============================================================ */
+
+        /* 小屏手机（宽度 ≤ 420px） */
+        @media (max-width: 420px) {
+            body {
+                padding: 12px;
+            }
+
             .card {
-                padding: 32px 20px;
-                border-radius: 36px;
+                padding: 24px 16px;
+                border-radius: 32px;
+                max-width: 100%;
+            }
+
+            .big-heart {
+                font-size: 44px;
+            }
+
+            .question {
+                font-size: 20px;
+                margin: 8px 0 2px;
+            }
+
+            .hint {
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 16px;
+                min-width: 80px;
+                border-radius: 50px;
+            }
+
+            .btn-group {
+                gap: 10px;
+            }
+
+            .result {
+                font-size: 16px;
+                min-height: 36px;
+                margin-top: 14px;
+            }
+
+            .bless {
+                font-size: 13px;
+                padding: 6px 12px;
+                border-radius: 24px;
+                white-space: nowrap;
+            }
+
+            .float-heart {
+                font-size: 20px;
+            }
+        }
+
+        /* 超小屏（宽度 ≤ 360px，如 iPhone SE） */
+        @media (max-width: 370px) {
+            .card {
+                padding: 20px 12px;
+                border-radius: 28px;
+            }
+
+            .big-heart {
+                font-size: 36px;
+            }
+
+            .question {
+                font-size: 18px;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 14px;
+                min-width: 70px;
+            }
+
+            .result {
+                font-size: 14px;
+                min-height: 32px;
+            }
+
+            .bless {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+        }
+
+        /* 大屏手机 / 平板 优化 */
+        @media (min-width: 421px) and (max-width: 768px) {
+            .card {
+                padding: 36px 24px;
+                max-width: 380px;
+            }
+
+            .big-heart {
+                font-size: 60px;
+            }
+
+            .question {
+                font-size: 26px;
+            }
+
+            .btn {
+                padding: 16px 36px;
+                font-size: 19px;
+                min-width: 110px;
+            }
+        }
+
+        /* 横屏警告提示（可选） */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .card {
+                padding: 16px 20px;
+                max-width: 320px;
             }
             .big-heart {
-                font-size: 50px;
+                font-size: 32px;
             }
             .question {
-                font-size: 24px;
+                font-size: 17px;
+                margin: 4px 0;
+            }
+            .hint {
+                font-size: 12px;
+                margin-bottom: 10px;
             }
             .btn {
-                padding: 14px 28px;
-                font-size: 18px;
-                min-width: 100px;
+                padding: 8px 16px;
+                font-size: 14px;
+                min-width: 70px;
             }
             .result {
-                font-size: 18px;
-                min-height: 40px;
+                font-size: 14px;
+                min-height: 28px;
+                margin-top: 10px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <!-- ===== 第一阶段：你爱我吗？ ===== -->
+    <div class="card" id="stage1">
         <div class="big-heart" id="bigHeart">❤️</div>
         <div class="question" id="questionEl">你爱我吗？</div>
         <div class="hint" id="hintEl">💖 认真回答哦 💖</div>
@@ -193,8 +366,34 @@
         <div class="result" id="resultMsg"></div>
     </div>
 
+    <!-- ===== 第二阶段：愿意继续看吗？ ===== -->
+    <div class="card card-stage2" id="stage2">
+        <div class="big-heart" id="bigHeart2">💕</div>
+        <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
+        <div class="hint" id="hintEl2">🌹 后面有惊喜哦 🌹</div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="btnYes">愿意 ❤️</button>
+            <button class="btn btn-hate" id="btnNo">不愿意 😢</button>
+        </div>
+
+        <div class="result" id="resultMsg2"></div>
+    </div>
+
     <script>
-        // ===== 数据 =====
+        // ============================================================
+        //  第一阶段：你爱我吗？
+        // ============================================================
+
+        const btnLove = document.getElementById('btnLove');
+        const btnHate = document.getElementById('btnHate');
+        const resultMsg = document.getElementById('resultMsg');
+        const bigHeart = document.getElementById('bigHeart');
+        const questionEl = document.getElementById('questionEl');
+        const hintEl = document.getElementById('hintEl');
+        const stage1 = document.getElementById('stage1');
+        const stage2 = document.getElementById('stage2');
+
         let hateClickCount = 0;
         const hateMsgs = [
             '你再想想？😠',
@@ -203,16 +402,86 @@
             '呜呜呜我伤心了 💔'
         ];
 
-        // ===== DOM 元素 =====
-        const btnLove = document.getElementById('btnLove');
-        const btnHate = document.getElementById('btnHate');
-        const resultMsg = document.getElementById('resultMsg');
-        const bigHeart = document.getElementById('bigHeart');
-        const questionEl = document.getElementById('questionEl');
-        const hintEl = document.getElementById('hintEl');
+        // ===== 工具：爱心烟花 =====
+        function launchHearts(count) {
+            const emojis = ['❤️', '💕', '💖', '✨', '💗', '🌸'];
+            return new Promise((resolve) => {
+                let completed = 0;
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.className = 'float-heart';
+                        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                        el.style.left = (10 + Math.random() * 80) + 'vw';
+                        el.style.top = (10 + Math.random() * 80) + 'vh';
+                        el.style.fontSize = (20 + Math.random() * 26) + 'px';
+                        el.style.animationDuration = (1.8 + Math.random() * 1.2) + 's';
+                        document.body.appendChild(el);
+                        setTimeout(() => el.remove(), 3000);
+                        completed++;
+                        if (completed === count) {
+                            setTimeout(resolve, 500);
+                        }
+                    }, i * 70);
+                }
+            });
+        }
 
-        // ===== 爱你 =====
-        btnLove.addEventListener('click', function() {
+        // ===== 工具：祝福语 =====
+        const blessings = [
+            '✨ 愿所有美好都如期而至',
+            '🌸 你是我藏在微风里的喜欢',
+            '💫 星星温柔，人间浪漫',
+            '🌙 月光所至，万事胜意',
+            '🌺 愿你眼里有光，心中有爱',
+            '🍀 幸运常伴，笑靥如花',
+            '💖 心动不止，温柔不息',
+            '🌊 山高水长，来日方长',
+            '🎈 每一天都是新的开始',
+            '🌈 生活明朗，万物可爱',
+            '🌟 你本身就是最好的礼物',
+            '💕 爱意随风起，风止意难平'
+        ];
+
+        function randomBless() {
+            return blessings[Math.floor(Math.random() * blessings.length)];
+        }
+
+        let blessInterval = null;
+
+        function createBless() {
+            const el = document.createElement('div');
+            el.className = 'bless';
+            el.textContent = randomBless();
+            el.style.left = (5 + Math.random() * 90) + 'vw';
+            el.style.top = (5 + Math.random() * 85) + 'vh';
+            const scale = 0.8 + Math.random() * 0.6;
+            el.style.fontSize = (12 + Math.random() * 12) + 'px';
+            el.style.transform = `scale(${scale})`;
+            const duration = 6 + Math.random() * 6;
+            el.style.animationDuration = duration + 's';
+            const hue = 320 + Math.random() * 40;
+            el.style.borderColor = `hsla(${hue}, 70%, 80%, 0.6)`;
+            el.style.background = `rgba(255, 255, 255, ${0.15 + Math.random() * 0.25})`;
+            document.body.appendChild(el);
+            setTimeout(() => { if (el.parentNode) el.remove(); }, duration * 1000 + 200);
+        }
+
+        function startBlessingRain(count = 35) {
+            document.querySelectorAll('.bless').forEach(el => el.remove());
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => createBless(), i * 100);
+            }
+            if (blessInterval) clearInterval(blessInterval);
+            blessInterval = setInterval(() => {
+                for (let i = 0; i < 2; i++) {
+                    setTimeout(() => createBless(), i * 300);
+                }
+            }, 4000);
+        }
+
+        // ===== 点击「爱你」 =====
+        btnLove.addEventListener('click', async function() {
             resultMsg.innerHTML = '💕 我也爱你！永远在一起！ 💕';
             resultMsg.style.color = '#c0392b';
             bigHeart.textContent = '💕';
@@ -222,56 +491,85 @@
             btnLove.disabled = true;
             btnLove.style.opacity = '0.7';
             btnLove.style.cursor = 'default';
-            launchHearts(24);
+
+            await launchHearts(28);
+
+            stage1.style.display = 'none';
+            stage2.classList.add('active');
         });
 
-        // ===== 不爱（带追踪 & 最后反转） =====
+        // ===== 点击「不爱」 =====
         btnHate.addEventListener('click', function() {
             hateClickCount++;
             const index = (hateClickCount - 1) % hateMsgs.length;
             resultMsg.innerHTML = hateMsgs[index];
             resultMsg.style.color = '#7f8c8d';
-
-            // 心跳反应
             bigHeart.textContent = '💔';
-            setTimeout(() => {
-                bigHeart.textContent = '❤️';
-            }, 400);
-
-            // 按够 4 次后"变心"
+            setTimeout(() => { bigHeart.textContent = '❤️'; }, 400);
             if (hateClickCount >= 4) {
                 btnHate.textContent = '我错了！爱！❤️';
                 btnHate.style.background = '#ff6b81';
                 btnHate.style.color = '#fff';
-                btnHate.style.boxShadow = '0 6px 20px rgba(255,107,129,0.3)';
-                // 替换点击事件
                 btnHate.onclick = function() {
                     btnLove.click();
                 };
             }
         });
 
-        // ===== 放烟花爱心 =====
-        function launchHearts(count) {
-            const emojis = ['❤️', '💕', '💖', '✨', '💗', '🌸'];
-            for (let i = 0; i < count; i++) {
-                setTimeout(() => {
-                    const el = document.createElement('div');
-                    el.className = 'float-heart';
-                    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    el.style.left = (10 + Math.random() * 80) + 'vw';
-                    el.style.top = (10 + Math.random() * 80) + 'vh';
-                    el.style.fontSize = (22 + Math.random() * 28) + 'px';
-                    el.style.animationDuration = (1.8 + Math.random() * 1.2) + 's';
-                    document.body.appendChild(el);
-                    // 自动移除
-                    setTimeout(() => el.remove(), 3000);
-                }, i * 70);
-            }
-        }
+        // ============================================================
+        //  第二阶段：愿意继续往下看吗？
+        // ============================================================
 
-        // ===== 页面加载完成后自动适配 =====
-        console.log('💕 你爱我吗？页面已加载！');
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const resultMsg2 = document.getElementById('resultMsg2');
+        const bigHeart2 = document.getElementById('bigHeart2');
+        const questionEl2 = document.getElementById('questionEl2');
+        const hintEl2 = document.getElementById('hintEl2');
+
+        let noClickCount = 0;
+        const noMsgs = [
+            '真的不想看吗？🥺',
+            '再给你一次机会！😠',
+            '求求你了嘛～😭',
+            '最后问一次！💔'
+        ];
+
+        // ===== 点击「愿意」 =====
+        btnYes.addEventListener('click', function() {
+            resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
+            resultMsg2.style.color = '#6a4a8a';
+            bigHeart2.textContent = '🌟';
+            questionEl2.textContent = '你真好！';
+            hintEl2.textContent = '💫 愿所有的美好都属于你 💫';
+            btnNo.style.display = 'none';
+            btnYes.disabled = true;
+            btnYes.style.opacity = '0.7';
+            btnYes.style.cursor = 'default';
+
+            startBlessingRain(40);
+        });
+
+        // ===== 点击「不愿意」 =====
+        btnNo.addEventListener('click', function() {
+            noClickCount++;
+            const index = (noClickCount - 1) % noMsgs.length;
+            resultMsg2.innerHTML = noMsgs[index];
+            resultMsg2.style.color = '#7f8c8d';
+            bigHeart2.textContent = '😢';
+            setTimeout(() => { bigHeart2.textContent = '💕'; }, 400);
+
+            if (noClickCount >= 4) {
+                btnNo.textContent = '我愿意！❤️';
+                btnNo.style.background = '#a18cd1';
+                btnNo.style.color = '#fff';
+                btnNo.onclick = function() {
+                    btnYes.click();
+                };
+            }
+        });
+
+        console.log('💕 两阶段问答已加载（手机适配版）！');
     </script>
 
 </body>

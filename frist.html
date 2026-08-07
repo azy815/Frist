@@ -5,44 +5,271 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>你爱我吗 💕 香槟金玫瑰</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        html,body{width:100%;min-height:100vh;overflow:hidden}
-        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;transition:background .6s ease}
-        body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            padding: 16px;
+            background: radial-gradient(ellipse at center, #fff5f7, #ffe8ee, #ffdce6);
+            background-size: 100% 100%;
+            transition: background 0.6s ease;
+            overflow: hidden;
+        }
+        body.dark-bg {
+            background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #040408) !important;
+        }
 
-        .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
-        .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
-        .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
+        .card {
+            position: relative;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 32px 20px;
+            border-radius: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin: 0 auto;
+            transition: all 0.5s ease;
+        }
+        .card.champagne {
+            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
+            backdrop-filter: none !important;
+            border: 2px solid #d4a86a !important;
+        }
+        .card.hide {
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            pointer-events: none;
+        }
 
-        .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
-        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-        .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
-        .hint{color:rgba(90,61,74,.6);font-size:14px;margin-bottom:20px}
-        .love-verse{color:rgba(90,61,74,.5);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(200,100,120,.1);padding-top:14px;font-style:italic}
-        .love-verse .highlight{color:#d47a8a;font-weight:500}
+        .big-heart {
+            font-size: 56px;
+            animation: pulse 1.6s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+        .question {
+            font-size: 24px;
+            font-weight: 700;
+            color: #5a3d4a;
+            margin: 10px 0 4px;
+        }
+        .hint {
+            color: rgba(90, 61, 74, 0.6);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .love-verse {
+            color: rgba(90, 61, 74, 0.5);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-top: 14px;
+            border-top: 1px solid rgba(200, 100, 120, 0.1);
+            padding-top: 14px;
+            font-style: italic;
+        }
+        .love-verse .highlight {
+            color: #d47a8a;
+            font-weight: 500;
+        }
 
-        .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-        .btn{padding:14px 32px;border:none;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;min-width:100px;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
-        .btn:active{transform:scale(.94)}
-        .btn-love{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff}
-        .btn-hate{background:rgba(200,150,160,.15);color:rgba(90,61,74,.5);border:1px solid rgba(200,150,160,.15)}
-        .btn-primary{background:linear-gradient(135deg,#e8b0c0,#d490a0);color:#fff}
-        .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
-        .card-stage2{display:none}.card-stage2.active{display:block}
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 100px;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active {
+            transform: scale(0.94);
+        }
+        .btn-love {
+            background: linear-gradient(135deg, #f5a0b0, #e88090);
+            color: #fff;
+        }
+        .btn-hate {
+            background: rgba(200, 150, 160, 0.15);
+            color: rgba(90, 61, 74, 0.5);
+            border: 1px solid rgba(200, 150, 160, 0.15);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #e8b0c0, #d490a0);
+            color: #fff;
+        }
+        .result {
+            margin-top: 18px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #5a3d4a;
+            min-height: 44px;
+        }
+        .card-stage2 {
+            display: none;
+        }
+        .card-stage2.active {
+            display: block;
+        }
 
-        .bless{position:fixed;pointer-events:none;z-index:25;font-size:16px;font-weight:600;color:#5a3d4a;padding:10px 22px;border-radius:30px;background:linear-gradient(145deg,#fce4ec,#f8d4de,#f5c8d4);border:1px solid rgba(255,255,255,.3);white-space:nowrap;animation:floatBless linear forwards;opacity:0;left:3%!important}
-        .bless.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;border:2px solid #d4a86a!important;color:#5a3d2a!important}
-        @keyframes floatBless{0%{opacity:0;transform:translateY(20px) scale(.9)}12%{opacity:1;transform:translateY(0) scale(1)}85%{opacity:1;transform:translateY(-100px) scale(1)}100%{opacity:0;transform:translateY(-160px) scale(.9)}}
+        /* ===== 祝福语 - 左右错开 ===== */
+        .bless {
+            position: fixed;
+            pointer-events: none;
+            z-index: 25;
+            font-size: 16px;
+            font-weight: 600;
+            color: #5a3d4a;
+            padding: 10px 22px;
+            border-radius: 30px;
+            background: linear-gradient(145deg, #fce4ec, #f8d4de, #f5c8d4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(200, 100, 120, 0.15);
+            white-space: nowrap;
+            animation: floatBless linear forwards;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        .bless.champagne {
+            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
+            border: 2px solid #d4a86a !important;
+            box-shadow: 0 4px 20px rgba(180, 130, 80, 0.2) !important;
+            color: #5a3d2a !important;
+        }
+        @keyframes floatBless {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            12% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            85% {
+                opacity: 1;
+                transform: translateY(-100px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-160px) scale(0.9);
+            }
+        }
 
-        #roseContainer{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:30;display:none;justify-content:center;align-items:center}
-        #roseContainer.active{display:flex}
-        #roseWrapper{position:relative;width:80vmin;height:80vmin}
+        /* ===== 玫瑰容器 ===== */
+        #roseContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 30;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        #roseContainer.active {
+            display: flex;
+        }
+        #roseWrapper {
+            position: relative;
+            width: 80vmin;
+            height: 80vmin;
+        }
 
-        .dust-particle{position:absolute;border-radius:50%;pointer-events:none;animation:dustTwinkle var(--dur) ease-in-out infinite alternate}
-        @keyframes dustTwinkle{0%{opacity:.3;transform:scale(.6)}100%{opacity:1;transform:scale(1.2)}}
+        .dust-particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: dustTwinkle var(--dur) ease-in-out infinite alternate;
+        }
+        @keyframes dustTwinkle {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.6);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
 
-        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px;left:2%!important}}
-        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px;left:2%!important}}
+        @media (max-width: 420px) {
+            .card {
+                padding: 24px 16px;
+                max-width: 100%;
+            }
+            .big-heart {
+                font-size: 44px;
+            }
+            .question {
+                font-size: 20px;
+            }
+            .btn {
+                padding: 12px 20px;
+                font-size: 16px;
+                min-width: 80px;
+            }
+            .bless {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+        }
+        @media (max-width: 370px) {
+            .card {
+                padding: 20px 12px;
+            }
+            .big-heart {
+                font-size: 36px;
+            }
+            .question {
+                font-size: 18px;
+            }
+            .btn {
+                padding: 10px 16px;
+                font-size: 14px;
+                min-width: 70px;
+            }
+            .bless {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -73,7 +300,9 @@
         <div class="love-verse" id="verse2">✦ 每一步都是 <span class="highlight">爱的印记</span>，别走开 ✦</div>
     </div>
 
-    <div id="roseContainer"><div id="roseWrapper"></div></div>
+    <div id="roseContainer">
+        <div id="roseWrapper"></div>
+    </div>
 
     <script>
         // ============================================================
@@ -166,7 +395,7 @@
         });
 
         // ============================================================
-        //  祝福语
+        //  祝福语（左右错开）
         // ============================================================
         const blessings = [
             '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
@@ -191,11 +420,22 @@
             return usedBlessings.pop();
         }
 
+        // ===== 12个位置：左右错开 =====
+        // 6行，每行2条，左列靠左，右列靠右
         const positions = [];
+        const leftBase = 3;
+        const rightBase = 45;
         for (let row = 0; row < 6; row++) {
-            for (let col = 0; col < 2; col++) {
-                positions.push({ row, col });
-            }
+            // 左列
+            positions.push({
+                left: leftBase + (Math.random() - 0.5) * 6,
+                top: 10 + row * 14 + (Math.random() - 0.5) * 3
+            });
+            // 右列
+            positions.push({
+                left: rightBase + (Math.random() - 0.5) * 6,
+                top: 10 + row * 14 + (Math.random() - 0.5) * 3
+            });
         }
         shuffleArray(positions);
 
@@ -206,17 +446,12 @@
             if (blessIndex >= positions.length) return;
             const pos = positions[blessIndex];
             blessIndex++;
-            const marginTop = 8;
-            const rowHeight = (100 - marginTop * 2) / 6;
-            const leftBase = 3 + pos.col * 25;
-            let top = marginTop + pos.row * rowHeight + rowHeight / 2;
-            let left = leftBase + (Math.random() - 0.5) * 4;
 
             const el = document.createElement('div');
             el.className = 'bless champagne';
             el.textContent = getNextBlessing();
-            el.style.left = Math.max(2, Math.min(50, left)) + 'vw';
-            el.style.top = Math.max(5, Math.min(95, top)) + 'vh';
+            el.style.left = Math.max(2, Math.min(55, pos.left)) + 'vw';
+            el.style.top = Math.max(5, Math.min(95, pos.top)) + 'vh';
             const scale = 0.85 + Math.random() * 0.3;
             el.style.fontSize = (14 + Math.random() * 8) + 'px';
             el.style.transform = `scale(${scale})`;
@@ -389,7 +624,6 @@
                             el.remove();
                             placed++;
                             if (placed === total) {
-                                // 玫瑰保持形状，不消失
                                 console.log('🌹 玫瑰形成完成，保持形状！');
                                 resolve();
                             }

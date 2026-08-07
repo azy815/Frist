@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -5,325 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>你爱我吗 💕 香槟金玫瑰</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html,
-        body {
-            width: 100%;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            padding: 16px;
-            background: radial-gradient(ellipse at center, #fff5f7, #ffe8ee, #ffdce6);
-            background-size: 100% 100%;
-            overflow: hidden;
-            position: relative;
-            transition: background 0.6s ease;
-        }
-        body.dark-bg {
-            background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #040408) !important;
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html,body{width:100%;min-height:100vh;overflow:hidden}
+        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;overflow:hidden;position:relative;transition:background .6s ease}
+        body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
+        .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;box-shadow:0 30px 60px rgba(200,100,120,.12);text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
+        .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border:2px solid #d4a86a!important;box-shadow:0 30px 60px rgba(180,130,80,.2),inset 0 0 40px rgba(212,168,106,.1)!important}
+        .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
+        .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+        .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
+        .hint{color:rgba(90,61,74,.6);font-size:14px;margin-bottom:20px}
+        .love-verse{color:rgba(90,61,74,.5);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(200,100,120,.1);padding-top:14px;font-style:italic;line-height:1.6}
+        .love-verse .highlight{color:#d47a8a;font-weight:500}
+        .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .btn{padding:14px 32px;border:none;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;min-width:100px;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
+        .btn:active{transform:scale(.94)}
+        .btn-love{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;box-shadow:0 6px 30px rgba(232,128,144,.25)}
+        .btn-hate{background:rgba(200,150,160,.15);color:rgba(90,61,74,.5);border:1px solid rgba(200,150,160,.15)}
+        .btn-primary{background:linear-gradient(135deg,#e8b0c0,#d490a0);color:#fff;box-shadow:0 6px 30px rgba(212,144,160,.25)}
+        .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
+        .card-stage2{display:none}.card-stage2.active{display:block}
 
-        .card {
-            position: relative;
-            z-index: 20;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 32px 20px;
-            border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.12);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            margin: 0 auto;
-            transition: all 0.5s ease;
-        }
-        .card.champagne {
-            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-            border: 2px solid #d4a86a !important;
-            box-shadow: 0 30px 60px rgba(180, 130, 80, 0.2), inset 0 0 40px rgba(212, 168, 106, 0.1) !important;
-        }
-        .card.hide {
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-            pointer-events: none;
-        }
+        .bless{position:fixed;pointer-events:none;z-index:25;font-size:16px;font-weight:600;color:#5a3d4a;padding:10px 22px;border-radius:30px;background:linear-gradient(145deg,#fce4ec,#f8d4de,#f5c8d4);border:1px solid rgba(255,255,255,.3);box-shadow:0 4px 20px rgba(200,100,120,.15);white-space:nowrap;animation:floatBless linear forwards;opacity:0;transition:all .4s ease;left:3%!important;transform:translateX(0) translateY(0)}
+        .bless.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;border:2px solid #d4a86a!important;box-shadow:0 4px 20px rgba(180,130,80,.2)!important;color:#5a3d2a!important}
+        @keyframes floatBless{0%{opacity:0;transform:translateX(0) translateY(20px) scale(.9)}12%{opacity:1;transform:translateX(0) translateY(0) scale(1)}85%{opacity:1;transform:translateX(0) translateY(-100px) scale(1)}100%{opacity:0;transform:translateX(0) translateY(-160px) scale(.9)}}
 
-        .big-heart {
-            font-size: 56px;
-            animation: pulse 1.6s ease-in-out infinite;
-            display: inline-block;
-        }
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.15);
-            }
-        }
-        .question {
-            font-size: 24px;
-            font-weight: 700;
-            color: #5a3d4a;
-            margin: 10px 0 4px;
-        }
-        .hint {
-            color: rgba(90, 61, 74, 0.6);
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        .love-verse {
-            color: rgba(90, 61, 74, 0.5);
-            font-size: 13px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-top: 14px;
-            border-top: 1px solid rgba(200, 100, 120, 0.1);
-            padding-top: 14px;
-            font-style: italic;
-            line-height: 1.6;
-        }
-        .love-verse .highlight {
-            color: #d47a8a;
-            font-weight: 500;
-        }
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 14px 32px;
-            border: none;
-            border-radius: 60px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            min-width: 100px;
-            touch-action: manipulation;
-            user-select: none;
-        }
-        .btn:active {
-            transform: scale(0.94);
-        }
-        .btn-love {
-            background: linear-gradient(135deg, #f5a0b0, #e88090);
-            color: #fff;
-            box-shadow: 0 6px 30px rgba(232, 128, 144, 0.25);
-        }
-        .btn-hate {
-            background: rgba(200, 150, 160, 0.15);
-            color: rgba(90, 61, 74, 0.5);
-            border: 1px solid rgba(200, 150, 160, 0.15);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #e8b0c0, #d490a0);
-            color: #fff;
-            box-shadow: 0 6px 30px rgba(212, 144, 160, 0.25);
-        }
-        .result {
-            margin-top: 18px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #5a3d4a;
-            min-height: 44px;
-        }
-        .card-stage2 {
-            display: none;
-        }
-        .card-stage2.active {
-            display: block;
-        }
+        #roseContainer{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:30;display:none;justify-content:center;align-items:center}
+        #roseContainer.active{display:flex}
+        #roseWrapper{position:relative;width:80vmin;height:80vmin;transition:transform .8s cubic-bezier(.34,1.56,.64,1);cursor:pointer}
+        #roseWrapper.zoomed{transform:scale(1.2)}
+        .dust-particle{position:absolute;border-radius:50%;pointer-events:none;will-change:transform,opacity;animation:dustTwinkle var(--dur) ease-in-out infinite alternate}
+        @keyframes dustTwinkle{0%{opacity:.05;transform:scale(.1)}100%{opacity:1;transform:scale(1.5)}}
+        .halo-star{position:absolute;border-radius:50%;pointer-events:none;animation:orbitStar linear infinite;box-shadow:0 0 20px currentColor}
+        @keyframes orbitStar{0%{transform:rotate(0deg) translateX(var(--radius)) rotate(0deg);opacity:.2}50%{opacity:1}100%{transform:rotate(360deg) translateX(var(--radius)) rotate(-360deg);opacity:.2}}
 
-        /* ===== 祝福语 ===== */
-        .bless {
-            position: fixed;
-            pointer-events: none;
-            z-index: 25;
-            font-size: 16px;
-            font-weight: 600;
-            color: #5a3d4a;
-            padding: 10px 22px;
-            border-radius: 30px;
-            background: linear-gradient(145deg, #fce4ec, #f8d4de, #f5c8d4);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 20px rgba(200, 100, 120, 0.15);
-            white-space: nowrap;
-            animation: floatBless linear forwards;
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-        .bless.champagne {
-            background: linear-gradient(145deg, #f5e6d3, #ecd4c0, #e8c8b0) !important;
-            border: 2px solid #d4a86a !important;
-            box-shadow: 0 4px 20px rgba(180, 130, 80, 0.2) !important;
-            color: #5a3d2a !important;
-        }
-        @keyframes floatBless {
-            0% {
-                opacity: 0;
-                transform: translateY(20px) scale(0.9);
-            }
-            12% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-            85% {
-                opacity: 1;
-                transform: translateY(-100px) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-160px) scale(0.9);
-            }
-        }
-
-        /* ===== 玫瑰容器 ===== */
-        #roseContainer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 30;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-        #roseContainer.active {
-            display: flex;
-        }
-        #roseWrapper {
-            position: relative;
-            width: 80vmin;
-            height: 80vmin;
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-        }
-        #roseWrapper.zoomed {
-            transform: scale(1.2);
-        }
-
-        /* ===== 粉尘粒子 ===== */
-        .dust-particle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            will-change: transform, opacity;
-            animation: dustTwinkle var(--dur) ease-in-out infinite alternate;
-        }
-        @keyframes dustTwinkle {
-            0% {
-                opacity: 0.05;
-                transform: scale(0.1);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1.5);
-            }
-        }
-
-        /* ===== 星星光环 ===== */
-        .halo-star {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: orbitStar linear infinite;
-            box-shadow: 0 0 20px currentColor;
-        }
-        @keyframes orbitStar {
-            0% {
-                transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
-                opacity: 0.2;
-            }
-        }
-
-        /* ===== 手机适配 ===== */
-        @media (max-width: 420px) {
-            .card {
-                padding: 24px 16px;
-                max-width: 100%;
-            }
-            .big-heart {
-                font-size: 44px;
-            }
-            .question {
-                font-size: 20px;
-            }
-            .btn {
-                padding: 12px 20px;
-                font-size: 16px;
-                min-width: 80px;
-            }
-            .bless {
-                font-size: 13px;
-                padding: 8px 16px;
-            }
-            .love-verse {
-                font-size: 12px;
-            }
-            #roseWrapper {
-                width: 85vmin;
-                height: 85vmin;
-            }
-        }
-        @media (max-width: 370px) {
-            .card {
-                padding: 20px 12px;
-            }
-            .big-heart {
-                font-size: 36px;
-            }
-            .question {
-                font-size: 18px;
-            }
-            .btn {
-                padding: 10px 16px;
-                font-size: 14px;
-                min-width: 70px;
-            }
-            .bless {
-                font-size: 11px;
-                padding: 6px 12px;
-            }
-            .love-verse {
-                font-size: 11px;
-            }
-            #roseWrapper {
-                width: 90vmin;
-                height: 90vmin;
-            }
-        }
+        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px;left:2%!important}.love-verse{font-size:12px}#roseWrapper{width:85vmin;height:85vmin}}
+        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px;left:2%!important}.love-verse{font-size:11px}#roseWrapper{width:90vmin;height:90vmin}}
     </style>
 </head>
 <body>
 
-    <!-- ===== 第一阶段 ===== -->
     <div class="card" id="stage1">
         <div class="big-heart" id="bigHeart">❤️</div>
         <div class="question" id="questionEl">你爱我吗？</div>
@@ -333,12 +56,9 @@
             <button class="btn btn-hate" id="btnHate">不爱 😢</button>
         </div>
         <div class="result" id="resultMsg"></div>
-        <div class="love-verse" id="verse1">
-            ✦ 我们的故事还要继续，<span class="highlight">先不要退出</span> ✦
-        </div>
+        <div class="love-verse" id="verse1">✦ 我们的故事还要继续，<span class="highlight">先不要退出</span> ✦</div>
     </div>
 
-    <!-- ===== 第二阶段 ===== -->
     <div class="card card-stage2" id="stage2">
         <div class="big-heart" id="bigHeart2">💕</div>
         <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
@@ -348,20 +68,13 @@
             <button class="btn btn-hate" id="btnNo">不愿意 😢</button>
         </div>
         <div class="result" id="resultMsg2"></div>
-        <div class="love-verse" id="verse2">
-            ✦ 每一步都是 <span class="highlight">爱的印记</span>，别走开 ✦
-        </div>
+        <div class="love-verse" id="verse2">✦ 每一步都是 <span class="highlight">爱的印记</span>，别走开 ✦</div>
     </div>
 
-    <!-- ===== 玫瑰容器 ===== -->
-    <div id="roseContainer">
-        <div id="roseWrapper"></div>
-    </div>
+    <div id="roseContainer"><div id="roseWrapper"></div></div>
 
     <script>
-        // ============================================================
-        //  第一阶段
-        // ============================================================
+        // ===== 第一阶段 =====
         const btnLove = document.getElementById('btnLove');
         const btnHate = document.getElementById('btnHate');
         const resultMsg = document.getElementById('resultMsg');
@@ -429,9 +142,7 @@
             }
         });
 
-        // ============================================================
-        //  第二阶段
-        // ============================================================
+        // ===== 第二阶段 =====
         const btnYes = document.getElementById('btnYes');
         const btnNo = document.getElementById('btnNo');
         const resultMsg2 = document.getElementById('resultMsg2');
@@ -472,9 +183,7 @@
             }
         });
 
-        // ============================================================
-        //  祝福语（居中均匀分布）
-        // ============================================================
+        // ===== 祝福语 =====
         const blessings = [
             '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
             '💫 星星温柔，人间浪漫', '🌙 月光所至，万事胜意',
@@ -498,9 +207,8 @@
             return usedBlessings.pop();
         }
 
-        // ===== 屏幕中央 60% 区域（更居中） =====
-        const gridCols = 3,
-            gridRows = 3;
+        const gridRows = 6,
+            gridCols = 2;
         let availableGrids = [];
 
         function initGrids() {
@@ -516,13 +224,13 @@
         function getGridPosition() {
             if (availableGrids.length === 0) initGrids();
             const grid = availableGrids.pop();
-            // 屏幕中央 60% 区域（上下左右各留 20% 边距）
-            const margin = 20;
-            const colWidth = (100 - margin * 2) / gridCols;
-            const rowHeight = (100 - margin * 2) / gridRows;
-            let left = margin + grid.col * colWidth + colWidth / 2 + (Math.random() - 0.5) * colWidth * 0.3;
-            let top = margin + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.3;
-            return { left: Math.max(15, Math.min(85, left)), top: Math.max(15, Math.min(85, top)) };
+            const marginTop = 8,
+                marginBottom = 8;
+            const rowHeight = (100 - marginTop - marginBottom) / gridRows;
+            const leftBase = 3 + grid.col * 25;
+            let top = marginTop + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.3;
+            let left = leftBase + (Math.random() - 0.5) * 4;
+            return { left: Math.max(2, Math.min(50, left)), top: Math.max(5, Math.min(95, top)) };
         }
 
         let activeBlessElements = [];
@@ -534,14 +242,14 @@
             if (activeBlessElements.length >= MAX_BLESS || blessCount >= TOTAL_BLESS) return;
             const pos = getGridPosition();
             const el = document.createElement('div');
-            el.className = 'bless champagne'; // 直接香槟金
+            el.className = 'bless champagne';
             el.textContent = getNextBlessing();
             el.style.left = pos.left + 'vw';
             el.style.top = pos.top + 'vh';
             const scale = 0.85 + Math.random() * 0.3;
             el.style.fontSize = (14 + Math.random() * 8) + 'px';
             el.style.transform = `scale(${scale})`;
-            const duration = 9 + Math.random() * 4;
+            const duration = 8 + Math.random() * 3;
             el.style.animationDuration = duration + 's';
             document.body.appendChild(el);
             activeBlessElements.push(el);
@@ -566,172 +274,116 @@
                 const checkDone = setInterval(() => {
                     if (blessCount >= TOTAL_BLESS && activeBlessElements.length === 0) {
                         clearInterval(checkDone);
-                        setTimeout(resolve, 300);
+                        setTimeout(resolve, 200);
                     }
-                }, 300);
+                }, 200);
             });
         }
 
-        // ============================================================
-        //  香槟金玫瑰
-        // ============================================================
-
-        function getRoseDustData() {
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const cx = w / 2;
-            const cy = h / 2 - 10;
-            const baseSize = Math.min(w, h) * 0.38;
-
+        // ===== 玫瑰生成 =====
+        function generateRoseParticles() {
+            const w = window.innerWidth,
+                h = window.innerHeight;
+            const cx = w / 2,
+                cy = h / 2;
+            const baseSize = Math.min(w, h) * 0.40;
             const particles = [];
+            const petals = 5;
             const layers = [
-                { count: 400, radius: 1.0, size: 0.7, color: 'pink-dark' },
-                { count: 480, radius: 0.85, size: 0.6, color: 'pink' },
-                { count: 540, radius: 0.7, size: 0.5, color: 'pink-light' },
-                { count: 600, radius: 0.55, size: 0.45, color: 'pink' },
-                { count: 650, radius: 0.4, size: 0.4, color: 'pink-light' },
-                { count: 700, radius: 0.25, size: 0.35, color: 'pink' }
+                { radius: 1.0, count: 150, size: 0.8, colors: ['#ff6b9d', '#ff8eb5', '#ff9eb5'] },
+                { radius: 0.85, count: 160, size: 0.7, colors: ['#ffb6d9', '#ff7fa8', '#ffa0b8'] },
+                { radius: 0.7, count: 170, size: 0.6, colors: ['#ffd1e8', '#ffb09a', '#ffc0d0'] },
+                { radius: 0.55, count: 180, size: 0.55, colors: ['#ff8a80', '#ffc8b0', '#ffd0dc'] },
+                { radius: 0.4, count: 190, size: 0.5, colors: ['#ffb6d9', '#ff8eb5', '#ff6b9d'] },
+                { radius: 0.25, count: 200, size: 0.45, colors: ['#ffd1e8', '#ffb09a', '#ff8a80'] }
             ];
-
-            const colorMap = {
-                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ff9eb5', '#ff7fa8', '#ffa0b8', '#ffc0d0'],
-                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80', '#ffc8b0', '#ffb8a0', '#ffd0b8', '#ffe0d0'],
-                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a', '#c06080', '#d06080', '#c85878', '#e07090'],
-                'gold': ['#ffd700', '#f0a030', '#ffb347', '#ffe066', '#ffcc44', '#ffdd77', '#f5c842'],
-                'green': ['#7ddfa0', '#5ccf8a', '#3da86a', '#90e8b0', '#6ae0a0', '#b0f0c0', '#c8f0d8']
-            };
-
             layers.forEach((layer, li) => {
-                const baseAngle = (li * 22) % 360;
+                const baseAngle = (li * 30) % 360;
                 for (let i = 0; i < layer.count; i++) {
-                    const angle = (i / layer.count) * 360 + baseAngle + (Math.random() - 0.5) * 15;
-                    const rad = angle * Math.PI / 180;
-                    const r = layer.radius * baseSize * (0.78 + Math.random() * 0.22);
-                    const x = cx + r * Math.cos(rad);
-                    const y = cy + r * Math.sin(rad) * 0.6;
-                    const colors = colorMap[layer.color] || colorMap['pink'];
-                    particles.push({
-                        x: x,
-                        y: y,
-                        size: 0.4 + Math.random() * 0.9,
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        twinkleSpeed: 0.8 + Math.random() * 2.2,
-                        glowIntensity: 6 + Math.random() * 16,
-                        layer: li
-                    });
+                    const t = (i / layer.count) * Math.PI * 2;
+                    const r = layer.radius * baseSize * Math.abs(Math.cos(petals * t / 2));
+                    const offset = 1 + (Math.random() - 0.5) * 0.15;
+                    const finalR = r * offset;
+                    const angle = t + baseAngle * Math.PI / 180 + (Math.random() - 0.5) * 0.1;
+                    const x = cx + finalR * Math.cos(angle);
+                    const y = cy + finalR * Math.sin(angle) * 0.7;
+                    const color = layer.colors[Math.floor(Math.random() * layer.colors.length)];
+                    particles.push({ x, y, size: layer.size * (0.6 + Math.random() * 0.6), color: color,
+                        twinkleSpeed: 0.8 + Math.random() * 1.8, glowIntensity: 5 + Math.random() * 12 });
                 }
             });
-
-            // 金色点缀
-            for (let i = 0; i < 350; i++) {
-                const angle = Math.random() * 360;
-                const rad = angle * Math.PI / 180;
-                const r = (0.05 + Math.random() * 1.15) * baseSize;
-                const x = cx + r * Math.cos(rad);
-                const y = cy + r * Math.sin(rad) * 0.6;
-                particles.push({
-                    x: x,
-                    y: y,
-                    size: 0.3 + Math.random() * 0.7,
-                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44', '#ffdd77', '#f5c842', '#e8b838'][Math.floor(Math
-                        .random() * 7)],
-                    twinkleSpeed: 1 + Math.random() * 2.5,
-                    glowIntensity: 7 + Math.random() * 20,
-                    layer: 6,
-                    isGold: true
-                });
+            for (let i = 0; i < 100; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = baseSize * (0.05 + Math.random() * 0.2);
+                const x = cx + dist * Math.cos(angle);
+                const y = cy + dist * Math.sin(angle) * 0.7;
+                particles.push({ x, y, size: 0.3 + Math.random() * 0.6, color: ['#ffd700', '#ffb347', '#ffe066',
+                        '#ffcc44'
+                    ][Math.floor(Math.random() * 4)],
+                    twinkleSpeed: 1 + Math.random() * 2, glowIntensity: 6 + Math.random() * 14 });
             }
-
-            // 叶子
-            const leafCenters = [
-                { angle: -42, dist: 1.25 },
-                { angle: -18, dist: 1.3 },
-                { angle: 215, dist: 1.25 },
-                { angle: 235, dist: 1.3 }
-            ];
-            leafCenters.forEach((lc) => {
-                const rad = lc.angle * Math.PI / 180;
-                const r = lc.dist * baseSize * 0.65;
-                const cx2 = cx + r * Math.cos(rad);
-                const cy2 = cy + r * Math.sin(rad) * 0.6 + 12;
-                for (let i = 0; i < 180; i++) {
-                    const angleOff = (Math.random() - 0.5) * 50;
-                    const radOff = angleOff * Math.PI / 180;
-                    const distOff = (0.2 + Math.random() * 0.5) * baseSize * 0.35;
-                    const x = cx2 + distOff * Math.cos(radOff);
-                    const y = cy2 + distOff * Math.sin(radOff) * 0.6;
-                    particles.push({
-                        x: x,
-                        y: y,
-                        size: 0.3 + Math.random() * 0.7,
-                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0', '#90e8b0', '#b8f0c8', '#d0f8e0'][Math.floor
-                            (Math.random() * 7)],
-                        twinkleSpeed: 0.7 + Math.random() * 2,
-                        glowIntensity: 5 + Math.random() * 14,
-                        layer: 7,
-                        isLeaf: true
-                    });
-                }
-            });
-
+            const leafColors = ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0', '#90e8b0'];
+            for (let i = 0; i < 150; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = baseSize * (0.45 + Math.random() * 0.3);
+                const x = cx + dist * Math.cos(angle + 1.2);
+                const y = cy + dist * Math.sin(angle + 1.2) * 0.7 + baseSize * 0.2;
+                particles.push({ x, y, size: 0.3 + Math.random() * 0.7, color: leafColors[Math.floor(Math.random() *
+                        leafColors.length)],
+                    twinkleSpeed: 0.7 + Math.random() * 1.8, glowIntensity: 4 + Math.random() * 10 });
+            }
             return particles;
         }
 
-        function createDustRose() {
+        function createRose() {
             return new Promise((resolve) => {
                 const container = document.getElementById('roseContainer');
                 const wrapper = document.getElementById('roseWrapper');
                 container.innerHTML = '';
                 wrapper.innerHTML = '';
                 container.classList.add('active');
-
-                const dustData = getRoseDustData();
-                const total = dustData.length;
+                const particles = generateRoseParticles();
+                const total = particles.length;
                 let placed = 0;
-
-                dustData.forEach((d, index) => {
+                particles.forEach((p, index) => {
                     const el = document.createElement('div');
                     el.className = 'dust-particle';
-                    const size = d.size;
+                    const size = p.size;
                     el.style.width = size + 'px';
                     el.style.height = size + 'px';
-                    el.style.background = d.color;
-                    const glow = d.glowIntensity || 8;
-                    el.style.boxShadow = `0 0 ${glow}px ${d.color}, 0 0 ${glow*2}px ${d.color}30`;
-                    el.style.setProperty('--dur', d.twinkleSpeed + 's');
+                    el.style.background = p.color;
+                    const glow = p.glowIntensity || 8;
+                    el.style.boxShadow = `0 0 ${glow}px ${p.color}, 0 0 ${glow*2}px ${p.color}30`;
+                    el.style.setProperty('--dur', p.twinkleSpeed + 's');
                     el.style.borderRadius = '50%';
-
                     const startX = 10 + Math.random() * 80;
                     const startY = 10 + Math.random() * 80;
                     el.style.left = startX + 'vw';
                     el.style.top = startY + 'vh';
                     el.style.opacity = '0.2';
-
                     document.body.appendChild(el);
-
                     setTimeout(() => {
                         el.style.transition =
-                            `all ${0.4+Math.random()*0.4}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
-                        el.style.left = d.x + 'px';
-                        el.style.top = d.y + 'px';
+                            `all ${0.2+Math.random()*0.2}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
+                        el.style.left = p.x + 'px';
+                        el.style.top = p.y + 'px';
                         el.style.opacity = '1';
-
                         setTimeout(() => {
                             const cloned = el.cloneNode(true);
                             cloned.style.transition = 'none';
                             const rect = container.getBoundingClientRect();
-                            cloned.style.left = (d.x - rect.left) + 'px';
-                            cloned.style.top = (d.y - rect.top) + 'px';
+                            cloned.style.left = (p.x - rect.left) + 'px';
+                            cloned.style.top = (p.y - rect.top) + 'px';
                             cloned.style.position = 'absolute';
                             cloned.style.opacity = '1';
                             cloned.style.width = size + 'px';
                             cloned.style.height = size + 'px';
-                            cloned.style.background = d.color;
-                            const glow2 = d.glowIntensity || 8;
+                            cloned.style.background = p.color;
+                            const glow2 = p.glowIntensity || 8;
                             cloned.style.boxShadow =
-                                `0 0 ${glow2}px ${d.color}, 0 0 ${glow2*2}px ${d.color}30`;
+                                `0 0 ${glow2}px ${p.color}, 0 0 ${glow2*2}px ${p.color}30`;
                             cloned.style.animation =
-                                `dustTwinkle ${d.twinkleSpeed}s ease-in-out infinite alternate`;
+                                `dustTwinkle ${p.twinkleSpeed}s ease-in-out infinite alternate`;
                             cloned.style.borderRadius = '50%';
                             wrapper.appendChild(cloned);
                             el.remove();
@@ -743,70 +395,57 @@
                                     };
                                     createHaloStars(wrapper, container);
                                     resolve();
-                                }, 300);
+                                }, 200);
                             }
-                        }, 60);
-                    }, 30 + index * 4);
+                        }, 30);
+                    }, 10 + index * 1.5);
                 });
             });
         }
 
-        // ===== 星星光环 =====
         function createHaloStars(wrapper, container) {
             const colors = ['#ffb6d9', '#ffd700', '#ff8eb5', '#ffffff', '#ff6b9d', '#a8d8ff', '#ff69b4', '#ffcc44'];
-            const count = 40 + Math.floor(Math.random() * 35);
+            const count = 30 + Math.floor(Math.random() * 25);
             const rect = container.getBoundingClientRect();
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
+            const cx = rect.width / 2,
+                cy = rect.height / 2;
             const baseRadius = Math.min(rect.width, rect.height) * 0.44;
-
             for (let i = 0; i < count; i++) {
                 const star = document.createElement('div');
                 star.className = 'halo-star';
-                const size = 1.5 + Math.random() * 4;
+                const size = 1.5 + Math.random() * 3.5;
                 star.style.width = size + 'px';
                 star.style.height = size + 'px';
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 star.style.background = color;
                 star.style.color = color;
-                star.style.boxShadow = `0 0 ${12+Math.random()*25}px ${color}`;
+                star.style.boxShadow = `0 0 ${12+Math.random()*20}px ${color}`;
                 star.style.borderRadius = '50%';
                 const radius = baseRadius * (0.65 + Math.random() * 0.35);
                 star.style.setProperty('--radius', radius + 'px');
                 star.style.left = (cx - size / 2) + 'px';
                 star.style.top = (cy - size / 2) + 'px';
-                const duration = 8 + Math.random() * 14;
+                const duration = 8 + Math.random() * 12;
                 star.style.animationDuration = duration + 's';
-                star.style.animationDelay = (Math.random() * 6) + 's';
+                star.style.animationDelay = (Math.random() * 5) + 's';
                 wrapper.appendChild(star);
             }
         }
 
-        // ============================================================
-        //  完整旅程
-        // ============================================================
+        // ===== 完整旅程 =====
         async function startFullJourney() {
-            // 1. 背景变黑 + 卡片变香槟金
             document.body.classList.add('dark-bg');
             document.querySelectorAll('.card').forEach(c => {
                 c.classList.add('champagne');
             });
-
-            // 2. 等待0.3秒后卡片消失
             await new Promise(r => setTimeout(r, 300));
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
-
-            // 3. 祝福语飘落（香槟金）
             await startBlessingRain();
-
-            // 4. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
-
-            // 5. 玫瑰形成
-            await createDustRose();
+            await createRose();
         }
 
-        console.log('💕 香槟金玫瑰已加载！');
+        console.log('💕 完整版已加载！');
     </script>
 
 </body>

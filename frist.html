@@ -15,7 +15,6 @@
             width: 100%;
             min-height: 100vh;
             overflow: hidden;
-            background: #0a0a1a;
         }
         body {
             min-height: 100vh;
@@ -24,9 +23,10 @@
             align-items: center;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             padding: 16px;
-            background: linear-gradient(135deg, #0a0a1a, #1a0a2e, #0d1b2a, #1a0a2e);
+            /* ===== 淡粉色背景 ===== */
+            background: linear-gradient(145deg, #fff0f3, #ffe4ec, #ffd9e4, #fff0f5);
             background-size: 400% 400%;
-            animation: bgShift 30s ease infinite;
+            animation: bgShift 20s ease infinite;
             overflow: hidden;
             position: relative;
         }
@@ -46,30 +46,17 @@
         .card {
             position: relative;
             z-index: 20;
-            background: linear-gradient(145deg, rgba(255, 182, 193, 0.25), rgba(255, 150, 180, 0.18));
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 32px 20px;
             border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 80px rgba(255, 150, 200, 0.08), 0 0 60px rgba(255, 150, 200, 0.05);
+            box-shadow: 0 30px 60px rgba(200, 100, 120, 0.12), inset 0 0 80px rgba(255, 200, 210, 0.15);
             text-align: center;
             max-width: 400px;
             width: 100%;
-            border: 1px solid rgba(255, 182, 193, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             margin: 0 auto;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 42px;
-            padding: 2px;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 150, 200, 0.1), rgba(255, 182, 193, 0.4));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            z-index: -1;
         }
 
         .big-heart {
@@ -89,36 +76,36 @@
         .question {
             font-size: 24px;
             font-weight: 700;
-            color: #fce4ec;
+            color: #5a3d4a;
             margin: 10px 0 4px;
-            text-shadow: 0 0 30px rgba(255, 150, 200, 0.3);
+            text-shadow: 0 0 30px rgba(200, 100, 120, 0.1);
         }
         .hint {
-            color: rgba(255, 200, 210, 0.7);
+            color: rgba(90, 61, 74, 0.6);
             font-size: 14px;
             margin-bottom: 20px;
         }
 
         .love-verse {
-            color: rgba(255, 200, 210, 0.6);
+            color: rgba(90, 61, 74, 0.5);
             font-size: 13px;
             font-weight: 300;
             letter-spacing: 2px;
             margin-top: 14px;
-            border-top: 1px solid rgba(255, 182, 193, 0.12);
+            border-top: 1px solid rgba(200, 100, 120, 0.1);
             padding-top: 14px;
             font-style: italic;
             transition: all 0.5s ease;
             line-height: 1.6;
         }
         .love-verse .highlight {
-            color: #ffb6c1;
+            color: #d47a8a;
             font-weight: 500;
-            text-shadow: 0 0 20px rgba(255, 150, 200, 0.2);
+            text-shadow: 0 0 20px rgba(200, 100, 120, 0.15);
         }
         .love-verse.glow {
-            color: rgba(255, 200, 210, 0.9);
-            text-shadow: 0 0 30px rgba(255, 150, 200, 0.2);
+            color: rgba(90, 61, 74, 0.8);
+            text-shadow: 0 0 30px rgba(200, 100, 120, 0.1);
         }
 
         .btn-group {
@@ -135,7 +122,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
             min-width: 100px;
             touch-action: manipulation;
             user-select: none;
@@ -145,25 +132,25 @@
             transform: scale(0.94);
         }
         .btn-love {
-            background: linear-gradient(135deg, #ff6b81, #ee5a6f);
+            background: linear-gradient(135deg, #f5a0b0, #e88090);
             color: #fff;
-            box-shadow: 0 6px 30px rgba(255, 107, 129, 0.3);
+            box-shadow: 0 6px 30px rgba(232, 128, 144, 0.25);
         }
         .btn-hate {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(200, 150, 160, 0.15);
+            color: rgba(90, 61, 74, 0.5);
+            border: 1px solid rgba(200, 150, 160, 0.15);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #f8a5b8, #f07a9a);
+            background: linear-gradient(135deg, #e8b0c0, #d490a0);
             color: #fff;
-            box-shadow: 0 6px 30px rgba(240, 122, 154, 0.3);
+            box-shadow: 0 6px 30px rgba(212, 144, 160, 0.25);
         }
         .result {
             margin-top: 18px;
             font-size: 18px;
             font-weight: 600;
-            color: #fce4ec;
+            color: #5a3d4a;
             min-height: 44px;
         }
         .card-stage2 {
@@ -180,18 +167,18 @@
             z-index: 25;
             font-size: 16px;
             font-weight: 600;
-            color: rgba(255, 200, 210, 0.85);
+            color: rgba(180, 100, 120, 0.8);
             padding: 8px 18px;
             border-radius: 32px;
-            background: rgba(255, 182, 193, 0.12);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 182, 193, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             white-space: nowrap;
             animation: floatBless linear forwards;
             opacity: 0;
-            text-shadow: 0 0 30px rgba(255, 150, 200, 0.15);
-            box-shadow: 0 0 40px rgba(255, 150, 200, 0.05);
+            text-shadow: 0 0 30px rgba(200, 100, 120, 0.1);
+            box-shadow: 0 0 40px rgba(200, 100, 120, 0.03);
         }
         @keyframes floatBless {
             0% {
@@ -289,26 +276,6 @@
             100% {
                 transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
                 opacity: 0.3;
-            }
-        }
-
-        /* ===== 飘落花瓣（背景装饰） ===== */
-        .falling-petal {
-            position: fixed;
-            pointer-events: none;
-            z-index: 5;
-            border-radius: 50% 0 50% 50%;
-            opacity: 0;
-            animation: fallDown linear forwards;
-        }
-        @keyframes fallDown {
-            0% {
-                opacity: 0.6;
-                transform: translateY(-10vh) rotate(0deg) scale(0.5);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(110vh) rotate(720deg) scale(1);
             }
         }
 
@@ -464,7 +431,7 @@
 
         btnLove.addEventListener('click', async function() {
             resultMsg.innerHTML = '💕 我也爱你！永远在一起！ 💕';
-            resultMsg.style.color = '#ff8eb5';
+            resultMsg.style.color = '#d47a8a';
             bigHeart.textContent = '💕';
             questionEl.textContent = '我就知道！';
             hintEl.textContent = '从今天开始，你是我的全世界！🌍';
@@ -482,13 +449,14 @@
             hateClickCount++;
             const index = (hateClickCount - 1) % hateMsgs.length;
             resultMsg.innerHTML = hateMsgs[index];
-            resultMsg.style.color = '#7f8c8d';
+            resultMsg.style.color = '#b08890';
             bigHeart.textContent = '💔';
             setTimeout(() => { bigHeart.textContent = '❤️'; }, 400);
             if (hateClickCount >= 4) {
                 btnHate.textContent = '我错了！爱！❤️';
-                btnHate.style.background = 'linear-gradient(135deg,#ff6b81,#ee5a6f)';
+                btnHate.style.background = 'linear-gradient(135deg,#f5a0b0,#e88090)';
                 btnHate.style.color = '#fff';
+                btnHate.style.border = 'none';
                 btnHate.onclick = function() { btnLove.click(); };
             }
         });
@@ -509,7 +477,7 @@
 
         btnYes.addEventListener('click', function() {
             resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
-            resultMsg2.style.color = '#f8a5b8';
+            resultMsg2.style.color = '#d490a0';
             bigHeart2.textContent = '🌟';
             questionEl2.textContent = '你真好！';
             hintEl2.textContent = '💫 愿所有的美好都属于你 💫';
@@ -525,13 +493,14 @@
             noClickCount++;
             const index = (noClickCount - 1) % noMsgs.length;
             resultMsg2.innerHTML = noMsgs[index];
-            resultMsg2.style.color = '#7f8c8d';
+            resultMsg2.style.color = '#b08890';
             bigHeart2.textContent = '😢';
             setTimeout(() => { bigHeart2.textContent = '💕'; }, 400);
             if (noClickCount >= 4) {
                 btnNo.textContent = '我愿意！❤️';
-                btnNo.style.background = 'linear-gradient(135deg,#f8a5b8,#f07a9a)';
+                btnNo.style.background = 'linear-gradient(135deg,#e8b0c0,#d490a0)';
                 btnNo.style.color = '#fff';
+                btnNo.style.border = 'none';
                 btnNo.onclick = function() { btnYes.click(); };
             }
         });
@@ -631,43 +600,6 @@
                     }
                 }, 500);
             });
-        }
-
-        // ============================================================
-        //  C: 飘落花瓣
-        // ============================================================
-        let fallingInterval = null;
-
-        function startFallingPetals() {
-            if (fallingInterval) return;
-            const colors = ['rgba(255,182,193,0.5)', 'rgba(255,138,128,0.4)', 'rgba(255,176,154,0.4)', 'rgba(255,209,179,0.4)',
-                'rgba(240,160,48,0.3)'
-            ];
-            fallingInterval = setInterval(() => {
-                const count = 2 + Math.floor(Math.random() * 3);
-                for (let i = 0; i < count; i++) {
-                    const petal = document.createElement('div');
-                    petal.className = 'falling-petal';
-                    const size = 10 + Math.random() * 18;
-                    petal.style.width = size + 'px';
-                    petal.style.height = size * 1.4 + 'px';
-                    petal.style.left = (Math.random() * 100) + 'vw';
-                    petal.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    petal.style.boxShadow = `0 0 20px rgba(255,150,200,0.1)`;
-                    const duration = 8 + Math.random() * 10;
-                    petal.style.animationDuration = duration + 's';
-                    petal.style.animationDelay = (Math.random() * 2) + 's';
-                    document.body.appendChild(petal);
-                    setTimeout(() => petal.remove(), duration * 1000 + 3000);
-                }
-            }, 1500);
-        }
-
-        function stopFallingPetals() {
-            if (fallingInterval) {
-                clearInterval(fallingInterval);
-                fallingInterval = null;
-            }
         }
 
         // ============================================================
@@ -826,7 +758,8 @@
                             cloned.style.height = size + 'px';
                             cloned.style.background = d.color;
                             cloned.style.boxShadow = `0 0 ${6+size*3}px ${d.color}`;
-                            cloned.style.animation = `dustTwinkle ${d.twinkleSpeed}s ease-in-out infinite alternate`;
+                            cloned.style.animation =
+                                `dustTwinkle ${d.twinkleSpeed}s ease-in-out infinite alternate`;
                             wrapper.appendChild(cloned);
                             el.remove();
                             placed++;
@@ -888,13 +821,10 @@
             // 2. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
 
-            // 3. 开始飘落花瓣（C效果）
-            startFallingPetals();
-
-            // 4. 星尘粒子汇聚成玫瑰
+            // 3. 星尘粒子汇聚成玫瑰
             await createDustRose();
 
-            // 5. 隐藏卡片
+            // 4. 隐藏卡片
             document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
         }
 

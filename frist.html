@@ -31,7 +31,6 @@
         }
         body.dark-bg {
             background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #040408) !important;
-            transition: background 0.8s ease;
         }
 
         /* ===== 卡片 ===== */
@@ -149,20 +148,20 @@
             display: block;
         }
 
-        /* ===== 祝福语（居中均匀分布） ===== */
+        /* ===== 祝福语（实心粉色背景 + 居中） ===== */
         .bless {
             position: fixed;
             pointer-events: none;
             z-index: 25;
             font-size: 16px;
-            font-weight: 500;
-            color: rgba(90, 61, 74, 0.7);
-            padding: 8px 18px;
+            font-weight: 600;
+            color: #5a3d4a;
+            padding: 10px 22px;
             border-radius: 30px;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #fce4ec;
+            background: linear-gradient(145deg, #fce4ec, #f8d4de, #f5c8d4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(200, 100, 120, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
             white-space: nowrap;
             animation: floatBless linear forwards;
             opacity: 0;
@@ -173,11 +172,11 @@
                 transform: translateY(20px) scale(0.9);
             }
             12% {
-                opacity: 0.95;
+                opacity: 1;
                 transform: translateY(0) scale(1);
             }
             85% {
-                opacity: 0.95;
+                opacity: 1;
                 transform: translateY(-100px) scale(1);
             }
             100% {
@@ -274,7 +273,7 @@
             }
             .bless {
                 font-size: 13px;
-                padding: 6px 12px;
+                padding: 8px 16px;
             }
             .love-verse {
                 font-size: 12px;
@@ -297,7 +296,7 @@
             }
             .bless {
                 font-size: 11px;
-                padding: 5px 10px;
+                padding: 6px 12px;
             }
             .love-verse {
                 font-size: 11px;
@@ -457,7 +456,7 @@
         });
 
         // ============================================================
-        //  祝福语（居中均匀分布）
+        //  祝福语（实心粉色 + 居中）
         // ============================================================
         const blessings = [
             '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
@@ -482,9 +481,9 @@
             return usedBlessings.pop();
         }
 
-        // ===== 居中均匀分布：缩小范围到屏幕中央 70% 区域 =====
+        // ===== 屏幕中央 50% 区域 =====
         const gridCols = 3,
-            gridRows = 4;
+            gridRows = 3;
         let availableGrids = [];
 
         function initGrids() {
@@ -500,13 +499,13 @@
         function getGridPosition() {
             if (availableGrids.length === 0) initGrids();
             const grid = availableGrids.pop();
-            // 缩小范围：只占屏幕中央 70%
-            const margin = 15;
+            // 屏幕中央 50% 区域
+            const margin = 25;
             const colWidth = (100 - margin * 2) / gridCols;
             const rowHeight = (100 - margin * 2) / gridRows;
-            let left = margin + grid.col * colWidth + colWidth / 2 + (Math.random() - 0.5) * colWidth * 0.5;
-            let top = margin + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.5;
-            return { left: Math.max(5, Math.min(95, left)), top: Math.max(5, Math.min(95, top)) };
+            let left = margin + grid.col * colWidth + colWidth / 2 + (Math.random() - 0.5) * colWidth * 0.4;
+            let top = margin + grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.4;
+            return { left: Math.max(10, Math.min(90, left)), top: Math.max(10, Math.min(90, top)) };
         }
 
         let activeBlessElements = [];
@@ -522,8 +521,8 @@
             el.textContent = getNextBlessing();
             el.style.left = pos.left + 'vw';
             el.style.top = pos.top + 'vh';
-            const scale = 0.8 + Math.random() * 0.4;
-            el.style.fontSize = (14 + Math.random() * 10) + 'px';
+            const scale = 0.85 + Math.random() * 0.3;
+            el.style.fontSize = (14 + Math.random() * 8) + 'px';
             el.style.transform = `scale(${scale})`;
             const duration = 10 + Math.random() * 6;
             el.style.animationDuration = duration + 's';
@@ -557,7 +556,7 @@
         }
 
         // ============================================================
-        //  超级细粉尘玫瑰（0.2~0.8px）
+        //  超级细粉尘玫瑰
         // ============================================================
 
         function getRoseDustData() {
@@ -765,23 +764,26 @@
         }
 
         // ============================================================
-        //  完整旅程（背景同步变黑）
+        //  完整旅程（正确顺序）
         // ============================================================
         async function startFullJourney() {
-            // 1. 背景变黑 + 祝福语飘落（同步进行）
+            // 1. 背景变黑 + 卡片消失（同步）
             document.body.classList.add('dark-bg');
-            await startBlessingRain();
-
-            // 2. 清空祝福语
-            document.querySelectorAll('.bless').forEach(el => el.remove());
-
-            // 3. 背景板消失
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
 
-            // 4. 等待淡出
-            await new Promise(r => setTimeout(r, 400));
+            // 2. 等待卡片淡出
+            await new Promise(r => setTimeout(r, 500));
 
-            // 5. 粉尘汇聚成玫瑰
+            // 3. 祝福语飘落
+            await startBlessingRain();
+
+            // 4. 清空祝福语
+            document.querySelectorAll('.bless').forEach(el => el.remove());
+
+            // 5. 等待片刻
+            await new Promise(r => setTimeout(r, 300));
+
+            // 6. 粉尘汇聚成玫瑰
             await createDustRose();
         }
 

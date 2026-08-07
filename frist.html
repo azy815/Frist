@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>你爱我吗 💕 星尘玫瑰</title>
+    <title>你爱我吗 💕 粉金玫瑰</title>
     <style>
         * {
             margin: 0;
@@ -45,16 +45,16 @@
         .card {
             position: relative;
             z-index: 20;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 182, 193, 0.15);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 32px 20px;
             border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 0 80px rgba(255, 182, 193, 0.05);
             text-align: center;
             max-width: 400px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 182, 193, 0.2);
             margin: 0 auto;
         }
         .big-heart {
@@ -74,15 +74,38 @@
         .question {
             font-size: 24px;
             font-weight: 700;
-            color: #f0e6ff;
+            color: #fce4ec;
             margin: 10px 0 4px;
-            text-shadow: 0 0 20px rgba(255, 200, 255, 0.2);
+            text-shadow: 0 0 30px rgba(255, 150, 200, 0.3);
         }
         .hint {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 200, 210, 0.7);
             font-size: 14px;
             margin-bottom: 20px;
         }
+
+        .love-verse {
+            color: rgba(255, 200, 210, 0.6);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-top: 14px;
+            border-top: 1px solid rgba(255, 182, 193, 0.12);
+            padding-top: 14px;
+            font-style: italic;
+            transition: all 0.5s ease;
+            line-height: 1.6;
+        }
+        .love-verse .highlight {
+            color: #ffb6c1;
+            font-weight: 500;
+            text-shadow: 0 0 20px rgba(255, 150, 200, 0.2);
+        }
+        .love-verse.glow {
+            color: rgba(255, 200, 210, 0.9);
+            text-shadow: 0 0 30px rgba(255, 150, 200, 0.2);
+        }
+
         .btn-group {
             display: flex;
             gap: 12px;
@@ -109,21 +132,23 @@
         .btn-love {
             background: linear-gradient(135deg, #ff6b81, #ee5a6f);
             color: #fff;
+            box-shadow: 0 6px 30px rgba(255, 107, 129, 0.3);
         }
         .btn-hate {
-            background: rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .btn-primary {
-            background: linear-gradient(135deg, #a18cd1, #8b7bc8);
+            background: linear-gradient(135deg, #f8a5b8, #f07a9a);
             color: #fff;
+            box-shadow: 0 6px 30px rgba(240, 122, 154, 0.3);
         }
         .result {
             margin-top: 18px;
             font-size: 18px;
             font-weight: 600;
-            color: #f0e6ff;
+            color: #fce4ec;
             min-height: 44px;
         }
         .card-stage2 {
@@ -140,17 +165,17 @@
             z-index: 10;
             font-size: 16px;
             font-weight: 600;
-            color: #f0e6ff;
+            color: #fce4ec;
             padding: 8px 18px;
             border-radius: 32px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 182, 193, 0.08);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 182, 193, 0.12);
             white-space: nowrap;
             animation: floatBless linear forwards;
             opacity: 0;
-            text-shadow: 0 0 20px rgba(255, 200, 255, 0.15);
+            text-shadow: 0 0 20px rgba(255, 150, 200, 0.1);
         }
         @keyframes floatBless {
             0% {
@@ -182,7 +207,7 @@
             transition: none;
         }
 
-        /* ===== 冰晶玫瑰容器 ===== */
+        /* ===== 玫瑰容器 ===== */
         #roseContainer {
             position: fixed;
             top: 0;
@@ -192,32 +217,51 @@
             pointer-events: none;
             z-index: 9999;
             display: none;
+            justify-content: center;
+            align-items: center;
         }
         #roseContainer.active {
-            display: block;
+            display: flex;
         }
 
-        /* ===== 花瓣 ===== */
+        /* ===== 玫瑰包装 ===== */
+        #roseWrapper {
+            position: relative;
+            width: 60vmin;
+            height: 60vmin;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        #roseWrapper.zoomed {
+            transform: scale(1.4);
+        }
+
+        /* ===== 花瓣（粉金渐变） ===== */
         .petal {
             position: absolute;
             border-radius: 50% 50% 50% 0;
             transform-origin: bottom center;
             opacity: 0;
         }
-        .petal.pink {
-            background: radial-gradient(ellipse at 30% 30%, #ffb6d9, #ff6b9d, #d44a7a);
-            box-shadow: 0 0 25px rgba(255, 100, 150, 0.4);
-            border: 1px solid rgba(255, 200, 220, 0.2);
+        .petal.pink-gold {
+            background: radial-gradient(ellipse at 30% 30%, #ffd1b3, #ff8a80, #d44a7a);
+            box-shadow: 0 0 30px rgba(255, 180, 130, 0.4), 0 0 60px rgba(255, 200, 150, 0.15);
+            border: 1px solid rgba(255, 215, 180, 0.25);
         }
-        .petal.pink-light {
-            background: radial-gradient(ellipse at 30% 30%, #ffd1e8, #ff8eb5, #e85a8a);
-            box-shadow: 0 0 20px rgba(255, 150, 200, 0.3);
-            border: 1px solid rgba(255, 200, 220, 0.15);
+        .petal.pink-gold-light {
+            background: radial-gradient(ellipse at 30% 30%, #ffe0c8, #ffb09a, #e85a8a);
+            box-shadow: 0 0 25px rgba(255, 190, 150, 0.3), 0 0 50px rgba(255, 200, 150, 0.1);
+            border: 1px solid rgba(255, 220, 190, 0.2);
         }
-        .petal.pink-dark {
-            background: radial-gradient(ellipse at 30% 30%, #e88ab0, #d44a7a, #b03060);
-            box-shadow: 0 0 30px rgba(200, 60, 120, 0.4);
-            border: 1px solid rgba(200, 100, 150, 0.2);
+        .petal.pink-gold-dark {
+            background: radial-gradient(ellipse at 30% 30%, #f0b8a0, #d4707a, #b03060);
+            box-shadow: 0 0 35px rgba(200, 120, 100, 0.4), 0 0 60px rgba(200, 150, 100, 0.15);
+            border: 1px solid rgba(200, 160, 140, 0.2);
+        }
+        .petal.gold {
+            background: radial-gradient(ellipse at 30% 30%, #ffd700, #f0a030, #c07020);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.35);
+            border: 1px solid rgba(255, 215, 0, 0.2);
         }
         .petal.green {
             background: radial-gradient(ellipse at 30% 30%, #7ddfa0, #3da86a, #1a7a40);
@@ -228,6 +272,48 @@
             background: radial-gradient(ellipse at 30% 30%, #a8f0c0, #5ccf8a, #2a9a5a);
             box-shadow: 0 0 15px rgba(100, 220, 150, 0.2);
             border: 1px solid rgba(150, 240, 180, 0.12);
+        }
+
+        /* ===== 星星光环 ===== */
+        .halo-star {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbitStar linear infinite;
+            box-shadow: 0 0 15px currentColor;
+        }
+        @keyframes orbitStar {
+            0% {
+                transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* ===== 飘落花瓣 ===== */
+        .falling-petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+            border-radius: 50% 0 50% 50%;
+            opacity: 0;
+            animation: fallDown linear forwards;
+        }
+        @keyframes fallDown {
+            0% {
+                opacity: 0.8;
+                transform: translateY(-10vh) rotate(0deg) scale(0.6);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(110vh) rotate(720deg) scale(1);
+            }
         }
 
         /* ===== 亮粒子 ===== */
@@ -269,6 +355,14 @@
                 font-size: 13px;
                 padding: 6px 12px;
             }
+            .love-verse {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+            #roseWrapper {
+                width: 80vmin;
+                height: 80vmin;
+            }
         }
         @media (max-width: 370px) {
             .card {
@@ -289,6 +383,9 @@
                 font-size: 11px;
                 padding: 5px 10px;
             }
+            .love-verse {
+                font-size: 11px;
+            }
         }
     </style>
 </head>
@@ -304,6 +401,9 @@
             <button class="btn btn-hate" id="btnHate">不爱 😢</button>
         </div>
         <div class="result" id="resultMsg"></div>
+        <div class="love-verse" id="verse1">
+            ✦ 我们的故事还要继续，<span class="highlight">先不要退出</span> ✦
+        </div>
     </div>
 
     <!-- ===== 第二阶段 ===== -->
@@ -316,10 +416,15 @@
             <button class="btn btn-hate" id="btnNo">不愿意 😢</button>
         </div>
         <div class="result" id="resultMsg2"></div>
+        <div class="love-verse" id="verse2">
+            ✦ 每一步都是 <span class="highlight">爱的印记</span>，别走开 ✦
+        </div>
     </div>
 
     <!-- ===== 玫瑰容器 ===== -->
-    <div id="roseContainer"></div>
+    <div id="roseContainer">
+        <div id="roseWrapper"></div>
+    </div>
 
     <script>
         // ============================================================
@@ -331,6 +436,7 @@
         const bigHeart = document.getElementById('bigHeart');
         const questionEl = document.getElementById('questionEl');
         const hintEl = document.getElementById('hintEl');
+        const verse1 = document.getElementById('verse1');
         const stage1 = document.getElementById('stage1');
         const stage2 = document.getElementById('stage2');
 
@@ -366,6 +472,8 @@
             bigHeart.textContent = '💕';
             questionEl.textContent = '我就知道！';
             hintEl.textContent = '从今天开始，你是我的全世界！🌍';
+            verse1.innerHTML = '✦ 你是我 <span class="highlight">藏在微风里的喜欢</span> ✦';
+            verse1.classList.add('glow');
             btnHate.style.display = 'none';
             btnLove.disabled = true;
             btnLove.style.opacity = '0.7';
@@ -390,7 +498,7 @@
         });
 
         // ============================================================
-        //  第二阶段：愿意继续看吗？
+        //  第二阶段
         // ============================================================
         const btnYes = document.getElementById('btnYes');
         const btnNo = document.getElementById('btnNo');
@@ -398,16 +506,19 @@
         const bigHeart2 = document.getElementById('bigHeart2');
         const questionEl2 = document.getElementById('questionEl2');
         const hintEl2 = document.getElementById('hintEl2');
+        const verse2 = document.getElementById('verse2');
 
         let noClickCount = 0;
         const noMsgs = ['真的不想看吗？🥺', '再给你一次机会！😠', '求求你了嘛～😭', '最后问一次！💔'];
 
         btnYes.addEventListener('click', function() {
             resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
-            resultMsg2.style.color = '#c8b0e8';
+            resultMsg2.style.color = '#f8a5b8';
             bigHeart2.textContent = '🌟';
             questionEl2.textContent = '你真好！';
             hintEl2.textContent = '💫 愿所有的美好都属于你 💫';
+            verse2.innerHTML = '✦ <span class="highlight">星辰大海</span> 不及你眼中光芒 ✦';
+            verse2.classList.add('glow');
             btnNo.style.display = 'none';
             btnYes.disabled = true;
             btnYes.style.opacity = '0.7';
@@ -423,7 +534,7 @@
             setTimeout(() => { bigHeart2.textContent = '💕'; }, 400);
             if (noClickCount >= 4) {
                 btnNo.textContent = '我愿意！❤️';
-                btnNo.style.background = 'linear-gradient(135deg,#a18cd1,#8b7bc8)';
+                btnNo.style.background = 'linear-gradient(135deg,#f8a5b8,#f07a9a)';
                 btnNo.style.color = '#fff';
                 btnNo.onclick = function() { btnYes.click(); };
             }
@@ -527,10 +638,44 @@
         }
 
         // ============================================================
-        //  星尘粒子 → 汇聚成玫瑰
+        //  C: 飘落花瓣
+        // ============================================================
+        let fallingInterval = null;
+
+        function startFallingPetals() {
+            if (fallingInterval) return;
+            const colors = ['#ffb6c1', '#ff8a80', '#ffb09a', '#ffd1b3', '#f0a030'];
+            fallingInterval = setInterval(() => {
+                const count = 2 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < count; i++) {
+                    const petal = document.createElement('div');
+                    petal.className = 'falling-petal';
+                    const size = 10 + Math.random() * 18;
+                    petal.style.width = size + 'px';
+                    petal.style.height = size * 1.4 + 'px';
+                    petal.style.left = (Math.random() * 100) + 'vw';
+                    petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    petal.style.boxShadow = `0 0 15px ${colors[Math.floor(Math.random() * colors.length)]}40`;
+                    const duration = 8 + Math.random() * 10;
+                    petal.style.animationDuration = duration + 's';
+                    petal.style.animationDelay = (Math.random() * 2) + 's';
+                    document.body.appendChild(petal);
+                    setTimeout(() => petal.remove(), duration * 1000 + 3000);
+                }
+            }, 1500);
+        }
+
+        function stopFallingPetals() {
+            if (fallingInterval) {
+                clearInterval(fallingInterval);
+                fallingInterval = null;
+            }
+        }
+
+        // ============================================================
+        //  星尘粒子 → 粉金玫瑰（含 B:点击放大 + D:星星光环）
         // ============================================================
 
-        // 玫瑰花瓣数据（预计算目标位置）
         function getRosePetalData() {
             const w = window.innerWidth;
             const h = window.innerHeight;
@@ -540,12 +685,12 @@
 
             const petals = [];
             const layers = [
-                { count: 8, radius: 1.0, size: 1.0, type: 'pink-dark' },
-                { count: 10, radius: 0.85, size: 0.9, type: 'pink' },
-                { count: 12, radius: 0.7, size: 0.8, type: 'pink-light' },
-                { count: 14, radius: 0.55, size: 0.7, type: 'pink' },
-                { count: 16, radius: 0.4, size: 0.6, type: 'pink-light' },
-                { count: 18, radius: 0.25, size: 0.5, type: 'pink' }
+                { count: 8, radius: 1.0, size: 1.0, type: 'pink-gold-dark' },
+                { count: 10, radius: 0.85, size: 0.9, type: 'pink-gold' },
+                { count: 12, radius: 0.7, size: 0.8, type: 'pink-gold-light' },
+                { count: 14, radius: 0.55, size: 0.7, type: 'pink-gold' },
+                { count: 16, radius: 0.4, size: 0.6, type: 'pink-gold-light' },
+                { count: 18, radius: 0.25, size: 0.5, type: 'pink-gold' }
             ];
 
             layers.forEach((layer, li) => {
@@ -569,7 +714,6 @@
                 }
             });
 
-            // 叶子
             const leafPositions = [
                 { angle: -40, dist: 1.2, size: 1.0 },
                 { angle: -20, dist: 1.25, size: 0.9 },
@@ -599,40 +743,34 @@
         function createStardustAndConverge() {
             return new Promise((resolve) => {
                 const container = document.getElementById('roseContainer');
+                const wrapper = document.getElementById('roseWrapper');
                 container.innerHTML = '';
+                wrapper.innerHTML = '';
                 container.classList.add('active');
 
                 const petalData = getRosePetalData();
                 const totalParticles = petalData.length;
                 const particles = [];
 
-                // 1. 生成星尘粒子（极细，散落在屏幕各处）
+                // 生成星尘粒子
                 for (let i = 0; i < totalParticles; i++) {
                     const el = document.createElement('div');
                     el.className = 'stardust';
                     const size = 2 + Math.random() * 4;
                     el.style.width = size + 'px';
                     el.style.height = size + 'px';
-
-                    // 起始位置：屏幕随机
                     const startX = 5 + Math.random() * 90;
                     const startY = 5 + Math.random() * 90;
                     el.style.left = startX + 'vw';
                     el.style.top = startY + 'vh';
-
-                    // 颜色：粉色或绿色系
-                    const colors = ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#d4a0e8', '#7ddfa0', '#a8f0c0', '#ffd700', '#ffffff'];
+                    const colors = ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ffd700', '#ffb09a', '#ffd1b3', '#ffffff'];
                     const color = colors[Math.floor(Math.random() * colors.length)];
                     el.style.background = color;
                     el.style.boxShadow = `0 0 ${8+Math.random()*20}px ${color}`;
                     el.style.opacity = '0.8';
-
-                    // 随机闪烁速度
                     const twinkleDur = 1 + Math.random() * 2;
                     el.style.animation = `twinkleParticle ${twinkleDur}s ease-in-out infinite alternate`;
-                    el.dataset.twinkleDur = twinkleDur;
 
-                    // 存储目标位置
                     const p = petalData[i];
                     el.dataset.targetX = p.x;
                     el.dataset.targetY = p.y;
@@ -646,13 +784,12 @@
                     particles.push(el);
                 }
 
-                // 注入粒子闪烁动画
                 const styleTwinkle = document.createElement('style');
                 styleTwinkle.textContent =
                     `@keyframes twinkleParticle{0%{opacity:0.3;transform:scale(0.5)}100%{opacity:1;transform:scale(1.2)}}`;
                 document.head.appendChild(styleTwinkle);
 
-                // 2. 汇聚动画：从当前位置飞向目标
+                // 汇聚动画
                 setTimeout(() => {
                     particles.forEach((el, index) => {
                         setTimeout(() => {
@@ -664,7 +801,6 @@
                             const type = el.dataset.type;
                             const isLeaf = el.dataset.isLeaf === 'true';
 
-                            // 飞向目标
                             el.style.transition =
                                 `all ${0.8+Math.random()*0.6}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
                             el.style.left = targetX + 'px';
@@ -679,7 +815,6 @@
                             el.style.opacity = '1';
                             el.style.animation = 'none';
 
-                            // 到达后变成花瓣样式
                             setTimeout(() => {
                                 el.className = `petal ${type}`;
                                 el.style.transition = 'none';
@@ -688,105 +823,7 @@
                                 el.style.width = targetW + 'px';
                                 el.style.height = targetH + 'px';
                                 el.style.borderRadius = isLeaf ? '50% 0 50% 50%' :
-                                '50% 50% 50% 0';
+                                    '50% 50% 50% 0';
                                 el.style.transform = `rotate(${targetRot}deg)`;
                                 el.style.opacity = '1';
-                                el.style.animation =
-                                    `petalAppear 0.6s ease-out forwards`;
-                                el.style.animationDelay = '0s';
-                            }, 100);
-                        }, index * 25);
-                    });
-
-                    // 所有粒子到达后，添加亮粒子点缀
-                    setTimeout(() => {
-                        addSparkles();
-                        setTimeout(resolve, 1000);
-                    }, totalParticles * 25 + 1500);
-
-                }, 800);
-            });
-        }
-
-        function getGradient(type) {
-            const g = {
-                'pink': 'radial-gradient(ellipse at 30% 30%, #ffb6d9, #ff6b9d, #d44a7a)',
-                'pink-light': 'radial-gradient(ellipse at 30% 30%, #ffd1e8, #ff8eb5, #e85a8a)',
-                'pink-dark': 'radial-gradient(ellipse at 30% 30%, #e88ab0, #d44a7a, #b03060)',
-                'green': 'radial-gradient(ellipse at 30% 30%, #7ddfa0, #3da86a, #1a7a40)',
-                'green-light': 'radial-gradient(ellipse at 30% 30%, #a8f0c0, #5ccf8a, #2a9a5a)'
-            };
-            return g[type] || g['pink'];
-        }
-
-        function getShadow(type) {
-            if (type.includes('pink')) return '0 0 25px rgba(255,100,150,0.4)';
-            return '0 0 20px rgba(60,200,120,0.3)';
-        }
-
-        function getBorder(type) {
-            if (type.includes('pink')) return 'rgba(255,200,220,0.2)';
-            return 'rgba(100,220,150,0.15)';
-        }
-
-        function addSparkles() {
-            const container = document.getElementById('roseContainer');
-            const sparkleColors = ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ffd700', '#7ddfa0', '#a8d8ff', '#ffffff', '#ff69b4'];
-            const count = 50 + Math.floor(Math.random() * 30);
-
-            // 获取玫瑰中心
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const cx = w / 2;
-            const cy = h / 2 - 20;
-            const baseSize = Math.min(w, h) * 0.3;
-
-            for (let i = 0; i < count; i++) {
-                const sp = document.createElement('div');
-                sp.className = 'sparkle';
-                const size = 2 + Math.random() * 5;
-                const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
-                sp.style.width = size + 'px';
-                sp.style.height = size + 'px';
-                sp.style.background = color;
-                sp.style.color = color;
-                sp.style.boxShadow = `0 0 ${10+Math.random()*25}px ${color}`;
-
-                const angle = Math.random() * 360;
-                const rad = angle * Math.PI / 180;
-                const dist = (0.1 + Math.random() * 1.5) * baseSize;
-                sp.style.left = (cx + dist * Math.cos(rad) - 3) + 'px';
-                sp.style.top = (cy + dist * Math.sin(rad) * 0.6 - 3) + 'px';
-                sp.style.animationDelay = (Math.random() * 3) + 's';
-                sp.style.animationDuration = (1 + Math.random() * 2) + 's';
-
-                container.appendChild(sp);
-            }
-        }
-
-        // 注入花瓣出现动画
-        const stylePetalAppear = document.createElement('style');
-        stylePetalAppear.textContent =
-            `@keyframes petalAppear{0%{opacity:0;transform:scale(0) rotate(0deg)}60%{opacity:1;transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}`;
-        document.head.appendChild(stylePetalAppear);
-
-        // ============================================================
-        //  完整旅程
-        // ============================================================
-        async function startFullJourney() {
-            // 1. 祝福语飘落
-            await startBlessingRain();
-
-            // 2. 清空祝福语 → 星尘粒子汇聚成玫瑰
-            document.querySelectorAll('.bless').forEach(el => el.remove());
-            await createStardustAndConverge();
-
-            // 3. 隐藏卡片
-            document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
-        }
-
-        console.log('💕 星尘玫瑰已加载！');
-    </script>
-
-</body>
-</html>
+                                el.style.animation = `

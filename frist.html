@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>你爱我吗 💕</title>
+    <title>你爱我吗 💕 冰晶玫瑰</title>
     <style>
         * {
             margin: 0;
@@ -15,7 +15,8 @@
         body {
             width: 100%;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
+            background: #0a0a1a;
         }
 
         body {
@@ -25,9 +26,9 @@
             align-items: center;
             font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
             padding: 16px;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1, #fbc2eb);
+            background: linear-gradient(135deg, #0a0a1a, #1a0a2e, #0d1b2a, #1a0a2e);
             background-size: 400% 400%;
-            animation: bgShift 20s ease infinite;
+            animation: bgShift 30s ease infinite;
             overflow: hidden;
             position: relative;
         }
@@ -46,17 +47,17 @@
 
         .card {
             position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 32px 20px;
             border-radius: 40px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             text-align: center;
             max-width: 400px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             transition: all 0.4s ease;
             margin: 0 auto;
         }
@@ -81,14 +82,15 @@
         .question {
             font-size: 24px;
             font-weight: 700;
-            color: #4a2a33;
+            color: #f0e6ff;
             margin: 10px 0 4px;
             letter-spacing: 0.5px;
             line-height: 1.3;
+            text-shadow: 0 0 20px rgba(255, 200, 255, 0.2);
         }
 
         .hint {
-            color: #6b4a57;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 14px;
             margin-bottom: 20px;
             opacity: 0.8;
@@ -110,7 +112,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             flex: 0 1 auto;
             min-width: 100px;
             touch-action: manipulation;
@@ -124,17 +126,18 @@
         }
 
         .btn-love {
-            background: #ff6b81;
+            background: linear-gradient(135deg, #ff6b81, #ee5a6f);
             color: #fff;
         }
 
         .btn-hate {
-            background: #e8e0e0;
-            color: #6b5a5a;
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn-primary {
-            background: #a18cd1;
+            background: linear-gradient(135deg, #a18cd1, #8b7bc8);
             color: #fff;
         }
 
@@ -142,7 +145,7 @@
             margin-top: 18px;
             font-size: 18px;
             font-weight: 600;
-            color: #4a2a33;
+            color: #f0e6ff;
             min-height: 44px;
             transition: all 0.3s;
             line-height: 1.4;
@@ -155,27 +158,28 @@
             display: block;
         }
 
-        /* ===== 祝福语样式 ===== */
+        /* ===== 祝福语 ===== */
         .bless {
             position: fixed;
             pointer-events: none;
-            z-index: 999;
+            z-index: 10;
             font-size: 16px;
             font-weight: 600;
-            color: #4a2a33;
+            color: #f0e6ff;
             padding: 8px 18px;
             border-radius: 32px;
-            background: rgba(255, 255, 255, 0.30);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.55);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(255, 200, 255, 0.05), inset 0 0 30px rgba(255, 200, 255, 0.02);
             white-space: nowrap;
             animation: floatBless linear forwards;
             transform-origin: center;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             letter-spacing: 0.5px;
             opacity: 0;
+            text-shadow: 0 0 20px rgba(255, 200, 255, 0.15);
         }
 
         @keyframes floatBless {
@@ -197,33 +201,108 @@
             }
         }
 
-        .float-heart {
+        /* ===== 星光粒子 ===== */
+        .star-particle {
             position: fixed;
             pointer-events: none;
-            z-index: 9999;
-            font-size: 26px;
-            animation: floatUp 2s ease-out forwards;
+            z-index: 15;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+            box-shadow: 0 0 var(--glow-size) var(--glow-color);
         }
 
-        @keyframes floatUp {
+        @keyframes twinkle {
             0% {
-                opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.2;
+                transform: scale(0.3);
             }
             100% {
-                opacity: 0;
-                transform: translateY(-280px) scale(1.6) rotate(30deg);
+                opacity: 1;
+                transform: scale(1.2);
             }
         }
 
-        /* ===== 手机适配 ===== */
-        @media (max-width: 420px) {
-            body {
-                padding: 12px;
+        /* ===== 冰晶玫瑰容器 ===== */
+        #roseContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 30;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #roseContainer.active {
+            display: flex;
+        }
+
+        /* ===== 花瓣 ===== */
+        .petal {
+            position: absolute;
+            border-radius: 50% 50% 50% 0;
+            transform-origin: bottom center;
+            opacity: 0;
+            animation: none;
+        }
+
+        .petal.pink {
+            background: radial-gradient(ellipse at 30% 30%, #ffb6d9, #ff6b9d, #d44a7a);
+            box-shadow: 0 0 25px rgba(255, 100, 150, 0.4), inset 0 -10px 30px rgba(200, 50, 100, 0.3);
+            border: 1px solid rgba(255, 200, 220, 0.2);
+        }
+
+        .petal.pink-light {
+            background: radial-gradient(ellipse at 30% 30%, #ffd1e8, #ff8eb5, #e85a8a);
+            box-shadow: 0 0 20px rgba(255, 150, 200, 0.3), inset 0 -10px 30px rgba(200, 80, 130, 0.2);
+            border: 1px solid rgba(255, 200, 220, 0.15);
+        }
+
+        .petal.pink-dark {
+            background: radial-gradient(ellipse at 30% 30%, #e88ab0, #d44a7a, #b03060);
+            box-shadow: 0 0 30px rgba(200, 60, 120, 0.4), inset 0 -10px 30px rgba(150, 30, 70, 0.3);
+            border: 1px solid rgba(200, 100, 150, 0.2);
+        }
+
+        .petal.green {
+            background: radial-gradient(ellipse at 30% 30%, #7ddfa0, #3da86a, #1a7a40);
+            box-shadow: 0 0 20px rgba(60, 200, 120, 0.3), inset 0 -10px 30px rgba(20, 100, 50, 0.3);
+            border: 1px solid rgba(100, 220, 150, 0.15);
+        }
+
+        .petal.green-light {
+            background: radial-gradient(ellipse at 30% 30%, #a8f0c0, #5ccf8a, #2a9a5a);
+            box-shadow: 0 0 15px rgba(100, 220, 150, 0.2), inset 0 -10px 30px rgba(30, 120, 60, 0.2);
+            border: 1px solid rgba(150, 240, 180, 0.12);
+        }
+
+        /* ===== 亮粒子点缀 ===== */
+        .sparkle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparklePulse 1.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        @keyframes sparklePulse {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.5);
             }
+            100% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 420px) {
             .card {
                 padding: 24px 16px;
-                border-radius: 32px;
                 max-width: 100%;
             }
             .big-heart {
@@ -231,41 +310,21 @@
             }
             .question {
                 font-size: 20px;
-                margin: 8px 0 2px;
-            }
-            .hint {
-                font-size: 13px;
-                margin-bottom: 16px;
             }
             .btn {
                 padding: 12px 20px;
                 font-size: 16px;
                 min-width: 80px;
-                border-radius: 50px;
-            }
-            .btn-group {
-                gap: 10px;
-            }
-            .result {
-                font-size: 16px;
-                min-height: 36px;
-                margin-top: 14px;
             }
             .bless {
                 font-size: 13px;
                 padding: 6px 12px;
-                border-radius: 24px;
-                white-space: nowrap;
-            }
-            .float-heart {
-                font-size: 20px;
             }
         }
 
         @media (max-width: 370px) {
             .card {
                 padding: 20px 12px;
-                border-radius: 28px;
             }
             .big-heart {
                 font-size: 36px;
@@ -278,66 +337,16 @@
                 font-size: 14px;
                 min-width: 70px;
             }
-            .result {
-                font-size: 14px;
-                min-height: 32px;
-            }
             .bless {
                 font-size: 11px;
                 padding: 5px 10px;
-            }
-        }
-
-        @media (min-width: 421px) and (max-width: 768px) {
-            .card {
-                padding: 36px 24px;
-                max-width: 380px;
-            }
-            .big-heart {
-                font-size: 60px;
-            }
-            .question {
-                font-size: 26px;
-            }
-            .btn {
-                padding: 16px 36px;
-                font-size: 19px;
-                min-width: 110px;
-            }
-        }
-
-        @media (max-height: 500px) and (orientation: landscape) {
-            .card {
-                padding: 16px 20px;
-                max-width: 320px;
-            }
-            .big-heart {
-                font-size: 32px;
-            }
-            .question {
-                font-size: 17px;
-                margin: 4px 0;
-            }
-            .hint {
-                font-size: 12px;
-                margin-bottom: 10px;
-            }
-            .btn {
-                padding: 8px 16px;
-                font-size: 14px;
-                min-width: 70px;
-            }
-            .result {
-                font-size: 14px;
-                min-height: 28px;
-                margin-top: 10px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== 第一阶段：你爱我吗？ ===== -->
+    <!-- 第一阶段 -->
     <div class="card" id="stage1">
         <div class="big-heart" id="bigHeart">❤️</div>
         <div class="question" id="questionEl">你爱我吗？</div>
@@ -349,7 +358,7 @@
         <div class="result" id="resultMsg"></div>
     </div>
 
-    <!-- ===== 第二阶段：愿意继续看吗？ ===== -->
+    <!-- 第二阶段 -->
     <div class="card card-stage2" id="stage2">
         <div class="big-heart" id="bigHeart2">💕</div>
         <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
@@ -360,6 +369,9 @@
         </div>
         <div class="result" id="resultMsg2"></div>
     </div>
+
+    <!-- 冰晶玫瑰容器 -->
+    <div id="roseContainer"></div>
 
     <script>
         // ============================================================
@@ -376,12 +388,7 @@
         const stage2 = document.getElementById('stage2');
 
         let hateClickCount = 0;
-        const hateMsgs = [
-            '你再想想？😠',
-            '真的不爱吗？🥺',
-            '再给你一次机会！😡',
-            '呜呜呜我伤心了 💔'
-        ];
+        const hateMsgs = ['你再想想？😠', '真的不爱吗？🥺', '再给你一次机会！😡', '呜呜呜我伤心了 💔'];
 
         // ===== 爱心烟花 =====
         function launchHearts(count) {
@@ -393,41 +400,120 @@
                         const el = document.createElement('div');
                         el.className = 'float-heart';
                         el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                        el.style.left = (10 + Math.random() * 80) + 'vw';
-                        el.style.top = (10 + Math.random() * 80) + 'vh';
-                        el.style.fontSize = (20 + Math.random() * 26) + 'px';
-                        el.style.animationDuration = (1.8 + Math.random() * 1.2) + 's';
+                        el.style.cssText = `
+                                position:fixed;pointer-events:none;z-index:9999;
+                                font-size:${20+Math.random()*26}px;
+                                left:${10+Math.random()*80}vw;
+                                top:${10+Math.random()*80}vh;
+                                animation:floatUp ${1.8+Math.random()*1.2}s ease-out forwards;
+                            `;
                         document.body.appendChild(el);
                         setTimeout(() => el.remove(), 3000);
                         completed++;
-                        if (completed === count) {
-                            setTimeout(resolve, 500);
-                        }
+                        if (completed === count) setTimeout(resolve, 500);
                     }, i * 70);
                 }
             });
         }
 
+        // 注入爱心动画
+        const styleHeart = document.createElement('style');
+        styleHeart.textContent = `
+                @keyframes floatUp {
+                    0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg);}
+                    100%{opacity:0;transform:translateY(-280px) scale(1.6) rotate(30deg);}
+                }
+            `;
+        document.head.appendChild(styleHeart);
+
+        btnLove.addEventListener('click', async function() {
+            resultMsg.innerHTML = '💕 我也爱你！永远在一起！ 💕';
+            resultMsg.style.color = '#ff8eb5';
+            bigHeart.textContent = '💕';
+            questionEl.textContent = '我就知道！';
+            hintEl.textContent = '从今天开始，你是我的全世界！🌍';
+            btnHate.style.display = 'none';
+            btnLove.disabled = true;
+            btnLove.style.opacity = '0.7';
+            btnLove.style.cursor = 'default';
+
+            await launchHearts(28);
+            stage1.style.display = 'none';
+            stage2.classList.add('active');
+        });
+
+        btnHate.addEventListener('click', function() {
+            hateClickCount++;
+            const index = (hateClickCount - 1) % hateMsgs.length;
+            resultMsg.innerHTML = hateMsgs[index];
+            resultMsg.style.color = '#7f8c8d';
+            bigHeart.textContent = '💔';
+            setTimeout(() => { bigHeart.textContent = '❤️'; }, 400);
+            if (hateClickCount >= 4) {
+                btnHate.textContent = '我错了！爱！❤️';
+                btnHate.style.background = 'linear-gradient(135deg,#ff6b81,#ee5a6f)';
+                btnHate.style.color = '#fff';
+                btnHate.onclick = function() { btnLove.click(); };
+            }
+        });
+
         // ============================================================
-        //  祝福语系统（均匀散落版）
+        //  第二阶段：愿意继续看吗？
+        // ============================================================
+
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const resultMsg2 = document.getElementById('resultMsg2');
+        const bigHeart2 = document.getElementById('bigHeart2');
+        const questionEl2 = document.getElementById('questionEl2');
+        const hintEl2 = document.getElementById('hintEl2');
+
+        let noClickCount = 0;
+        const noMsgs = ['真的不想看吗？🥺', '再给你一次机会！😠', '求求你了嘛～😭', '最后问一次！💔'];
+
+        btnYes.addEventListener('click', function() {
+            resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
+            resultMsg2.style.color = '#c8b0e8';
+            bigHeart2.textContent = '🌟';
+            questionEl2.textContent = '你真好！';
+            hintEl2.textContent = '💫 愿所有的美好都属于你 💫';
+            btnNo.style.display = 'none';
+            btnYes.disabled = true;
+            btnYes.style.opacity = '0.7';
+            btnYes.style.cursor = 'default';
+
+            // 开始祝福语 + 完整流程
+            startFullJourney();
+        });
+
+        btnNo.addEventListener('click', function() {
+            noClickCount++;
+            const index = (noClickCount - 1) % noMsgs.length;
+            resultMsg2.innerHTML = noMsgs[index];
+            resultMsg2.style.color = '#7f8c8d';
+            bigHeart2.textContent = '😢';
+            setTimeout(() => { bigHeart2.textContent = '💕'; }, 400);
+            if (noClickCount >= 4) {
+                btnNo.textContent = '我愿意！❤️';
+                btnNo.style.background = 'linear-gradient(135deg,#a18cd1,#8b7bc8)';
+                btnNo.style.color = '#fff';
+                btnNo.onclick = function() { btnYes.click(); };
+            }
+        });
+
+        // ============================================================
+        //  祝福语 → 星光粒子 → 冰晶玫瑰 完整流程
         // ============================================================
 
         const blessings = [
-            '✨ 愿所有美好都如期而至',
-            '🌸 你是我藏在微风里的喜欢',
-            '💫 星星温柔，人间浪漫',
-            '🌙 月光所至，万事胜意',
-            '🌺 愿你眼里有光，心中有爱',
-            '🍀 幸运常伴，笑靥如花',
-            '💖 心动不止，温柔不息',
-            '🌊 山高水长，来日方长',
-            '🎈 每一天都是新的开始',
-            '🌈 生活明朗，万物可爱',
-            '🌟 你本身就是最好的礼物',
-            '💕 爱意随风起，风止意难平'
+            '✨ 愿所有美好都如期而至', '🌸 你是我藏在微风里的喜欢',
+            '💫 星星温柔，人间浪漫', '🌙 月光所至，万事胜意',
+            '🌺 愿你眼里有光，心中有爱', '🍀 幸运常伴，笑靥如花',
+            '💖 心动不止，温柔不息', '🌊 山高水长，来日方长',
+            '🎈 每一天都是新的开始', '🌈 生活明朗，万物可爱',
+            '🌟 你本身就是最好的礼物', '💕 爱意随风起，风止意难平'
         ];
 
-        // 打乱数组
         function shuffleArray(arr) {
             for (let i = arr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -445,13 +531,9 @@
             return usedBlessings.pop();
         }
 
-        // ===== 核心：均匀分布算法 =====
-        // 把屏幕分成 3 列（左、中、右）× 5 行 = 15 个网格
-        // 每个网格内最多放 1 条，彻底避免重叠
-
-        const gridCols = 3;
-        const gridRows = 5;
-        const totalGrids = gridCols * gridRows;
+        // ===== 网格均匀分布 =====
+        const gridCols = 3,
+            gridRows = 5;
         let availableGrids = [];
 
         function initGrids() {
@@ -461,205 +543,278 @@
                     availableGrids.push({ row, col });
                 }
             }
-            // 打乱网格顺序，让出现位置随机但不重叠
             availableGrids = shuffleArray(availableGrids);
         }
 
         function getGridPosition() {
-            if (availableGrids.length === 0) {
-                // 如果网格用完，重新初始化（但保留一些随机性）
-                initGrids();
-                // 再打乱一次
-                availableGrids = shuffleArray(availableGrids);
-            }
+            if (availableGrids.length === 0) initGrids();
             const grid = availableGrids.pop();
-
-            // 计算网格的中心位置，并加入随机偏移（不超过网格大小的 60%）
-            const colWidth = 100 / gridCols;
-            const rowHeight = 100 / gridRows;
-
-            // 列偏移：左列偏左，中列居中，右列偏右
-            let baseLeft = grid.col * colWidth + colWidth / 2;
-            // 加入随机偏移，让位置更自然
-            const offsetX = (Math.random() - 0.5) * colWidth * 0.6;
-            const offsetY = (Math.random() - 0.5) * rowHeight * 0.6;
-
-            let left = baseLeft + offsetX;
-            // 边界保护
-            left = Math.max(2, Math.min(98, left));
-
-            let top = grid.row * rowHeight + rowHeight / 2 + offsetY;
-            top = Math.max(2, Math.min(98, top));
-
-            return { left, top };
+            const colWidth = 100 / gridCols,
+                rowHeight = 100 / gridRows;
+            let left = grid.col * colWidth + colWidth / 2 + (Math.random() - 0.5) * colWidth * 0.6;
+            let top = grid.row * rowHeight + rowHeight / 2 + (Math.random() - 0.5) * rowHeight * 0.6;
+            return { left: Math.max(2, Math.min(98, left)), top: Math.max(2, Math.min(98, top)) };
         }
 
         let blessInterval = null;
         let activeBlessElements = [];
         const MAX_BLESS = 12;
+        let blessCount = 0;
+        const TOTAL_BLESS = 12;
 
         function createBless() {
-            // 控制同时存在的数量
-            if (activeBlessElements.length >= MAX_BLESS) return;
+            if (activeBlessElements.length >= MAX_BLESS || blessCount >= TOTAL_BLESS) return;
 
-            // 获取均匀分布的位置
             const pos = getGridPosition();
-
             const el = document.createElement('div');
             el.className = 'bless';
             el.textContent = getNextBlessing();
-
             el.style.left = pos.left + 'vw';
             el.style.top = pos.top + 'vh';
-
-            // 随机大小
             const scale = 0.75 + Math.random() * 0.5;
             el.style.fontSize = (13 + Math.random() * 11) + 'px';
             el.style.transform = `scale(${scale})`;
-
-            // 飘落速度：12~20秒，很慢很优雅
             const duration = 12 + Math.random() * 8;
             el.style.animationDuration = duration + 's';
-
-            // 边框颜色柔和
             const hue = 320 + Math.random() * 40;
-            el.style.borderColor = `hsla(${hue}, 70%, 80%, 0.6)`;
-            el.style.background = `rgba(255, 255, 255, ${0.15 + Math.random() * 0.25})`;
+            el.style.borderColor = `hsla(${hue}, 70%, 80%, 0.15)`;
+            el.style.background = `rgba(255,255,255,${0.04+Math.random()*0.06})`;
 
             document.body.appendChild(el);
             activeBlessElements.push(el);
+            blessCount++;
 
-            // 动画结束后移除
             setTimeout(() => {
                 if (el.parentNode) {
                     el.parentNode.removeChild(el);
-                    const index = activeBlessElements.indexOf(el);
-                    if (index > -1) {
-                        activeBlessElements.splice(index, 1);
-                    }
+                    const idx = activeBlessElements.indexOf(el);
+                    if (idx > -1) activeBlessElements.splice(idx, 1);
                 }
             }, duration * 1000 + 300);
         }
 
         function startBlessingRain() {
-            // 清空旧祝福语
-            activeBlessElements.forEach(el => {
-                if (el.parentNode) el.parentNode.removeChild(el);
+            return new Promise((resolve) => {
+                blessCount = 0;
+                activeBlessElements = [];
+                initGrids();
+
+                for (let i = 0; i < TOTAL_BLESS; i++) {
+                    setTimeout(() => createBless(), i * 600);
+                }
+
+                // 等待所有祝福语飘完
+                const checkDone = setInterval(() => {
+                    if (blessCount >= TOTAL_BLESS && activeBlessElements.length === 0) {
+                        clearInterval(checkDone);
+                        setTimeout(resolve, 500);
+                    }
+                }, 500);
             });
-            activeBlessElements = [];
-            initGrids();
-
-            if (blessInterval) {
-                clearInterval(blessInterval);
-                blessInterval = null;
-            }
-
-            // 初始生成 10 条，间隔 600ms，让它们逐渐出现
-            for (let i = 0; i < 10; i++) {
-                setTimeout(() => createBless(), i * 600);
-            }
-
-            // 持续补充：每 8 秒补 1 条
-            blessInterval = setInterval(() => {
-                createBless();
-            }, 8000);
         }
 
-        // ===== 点击「爱你」 =====
-        btnLove.addEventListener('click', async function() {
-            resultMsg.innerHTML = '💕 我也爱你！永远在一起！ 💕';
-            resultMsg.style.color = '#c0392b';
-            bigHeart.textContent = '💕';
-            questionEl.textContent = '我就知道！';
-            hintEl.textContent = '从今天开始，你是我的全世界！🌍';
-            btnHate.style.display = 'none';
-            btnLove.disabled = true;
-            btnLove.style.opacity = '0.7';
-            btnLove.style.cursor = 'default';
+        // ===== 星光粒子 =====
+        function createStarParticles(count) {
+            return new Promise((resolve) => {
+                const colors = ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#d4a0e8', '#a8d8ff', '#7ddfa0', '#ffd700', '#ff69b4'];
+                let completed = 0;
 
-            await launchHearts(28);
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.className = 'star-particle';
+                        const size = 3 + Math.random() * 6;
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        el.style.width = size + 'px';
+                        el.style.height = size + 'px';
+                        el.style.left = (2 + Math.random() * 96) + 'vw';
+                        el.style.top = (2 + Math.random() * 96) + 'vh';
+                        el.style.setProperty('--duration', (1.5 + Math.random() * 2.5) + 's');
+                        el.style.setProperty('--glow-size', (10 + Math.random() * 30) + 'px');
+                        el.style.setProperty('--glow-color', color);
+                        el.style.background = color;
+                        el.style.boxShadow = `0 0 ${10+Math.random()*30}px ${color}`;
 
-            stage1.style.display = 'none';
-            stage2.classList.add('active');
-        });
+                        document.body.appendChild(el);
+                        completed++;
+                        if (completed === count) {
+                            setTimeout(resolve, 500);
+                        }
+                    }, i * 50);
+                }
+            });
+        }
 
-        // ===== 点击「不爱」 =====
-        btnHate.addEventListener('click', function() {
-            hateClickCount++;
-            const index = (hateClickCount - 1) % hateMsgs.length;
-            resultMsg.innerHTML = hateMsgs[index];
-            resultMsg.style.color = '#7f8c8d';
-            bigHeart.textContent = '💔';
-            setTimeout(() => {
-                bigHeart.textContent = '❤️';
-            }, 400);
+        function clearStars() {
+            document.querySelectorAll('.star-particle').forEach(el => el.remove());
+        }
 
-            if (hateClickCount >= 4) {
-                btnHate.textContent = '我错了！爱！❤️';
-                btnHate.style.background = '#ff6b81';
-                btnHate.style.color = '#fff';
-                btnHate.onclick = function() {
-                    btnLove.click();
-                };
+        // ===== 冰晶玫瑰 =====
+        function createIceRose() {
+            const container = document.getElementById('roseContainer');
+            container.innerHTML = '';
+            container.classList.add('active');
+
+            const centerX = 50,
+                centerY = 45;
+            const baseSize = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+
+            // 花瓣层数
+            const layers = [{
+                count: 8,
+                radius: 1.0,
+                size: 1.0,
+                type: 'pink-dark'
+            }, {
+                count: 10,
+                radius: 0.85,
+                size: 0.9,
+                type: 'pink'
+            }, {
+                count: 12,
+                radius: 0.7,
+                size: 0.8,
+                type: 'pink-light'
+            }, {
+                count: 14,
+                radius: 0.55,
+                size: 0.7,
+                type: 'pink'
+            }, {
+                count: 16,
+                radius: 0.4,
+                size: 0.6,
+                type: 'pink-light'
+            }, {
+                count: 18,
+                radius: 0.25,
+                size: 0.5,
+                type: 'pink'
+            }];
+
+            let petalCount = 0;
+            const totalPetals = layers.reduce((sum, l) => sum + l.count, 0);
+
+            layers.forEach((layer, li) => {
+                const baseAngle = (li * 30) % 360;
+                for (let i = 0; i < layer.count; i++) {
+                    const angle = (i / layer.count) * 360 + baseAngle;
+                    const rad = angle * Math.PI / 180;
+                    const r = layer.radius * baseSize * (0.85 + Math.random() * 0.15);
+                    const x = centerX + r * Math.cos(rad) - 15;
+                    const y = centerY + r * Math.sin(rad) * 0.6 - 10;
+
+                    const petal = document.createElement('div');
+                    petal.className = `petal ${layer.type}`;
+                    const size = (25 + Math.random() * 15) * layer.size;
+                    petal.style.width = size + 'px';
+                    petal.style.height = size * 1.4 + 'px';
+                    petal.style.left = x + 'vw';
+                    petal.style.top = y + 'vh';
+                    petal.style.transform = `rotate(${angle+30+Math.random()*20-10}deg)`;
+                    petal.style.animation = `petalAppear ${0.8+Math.random()*0.6}s ease-out forwards`;
+                    petal.style.animationDelay = (petalCount * 40) + 'ms';
+
+                    container.appendChild(petal);
+                    petalCount++;
+                }
+            });
+
+            // 叶子
+            const leafPositions = [
+                { angle: -40, dist: 1.2, size: 1.0 },
+                { angle: -20, dist: 1.25, size: 0.9 },
+                { angle: 210, dist: 1.2, size: 1.0 },
+                { angle: 230, dist: 1.25, size: 0.9 }
+            ];
+
+            leafPositions.forEach((lp, idx) => {
+                const rad = lp.angle * Math.PI / 180;
+                const r = lp.dist * baseSize * 0.7;
+                const x = centerX + r * Math.cos(rad) - 10;
+                const y = centerY + r * Math.sin(rad) * 0.6 + 10;
+
+                const leaf = document.createElement('div');
+                leaf.className = `petal ${idx % 2 === 0 ? 'green' : 'green-light'}`;
+                const size = (25 + Math.random() * 10) * lp.size;
+                leaf.style.width = size * 1.6 + 'px';
+                leaf.style.height = size * 1.2 + 'px';
+                leaf.style.left = x + 'vw';
+                leaf.style.top = y + 'vh';
+                leaf.style.transform = `rotate(${lp.angle+90+Math.random()*20-10}deg)`;
+                leaf.style.animation = `petalAppear ${0.8+Math.random()*0.4}s ease-out forwards`;
+                leaf.style.animationDelay = (petalCount * 40) + 'ms';
+                leaf.style.borderRadius = '50% 0 50% 50%';
+                container.appendChild(leaf);
+                petalCount++;
+            });
+
+            // 亮粒子点缀
+            const sparkleColors = ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ffd700', '#7ddfa0', '#a8d8ff', '#ffffff', '#ff69b4'];
+            const sparkleCount = 60 + Math.floor(Math.random() * 40);
+
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                const size = 2 + Math.random() * 5;
+                const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                sparkle.style.width = size + 'px';
+                sparkle.style.height = size + 'px';
+                sparkle.style.color = color;
+                sparkle.style.background = color;
+                sparkle.style.boxShadow = `0 0 ${10+Math.random()*25}px ${color}`;
+
+                const angle = Math.random() * 360;
+                const rad = angle * Math.PI / 180;
+                const dist = (0.1 + Math.random() * 1.4) * baseSize;
+                const x = centerX + dist * Math.cos(rad) - 3;
+                const y = centerY + dist * Math.sin(rad) * 0.6 - 3;
+                sparkle.style.left = x + 'vw';
+                sparkle.style.top = y + 'vh';
+                sparkle.style.animationDelay = (Math.random() * 3) + 's';
+                sparkle.style.animationDuration = (1 + Math.random() * 2) + 's';
+                sparkle.style.setProperty('--sparkle-delay', (Math.random() * 3) + 's');
+
+                container.appendChild(sparkle);
             }
-        });
 
-        // ============================================================
-        //  第二阶段：愿意继续往下看吗？
-        // ============================================================
+            // 注入花瓣动画
+            const stylePetal = document.createElement('style');
+            stylePetal.textContent = `
+                    @keyframes petalAppear {
+                        0% { opacity: 0; transform: scale(0) rotate(0deg); }
+                        60% { opacity: 1; transform: scale(1.1) rotate(var(--rot, 0deg)); }
+                        100% { opacity: 1; transform: scale(1) rotate(var(--rot, 0deg)); }
+                    }
+                `;
+            document.head.appendChild(stylePetal);
 
-        const btnYes = document.getElementById('btnYes');
-        const btnNo = document.getElementById('btnNo');
-        const resultMsg2 = document.getElementById('resultMsg2');
-        const bigHeart2 = document.getElementById('bigHeart2');
-        const questionEl2 = document.getElementById('questionEl2');
-        const hintEl2 = document.getElementById('hintEl2');
+            // 设置花瓣旋转变量
+            document.querySelectorAll('.petal').forEach(p => {
+                const rot = p.style.transform.match(/rotate\(([^)]+)\)/);
+                if (rot) p.style.setProperty('--rot', rot[1]);
+            });
+        }
 
-        let noClickCount = 0;
-        const noMsgs = [
-            '真的不想看吗？🥺',
-            '再给你一次机会！😠',
-            '求求你了嘛～😭',
-            '最后问一次！💔'
-        ];
+        // ===== 完整旅程 =====
+        async function startFullJourney() {
+            // 1. 祝福语
+            await startBlessingRain();
 
-        // ===== 点击「愿意」 =====
-        btnYes.addEventListener('click', function() {
-            resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
-            resultMsg2.style.color = '#6a4a8a';
-            bigHeart2.textContent = '🌟';
-            questionEl2.textContent = '你真好！';
-            hintEl2.textContent = '💫 愿所有的美好都属于你 💫';
-            btnNo.style.display = 'none';
-            btnYes.disabled = true;
-            btnYes.style.opacity = '0.7';
-            btnYes.style.cursor = 'default';
+            // 2. 清空祝福语 → 星光粒子
+            document.querySelectorAll('.bless').forEach(el => el.remove());
+            await createStarParticles(200);
 
-            startBlessingRain();
-        });
+            // 3. 等待3秒后，粒子汇聚成玫瑰
+            await new Promise(r => setTimeout(r, 3000));
 
-        // ===== 点击「不愿意」 =====
-        btnNo.addEventListener('click', function() {
-            noClickCount++;
-            const index = (noClickCount - 1) % noMsgs.length;
-            resultMsg2.innerHTML = noMsgs[index];
-            resultMsg2.style.color = '#7f8c8d';
-            bigHeart2.textContent = '😢';
-            setTimeout(() => {
-                bigHeart2.textContent = '💕';
-            }, 400);
+            // 4. 清空粒子 → 冰晶玫瑰
+            clearStars();
+            createIceRose();
 
-            if (noClickCount >= 4) {
-                btnNo.textContent = '我愿意！❤️';
-                btnNo.style.background = '#a18cd1';
-                btnNo.style.color = '#fff';
-                btnNo.onclick = function() {
-                    btnYes.click();
-                };
-            }
-        });
-
-        console.log('💕 祝福语均匀散落版已加载！');
+            // 5. 隐藏卡片
+            document.querySelectorAll('.card').forEach(c => c.style.display = 'none');
+        }
     </script>
 
 </body>

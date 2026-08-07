@@ -29,7 +29,14 @@
             animation: bgShift 20s ease infinite;
             overflow: hidden;
             position: relative;
+            transition: background 1.2s ease, background-color 1.2s ease;
         }
+        body.dark-bg {
+            background: #0a0a0f !important;
+            background: radial-gradient(ellipse at center, #0d0d1a, #08080e, #050508) !important;
+            animation: none !important;
+        }
+
         @keyframes bgShift {
             0% {
                 background-position: 0% 50%;
@@ -42,7 +49,6 @@
             }
         }
 
-        /* ===== 不透明粉色背景板 ===== */
         .card {
             position: relative;
             z-index: 20;
@@ -193,7 +199,7 @@
             }
         }
 
-        /* ===== 玫瑰容器 ===== */
+        /* ===== 玫瑰容器 - 全屏 ===== */
         #roseContainer {
             position: fixed;
             top: 0;
@@ -212,16 +218,16 @@
 
         #roseWrapper {
             position: relative;
-            width: 60vmin;
-            height: 60vmin;
+            width: 100vw;
+            height: 100vh;
             transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
         #roseWrapper.zoomed {
-            transform: scale(1.4);
+            transform: scale(1.1);
         }
 
-        /* ===== 极细星尘粒子 ===== */
+        /* ===== 发光极细星尘粒子 ===== */
         .dust-particle {
             position: absolute;
             border-radius: 50%;
@@ -231,12 +237,12 @@
         }
         @keyframes dustTwinkle {
             0% {
-                opacity: 0.1;
-                transform: scale(0.2);
+                opacity: 0.05;
+                transform: scale(0.1);
             }
             100% {
                 opacity: 1;
-                transform: scale(1.2);
+                transform: scale(1.3);
             }
         }
 
@@ -246,19 +252,19 @@
             border-radius: 50%;
             pointer-events: none;
             animation: orbitStar linear infinite;
-            box-shadow: 0 0 15px currentColor;
+            box-shadow: 0 0 20px currentColor;
         }
         @keyframes orbitStar {
             0% {
                 transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
-                opacity: 0.3;
+                opacity: 0.2;
             }
             50% {
                 opacity: 1;
             }
             100% {
                 transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
-                opacity: 0.3;
+                opacity: 0.2;
             }
         }
 
@@ -285,10 +291,6 @@
             }
             .love-verse {
                 font-size: 12px;
-            }
-            #roseWrapper {
-                width: 80vmin;
-                height: 80vmin;
             }
         }
         @media (max-width: 370px) {
@@ -565,96 +567,100 @@
         }
 
         // ============================================================
-        //  极细星尘玫瑰
+        //  全屏发光极细星尘玫瑰
         // ============================================================
 
         function getRoseDustData() {
             const w = window.innerWidth;
             const h = window.innerHeight;
             const cx = w / 2;
-            const cy = h / 2 - 20;
-            const baseSize = Math.min(w, h) * 0.3;
+            const cy = h / 2 - 10;
+            // 玫瑰占屏幕 85%
+            const baseSize = Math.min(w, h) * 0.42;
 
             const particles = [];
             const layers = [
-                { count: 100, radius: 1.0, size: 0.6, color: 'pink-dark' },
-                { count: 130, radius: 0.85, size: 0.5, color: 'pink' },
-                { count: 150, radius: 0.7, size: 0.4, color: 'pink-light' },
-                { count: 170, radius: 0.55, size: 0.35, color: 'pink' },
-                { count: 190, radius: 0.4, size: 0.3, color: 'pink-light' },
-                { count: 200, radius: 0.25, size: 0.25, color: 'pink' }
+                { count: 180, radius: 1.0, size: 0.5, color: 'pink-dark' },
+                { count: 220, radius: 0.85, size: 0.4, color: 'pink' },
+                { count: 260, radius: 0.7, size: 0.35, color: 'pink-light' },
+                { count: 300, radius: 0.55, size: 0.3, color: 'pink' },
+                { count: 340, radius: 0.4, size: 0.25, color: 'pink-light' },
+                { count: 380, radius: 0.25, size: 0.2, color: 'pink' }
             ];
 
             const colorMap = {
-                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d'],
-                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80'],
-                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a'],
-                'gold': ['#ffd700', '#f0a030', '#ffb347'],
-                'green': ['#7ddfa0', '#5ccf8a', '#3da86a']
+                'pink': ['#ffb6d9', '#ff8eb5', '#ff6b9d', '#ff9eb5'],
+                'pink-light': ['#ffd1e8', '#ffb09a', '#ff8a80', '#ffc8b0'],
+                'pink-dark': ['#e88ab0', '#d4707a', '#d44a7a', '#c06080'],
+                'gold': ['#ffd700', '#f0a030', '#ffb347', '#ffe066'],
+                'green': ['#7ddfa0', '#5ccf8a', '#3da86a', '#90e8b0']
             };
 
             layers.forEach((layer, li) => {
                 const baseAngle = (li * 25) % 360;
                 for (let i = 0; i < layer.count; i++) {
-                    const angle = (i / layer.count) * 360 + baseAngle + (Math.random() - 0.5) * 20;
+                    const angle = (i / layer.count) * 360 + baseAngle + (Math.random() - 0.5) * 18;
                     const rad = angle * Math.PI / 180;
-                    const r = layer.radius * baseSize * (0.8 + Math.random() * 0.2);
-                    const x = cx + r * Math.cos(rad) - 3;
-                    const y = cy + r * Math.sin(rad) * 0.6 - 3;
+                    const r = layer.radius * baseSize * (0.78 + Math.random() * 0.22);
+                    const x = cx + r * Math.cos(rad);
+                    const y = cy + r * Math.sin(rad) * 0.6;
                     const colors = colorMap[layer.color] || colorMap['pink'];
                     particles.push({
                         x: x,
                         y: y,
-                        size: 0.5 + Math.random() * 1.5,
+                        size: 0.3 + Math.random() * 1.0,
                         color: colors[Math.floor(Math.random() * colors.length)],
-                        twinkleSpeed: 1.2 + Math.random() * 2,
+                        twinkleSpeed: 1 + Math.random() * 2.5,
+                        glowIntensity: 6 + Math.random() * 14,
                         layer: li
                     });
                 }
             });
 
-            // 金色点缀（更细）
-            for (let i = 0; i < 80; i++) {
+            // 金色点缀
+            for (let i = 0; i < 150; i++) {
                 const angle = Math.random() * 360;
                 const rad = angle * Math.PI / 180;
-                const r = (0.1 + Math.random() * 1.1) * baseSize;
-                const x = cx + r * Math.cos(rad) - 2;
-                const y = cy + r * Math.sin(rad) * 0.6 - 2;
+                const r = (0.05 + Math.random() * 1.15) * baseSize;
+                const x = cx + r * Math.cos(rad);
+                const y = cy + r * Math.sin(rad) * 0.6;
                 particles.push({
                     x: x,
                     y: y,
-                    size: 0.5 + Math.random() * 1.2,
-                    color: ['#ffd700', '#ffb347', '#ffe066'][Math.floor(Math.random() * 3)],
-                    twinkleSpeed: 1.5 + Math.random() * 2.5,
+                    size: 0.3 + Math.random() * 0.8,
+                    color: ['#ffd700', '#ffb347', '#ffe066', '#ffcc44'][Math.floor(Math.random() * 4)],
+                    twinkleSpeed: 1.3 + Math.random() * 2.5,
+                    glowIntensity: 8 + Math.random() * 18,
                     layer: 6,
                     isGold: true
                 });
             }
 
-            // 叶子粒子（更细）
+            // 叶子
             const leafCenters = [
-                { angle: -40, dist: 1.2 },
-                { angle: -20, dist: 1.25 },
-                { angle: 210, dist: 1.2 },
-                { angle: 230, dist: 1.25 }
+                { angle: -42, dist: 1.25 },
+                { angle: -18, dist: 1.3 },
+                { angle: 215, dist: 1.25 },
+                { angle: 235, dist: 1.3 }
             ];
             leafCenters.forEach((lc) => {
                 const rad = lc.angle * Math.PI / 180;
                 const r = lc.dist * baseSize * 0.65;
                 const cx2 = cx + r * Math.cos(rad);
-                const cy2 = cy + r * Math.sin(rad) * 0.6 + 10;
-                for (let i = 0; i < 50; i++) {
+                const cy2 = cy + r * Math.sin(rad) * 0.6 + 12;
+                for (let i = 0; i < 80; i++) {
                     const angleOff = (Math.random() - 0.5) * 50;
                     const radOff = angleOff * Math.PI / 180;
-                    const distOff = (0.3 + Math.random() * 0.5) * baseSize * 0.3;
+                    const distOff = (0.2 + Math.random() * 0.5) * baseSize * 0.35;
                     const x = cx2 + distOff * Math.cos(radOff);
                     const y = cy2 + distOff * Math.sin(radOff) * 0.6;
                     particles.push({
                         x: x,
                         y: y,
-                        size: 0.5 + Math.random() * 1.2,
-                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0'][Math.floor(Math.random() * 3)],
-                        twinkleSpeed: 1 + Math.random() * 2,
+                        size: 0.3 + Math.random() * 0.9,
+                        color: ['#7ddfa0', '#5ccf8a', '#a8f0c0', '#6ae0a0'][Math.floor(Math.random() * 4)],
+                        twinkleSpeed: 0.8 + Math.random() * 2,
+                        glowIntensity: 5 + Math.random() * 12,
                         layer: 7,
                         isLeaf: true
                     });
@@ -683,20 +689,21 @@
                     el.style.width = size + 'px';
                     el.style.height = size + 'px';
                     el.style.background = d.color;
-                    el.style.boxShadow = `0 0 ${4+size*4}px ${d.color}`;
+                    const glow = d.glowIntensity || 8;
+                    el.style.boxShadow = `0 0 ${glow}px ${d.color}, 0 0 ${glow*2}px ${d.color}40`;
                     el.style.setProperty('--dur', d.twinkleSpeed + 's');
 
                     const startX = 5 + Math.random() * 90;
                     const startY = 5 + Math.random() * 90;
                     el.style.left = startX + 'vw';
                     el.style.top = startY + 'vh';
-                    el.style.opacity = '0.5';
+                    el.style.opacity = '0.3';
 
                     document.body.appendChild(el);
 
                     setTimeout(() => {
                         el.style.transition =
-                            `all ${0.6+Math.random()*0.8}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
+                            `all ${0.7+Math.random()*0.8}s cubic-bezier(0.34, 1.56, 0.64, 1)`;
                         el.style.left = d.x + 'px';
                         el.style.top = d.y + 'px';
                         el.style.opacity = '1';
@@ -704,16 +711,17 @@
                         setTimeout(() => {
                             const cloned = el.cloneNode(true);
                             cloned.style.transition = 'none';
-                            cloned.style.left = (d.x - container.getBoundingClientRect()
-                                .left) + 'px';
-                            cloned.style.top = (d.y - container.getBoundingClientRect()
-                                .top) + 'px';
+                            const rect = container.getBoundingClientRect();
+                            cloned.style.left = (d.x - rect.left) + 'px';
+                            cloned.style.top = (d.y - rect.top) + 'px';
                             cloned.style.position = 'absolute';
                             cloned.style.opacity = '1';
                             cloned.style.width = size + 'px';
                             cloned.style.height = size + 'px';
                             cloned.style.background = d.color;
-                            cloned.style.boxShadow = `0 0 ${4+size*4}px ${d.color}`;
+                            const glow2 = d.glowIntensity || 8;
+                            cloned.style.boxShadow =
+                                `0 0 ${glow2}px ${d.color}, 0 0 ${glow2*2}px ${d.color}40`;
                             cloned.style.animation =
                                 `dustTwinkle ${d.twinkleSpeed}s ease-in-out infinite alternate`;
                             wrapper.appendChild(cloned);
@@ -726,46 +734,46 @@
                                     };
                                     createHaloStars(wrapper, container);
                                     resolve();
-                                }, 300);
+                                }, 400);
                             }
-                        }, 100);
-                    }, 100 + index * 12);
+                        }, 120);
+                    }, 80 + index * 10);
                 });
             });
         }
 
         // ===== 星星光环 =====
         function createHaloStars(wrapper, container) {
-            const colors = ['#ffb6d9', '#ffd700', '#ff8eb5', '#ffffff', '#ff6b9d', '#a8d8ff'];
-            const count = 20 + Math.floor(Math.random() * 16);
+            const colors = ['#ffb6d9', '#ffd700', '#ff8eb5', '#ffffff', '#ff6b9d', '#a8d8ff', '#ff69b4', '#ffcc44'];
+            const count = 30 + Math.floor(Math.random() * 25);
             const rect = container.getBoundingClientRect();
             const cx = rect.width / 2;
             const cy = rect.height / 2;
-            const baseRadius = Math.min(rect.width, rect.height) * 0.42;
+            const baseRadius = Math.min(rect.width, rect.height) * 0.44;
 
             for (let i = 0; i < count; i++) {
                 const star = document.createElement('div');
                 star.className = 'halo-star';
-                const size = 1.5 + Math.random() * 3.5;
+                const size = 1.5 + Math.random() * 4;
                 star.style.width = size + 'px';
                 star.style.height = size + 'px';
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 star.style.background = color;
                 star.style.color = color;
-                star.style.boxShadow = `0 0 ${8+Math.random()*18}px ${color}`;
-                const radius = baseRadius * (0.7 + Math.random() * 0.3);
+                star.style.boxShadow = `0 0 ${12+Math.random()*25}px ${color}`;
+                const radius = baseRadius * (0.65 + Math.random() * 0.35);
                 star.style.setProperty('--radius', radius + 'px');
                 star.style.left = (cx - size / 2) + 'px';
                 star.style.top = (cy - size / 2) + 'px';
-                const duration = 8 + Math.random() * 12;
+                const duration = 8 + Math.random() * 14;
                 star.style.animationDuration = duration + 's';
-                star.style.animationDelay = (Math.random() * 5) + 's';
+                star.style.animationDelay = (Math.random() * 6) + 's';
                 wrapper.appendChild(star);
             }
         }
 
         // ============================================================
-        //  完整旅程（弹窗提前消失）
+        //  完整旅程
         // ============================================================
         async function startFullJourney() {
             // 1. 祝福语飘落
@@ -774,17 +782,20 @@
             // 2. 清空祝福语
             document.querySelectorAll('.bless').forEach(el => el.remove());
 
-            // 3. 弹窗消失（在星辰出现之前）
+            // 3. 弹窗消失
             document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
 
-            // 4. 等待弹窗淡出完成
+            // 4. 等待弹窗淡出
             await new Promise(r => setTimeout(r, 500));
 
-            // 5. 星尘粒子汇聚成玫瑰
+            // 5. 背景变黑（在玫瑰形成前）
+            document.body.classList.add('dark-bg');
+
+            // 6. 星尘粒子汇聚成玫瑰
             await createDustRose();
         }
 
-        console.log('💕 极细星尘玫瑰已加载！');
+        console.log('💕 全屏发光星尘玫瑰已加载！');
     </script>
 
 </body>

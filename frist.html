@@ -155,6 +155,7 @@
             display: block;
         }
 
+        /* ===== 祝福语样式 ===== */
         .bless {
             position: fixed;
             pointer-events: none;
@@ -162,7 +163,7 @@
             font-size: 16px;
             font-weight: 600;
             color: #4a2a33;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 32px;
             background: rgba(255, 255, 255, 0.30);
             backdrop-filter: blur(8px);
@@ -170,28 +171,29 @@
             border: 1.5px solid rgba(255, 255, 255, 0.55);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
             white-space: nowrap;
-            animation: floatBless 8s linear forwards;
+            animation: floatBless linear forwards;
             transform-origin: center;
             font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             letter-spacing: 0.5px;
+            opacity: 0;
         }
 
         @keyframes floatBless {
             0% {
                 opacity: 0;
-                transform: translateY(20px) scale(0.92) rotate(-2deg);
+                transform: translateY(40px) scale(0.85) rotate(-4deg);
             }
-            8% {
+            12% {
                 opacity: 1;
                 transform: translateY(0) scale(1) rotate(0deg);
             }
-            85% {
+            80% {
                 opacity: 1;
-                transform: translateY(-120px) scale(1) rotate(0deg);
+                transform: translateY(-100px) scale(1) rotate(0deg);
             }
             100% {
                 opacity: 0;
-                transform: translateY(-180px) scale(0.95) rotate(3deg);
+                transform: translateY(-180px) scale(0.9) rotate(4deg);
             }
         }
 
@@ -214,6 +216,7 @@
             }
         }
 
+        /* ===== 手机适配 ===== */
         @media (max-width: 420px) {
             body {
                 padding: 12px;
@@ -402,7 +405,7 @@
             });
         }
 
-        // ===== 祝福语系统（稀疏版） =====
+        // ===== 祝福语系统（彻底解决堆叠） =====
         const blessings = [
             '✨ 愿所有美好都如期而至',
             '🌸 你是我藏在微风里的喜欢',
@@ -418,44 +421,112 @@
             '💕 爱意随风起，风止意难平'
         ];
 
-        function randomBless() {
-            return blessings[Math.floor(Math.random() * blessings.length)];
+        // 打乱数组，让祝福语顺序随机
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        let usedBlessings = [];
+
+        function getNextBlessing() {
+            if (usedBlessings.length === 0) {
+                usedBlessings = shuffleArray([...blessings]);
+            }
+            return usedBlessings.pop();
         }
 
         let blessInterval = null;
+        let activeBlessCount = 0;
+        const MAX_BLESS = 14; // 同时存在最多14条
 
         function createBless() {
+            // 控制同时存在的数量
+            if (activeBlessCount >= MAX_BLESS) return;
+
             const el = document.createElement('div');
             el.className = 'bless';
-            el.textContent = randomBless();
-            el.style.left = (5 + Math.random() * 90) + 'vw';
-            el.style.top = (5 + Math.random() * 85) + 'vh';
-            const scale = 0.8 + Math.random() * 0.6;
-            el.style.fontSize = (12 + Math.random() * 12) + 'px';
+            el.textContent = getNextBlessing();
+
+            // 将屏幕分成 4 个象限，分散分布
+            const quadrant = Math.floor(Math.random() * 4);
+            let left, top;
+
+            switch (quadrant) {
+                case 0: // 左上
+                    left = 3 + Math.random() * 40;
+                    top = 3 + Math.random() * 40;
+                    break;
+                case 1: // 右上
+                    left = 55 + Math.random() * 40;
+                    top = 3 + Math.random() * 40;
+                    break;
+                case 2: // 左下
+                    left = 3 + Math.random() * 40;
+                    top = 50 + Math.random() * 40;
+                    break;
+                case 3: // 右下
+                    left = 55 + Math.random() * 40;
+                    top = 50 + Math.random() * 40;
+                    break;
+            }
+
+            el.style.left = left + 'vw';
+            el.style.top = top + 'vh';
+
+            // 随机大小
+            const scale = 0.75 + Math.random() * 0.6;
+            el.style.fontSize = (13 + Math.random() * 12) + 'px';
             el.style.transform = `scale(${scale})`;
-            // 飘得更慢：8~14秒
-            const duration = 8 + Math.random() * 6;
+
+            // 飘落速度：10~18秒，更慢更优雅
+            const duration = 10 + Math.random() * 8;
             el.style.animationDuration = duration + 's';
+
+            // 边框颜色柔和
             const hue = 320 + Math.random() * 40;
             el.style.borderColor = `hsla(${hue}, 70%, 80%, 0.6)`;
             el.style.background = `rgba(255, 255, 255, ${0.15 + Math.random() * 0.25})`;
+
             document.body.appendChild(el);
+            activeBlessCount++;
+
+            // 动画结束后移除
             setTimeout(() => {
-                if (el.parentNode) el.remove();
-            }, duration * 1000 + 200);
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                    activeBlessCount--;
+                }
+            }, duration * 1000 + 300);
         }
 
-        function startBlessingRain(count = 20) {
-            document.querySelectorAll('.bless').forEach(el => el.remove());
-            // 间隔300ms逐条出现，更稀疏
-            for (let i = 0; i < count; i++) {
-                setTimeout(() => createBless(), i * 300);
+        function startBlessingRain() {
+            // 清空旧祝福语
+            document.querySelectorAll('.bless').forEach(el => {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                }
+            });
+            activeBlessCount = 0;
+            usedBlessings = [];
+
+            if (blessInterval) {
+                clearInterval(blessInterval);
+                blessInterval = null;
             }
-            if (blessInterval) clearInterval(blessInterval);
-            // 每6秒补1条
+
+            // 初始生成 10 条，间隔 500ms
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => createBless(), i * 500);
+            }
+
+            // 持续补充：每 7 秒补 1 条
             blessInterval = setInterval(() => {
                 createBless();
-            }, 6000);
+            }, 7000);
         }
 
         // ===== 点击「爱你」 =====
@@ -486,6 +557,7 @@
             setTimeout(() => {
                 bigHeart.textContent = '❤️';
             }, 400);
+
             if (hateClickCount >= 4) {
                 btnHate.textContent = '我错了！爱！❤️';
                 btnHate.style.background = '#ff6b81';
@@ -524,7 +596,7 @@
             btnYes.style.opacity = '0.7';
             btnYes.style.cursor = 'default';
 
-            startBlessingRain(20);
+            startBlessingRain();
         });
 
         // ===== 点击「不愿意」 =====
@@ -548,7 +620,7 @@
             }
         });
 
-        console.log('💕 两阶段问答已加载（稀疏祝福雨版）！');
+        console.log('💕 两阶段问答已加载（祝福语稀疏版）！');
     </script>
 
 </body>

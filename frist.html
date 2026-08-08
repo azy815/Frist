@@ -11,6 +11,15 @@
         body.pink-bg{background:radial-gradient(ellipse at center,#ffe4ec,#ffd0d8,#ffb8c6)!important}
         body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
 
+        /* 音乐按钮 */
+        .music-btn{position:fixed;top:20px;right:20px;z-index:99999;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;transition:all .3s ease;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+        .music-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25)}
+        .music-btn.playing{animation:musicPulse 1.5s ease-in-out infinite}
+        @keyframes musicPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,157,0.2)}50%{box-shadow:0 0 0 8px rgba(255,107,157,0)}}
+        .music-btn .note{display:inline-block}
+        .music-btn.playing .note{animation:noteDance 0.6s ease-in-out infinite alternate}
+        @keyframes noteDance{0%{transform:scale(1)}100%{transform:scale(1.2)}}
+
         .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
         .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
         .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
@@ -67,7 +76,7 @@
         .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px}
         .poem-box .btn{margin-top:18px}
 
-        /* 授权弹窗样式 */
+        /* 授权弹窗 */
         .auth-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:fadeInAuth .6s ease}
         @keyframes fadeInAuth{0%{opacity:0}100%{opacity:1}}
         @keyframes floatUpAuth{0%{opacity:0;transform:translateY(40px) scale(0.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
@@ -88,7 +97,7 @@
         .auth-btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.35);border:1px solid rgba(200,150,160,0.08)}
         .auth-footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:16px;letter-spacing:1px}
 
-        /* 情侣网名展示样式 */
+        /* 情侣名展示 */
         .couple-box{background:rgba(255,255,255,0.03);border-radius:24px;padding:24px 20px;margin:12px 0;border:1px solid rgba(255,255,255,0.06)}
         .couple-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
         .couple-item{flex:1;min-width:80px;text-align:center}
@@ -175,6 +184,12 @@
 
     <script>
         // ============================================================
+        //  🎵 背景音乐（免费可商用）
+        //  曲名：Daydream · 作者：Steve Combs · 授权：CC0
+        // ============================================================
+        const MUSIC_URL = 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Steve_Combs/Transitions/Steve_Combs_-_Daydream.mp3';
+
+        // ============================================================
         //  统一授权码
         // ============================================================
         const SECRET_KEY = 'ROSE2026';
@@ -183,6 +198,52 @@
             return localStorage.getItem('azy_romantic_auth') === 'true';
         }
 
+        // ============================================================
+        //  音乐控制
+        // ============================================================
+        let audio = null;
+        let isMusicPlaying = false;
+        let musicReady = false;
+
+        function initAudio() {
+            if (!audio) {
+                audio = new Audio(MUSIC_URL);
+                audio.loop = true;
+                audio.volume = 0.5;
+                audio.load();
+                musicReady = true;
+            }
+            return audio;
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('musicBtn');
+            if (!musicReady) initAudio();
+
+            if (isMusicPlaying) {
+                audio.pause();
+                isMusicPlaying = false;
+                btn.classList.remove('playing');
+            } else {
+                audio.play().catch(e => console.log('音乐播放需要用户交互'));
+                isMusicPlaying = true;
+                btn.classList.add('playing');
+            }
+        }
+
+        function tryAutoPlayMusic() {
+            initAudio();
+            audio.play().then(() => {
+                isMusicPlaying = true;
+                document.getElementById('musicBtn').classList.add('playing');
+            }).catch(() => {
+                console.log('自动播放被浏览器阻止，等待用户点击');
+            });
+        }
+
+        // ============================================================
+        //  星门验证弹窗
+        // ============================================================
         function showAuthDialog() {
             return new Promise((resolve) => {
                 const overlay = document.createElement('div');
@@ -251,7 +312,13 @@
             });
         }
 
+        // ============================================================
+        //  启动应用
+        // ============================================================
         async function startApp() {
+            // 先尝试自动播放音乐
+            tryAutoPlayMusic();
+
             if (isAuthorized()) {
                 document.getElementById('stage1').style.display = 'block';
                 return;
@@ -275,6 +342,17 @@
                 }, 600);
             }
         }
+
+        // 创建音乐按钮（在页面加载后显示）
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.createElement('button');
+            btn.id = 'musicBtn';
+            btn.className = 'music-btn';
+            btn.innerHTML = '<span class="note">♪</span>';
+            btn.title = '播放/暂停背景音乐';
+            btn.onclick = toggleMusic;
+            document.body.appendChild(btn);
+        });
 
         startApp();
 
@@ -332,11 +410,6 @@
             text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。'
         }];
 
-        // ============================================================
-        //  名字→小诗 + 文艺情侣名
-        // ============================================================
-
-        // 汉字→诗句映射
         const wordMap = {
             '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
             '心': ['心之所向皆是你', '心动是最美的风景', '心中有光，眼中有你'],
@@ -423,27 +496,15 @@
             return finalLines.join('\n');
         }
 
-        // ============================================================
-        //  文艺情侣名生成器（自然版）
-        // ============================================================
-
         function generateCoupleNames(name1, name2) {
             const n1 = name1.trim();
             const n2 = name2.trim();
 
-            if (!n1 || !n2) return {
-                his: '✨',
-                hers: '✨',
-                tagline: '请先输入两个名字哦'
-            };
+            if (!n1 || !n2) return { his: '✨', hers: '✨', tagline: '请先输入两个名字哦', intro: '' };
 
-            // 取首字和尾字
             const first1 = n1.charAt(0);
-            const last1 = n1.charAt(n1.length - 1);
             const first2 = n2.charAt(0);
-            const last2 = n2.charAt(n2.length - 1);
 
-            // 意象词库（文艺向）
             const imagery = {
                 '伟': ['岸', '屹', '峰'],
                 '婷': ['汀', '停', '亭'],
@@ -464,111 +525,53 @@
                 '舟': ['同', '行', '归'],
                 '晚': ['风', '安', '宁'],
                 '安': ['静', '宁', '暖'],
-                '念': ['忘', '想', '归'],
-                '钧': ['天', '衡', '音'],
-                '安': ['静', '宁', '暖'],
-                '枫': ['晚', '落', '岸'],
-                '宁': ['静', '安', '和'],
-                '清': ['风', '水', '浅'],
-                '顾': ['盼', '影', '望'],
-                '汐': ['潮', '水', '落'],
-                '笙': ['歌', '乐', '音'],
-                '暮': ['色', '光', '落'],
-                '陆': ['地', '岸', '途'],
-                '林': ['木', '间', '深'],
-                '长': ['安', '风', '久'],
-                '向': ['晚', '阳', '往'],
-                '远': ['行', '方', '梦'],
-                '归': ['来', '去', '途'],
-                '南': ['风', '山', '国'],
-                '北': ['雪', '风', '城']
+                '念': ['忘', '想', '归']
             };
 
-            // 默认词库
-            const defaultImagery = ['光', '风', '月', '雨', '星', '梦', '雪', '霜', '霞', '露'];
+            const defaultImagery = ['光', '风', '月', '雨', '星', '梦', '雪'];
 
-            // 获取意象
             const getImage = (char) => {
                 if (imagery[char]) return imagery[char];
-                // 尝试用最后一个字
                 const lastChar = char;
                 if (imagery[lastChar]) return imagery[lastChar];
                 return defaultImagery;
             };
 
-            // 生成第一个名字的网名
             const img1 = getImage(first1);
             const img2 = getImage(first2);
-
-            // 随机取意象
             const img1_1 = img1[Math.floor(Math.random() * img1.length)];
             const img2_1 = img2[Math.floor(Math.random() * img2.length)];
 
-            // 确保两个字不同
             let final1 = img1_1;
             let final2 = img2_1;
             if (final1 === final2) {
                 final2 = img2[(Math.floor(Math.random() * img2.length) + 1) % img2.length];
             }
 
-            // 生成4种风格，随机选一种
             const styles = [];
-
-            // 风格1：意象单字（最简洁）
-            styles.push({
-                his: final1,
-                hers: final2,
-                tagline: `${final1}与${final2}，一个在左，一个在右`
-            });
-
-            // 风格2：意象双字（加一个浪漫字）
+            styles.push({ his: final1, hers: final2, tagline: `${final1}与${final2}，一个在左，一个在右` });
             const prefix1 = ['长', '清', '微', '轻', '晚', '初', '向', '南'][Math.floor(Math.random() * 8)];
             const prefix2 = ['长', '清', '微', '轻', '晚', '初', '向', '北'][Math.floor(Math.random() * 8)];
-            styles.push({
-                his: prefix1 + final1,
-                hers: prefix2 + final2,
-                tagline: `${prefix1}${final1}，${prefix2}${final2}——遥遥相望，各自安好`
-            });
-
-            // 风格3：加一个修饰字
+            styles.push({ his: prefix1 + final1, hers: prefix2 + final2, tagline: `${prefix1}${final1}，${prefix2}${final2}——遥遥相望，各自安好` });
             const mod1 = ['落', '入', '有', '无', '在', '若'][Math.floor(Math.random() * 6)];
             const mod2 = ['落', '入', '有', '无', '在', '若'][Math.floor(Math.random() * 6)];
-            styles.push({
-                his: mod1 + final1,
-                hers: mod2 + final2,
-                tagline: `${mod1}${final1}，${mod2}${final2}——有风有月，有你有我`
-            });
-
-            // 风格4：留白式
+            styles.push({ his: mod1 + final1, hers: mod2 + final2, tagline: `${mod1}${final1}，${mod2}${final2}——有风有月，有你有我` });
             const space1 = ['山', '水', '云', '风', '月', '星'][Math.floor(Math.random() * 6)];
             const space2 = ['山', '水', '云', '风', '月', '星'][Math.floor(Math.random() * 6)];
-            styles.push({
-                his: space1 + '间' + final1,
-                hers: space2 + '中' + final2,
-                tagline: `${space1}间${final1}，${space2}中${final2}——山高水长，来日方长`
-            });
+            styles.push({ his: space1 + '间' + final1, hers: space2 + '中' + final2, tagline: `${space1}间${final1}，${space2}中${final2}——山高水长，来日方长` });
 
             const selected = styles[Math.floor(Math.random() * styles.length)];
 
-            // 生成浪漫介绍
             const intro = [
-                `“${selected.his}”是风，“${selected.hers}”是月，风月无边。`,
-                `你是“${selected.his}”，我是“${selected.hers}”，刚刚好。`,
-                `“${selected.his}”与“${selected.hers}”，隔着一整个世界的距离，却落在同一行诗里。`,
-                `世间万物，都不如“${selected.his}”和“${selected.hers}”凑在一起好看。`
+                `“${selected.his}”是风，“${selected.hers}”是月，风月无边，皆为你们。`,
+                `星海为你择名，人间从此成双。你是“${selected.his}”，ta是“${selected.hers}”。`,
+                `你的名字，ta的名字，刚好凑成一首诗——“${selected.his}”与“${selected.hers}”。`,
+                `世间万物，都不如“${selected.his}”和“${selected.hers}”凑在一起好看。`,
+                `“${selected.his}”是山，“${selected.hers}”是水，山水一程，三生有幸。`
             ];
 
-            return {
-                his: selected.his,
-                hers: selected.hers,
-                tagline: selected.tagline,
-                intro: intro[Math.floor(Math.random() * intro.length)]
-            };
+            return { his: selected.his, hers: selected.hers, tagline: selected.tagline, intro: intro[Math.floor(Math.random() * intro.length)] };
         }
-
-        // ============================================================
-        //  算命名报告
-        // ============================================================
 
         function generateFortuneReport(name1, name2) {
             if (!name1 || !name1.trim() || !name2 || !name2.trim()) return '请先输入两个名字哦 💕';
@@ -835,10 +838,8 @@
                                         '—— ' + loverName + '，你也是我写过最美的诗 ——',
                                         poem2,
                                         function() {
-                                            // 生成文艺情侣名
-                                            const couple = generateCoupleNames(myName, loverName);
-
-                                            // 构建情侣名展示HTML
+                                            const couple = generateCoupleNames(myName,
+                                            loverName);
                                             const coupleHTML = `
                                                     <div class="couple-box">
                                                         <div class="couple-row">
@@ -858,8 +859,8 @@
                                                         <div class="couple-tagline" style="font-size:12px;border-top:none;padding-top:4px;opacity:0.5;">${couple.tagline}</div>
                                                     </div>
                                                 `;
-
-                                            const report = generateFortuneReport(myName, loverName);
+                                            const report = generateFortuneReport(myName,
+                                                loverName);
                                             const ending = [
                                                 '', '', '💕 今天的故事在这里告一段落 💕', '',
                                                 '但你们的故事，才刚刚开始。', '',
@@ -869,11 +870,12 @@
                                                 '💫 人间烟火，皆是温柔。💫', '',
                                                 '—— 愿所有美好，都与你们环环相扣 ——'
                                             ];
-                                            const fullText = coupleHTML + '\n\n' + report + '\n\n' + ending
-                                                .join('\n');
+                                            const fullText = coupleHTML + '\n\n' + report +
+                                                '\n\n' + ending.join('\n');
                                             showPoemDisplay(
                                                 '💕 命 名 吉 祥 笺 · 上上签 💕',
-                                                '—— ' + myName + ' ✦ ' + loverName + ' —— 缘定今生',
+                                                '—— ' + myName + ' ✦ ' + loverName +
+                                                ' —— 缘定今生',
                                                 fullText,
                                                 function() {
                                                     showFinalMessage();
@@ -932,7 +934,6 @@
             const container = document.getElementById('poemDisplay');
             document.getElementById('poemTitle').textContent = title;
             document.getElementById('poemSub').textContent = sub;
-            // 如果是HTML内容，直接设置innerHTML
             if (text.includes('<div class="couple-box">')) {
                 document.getElementById('poemText').innerHTML = text;
             } else {
@@ -981,6 +982,7 @@
 
         console.log('💕 完整旅程已加载！');
         console.log('🗝️ 统一授权码：' + SECRET_KEY);
+        console.log('🎵 背景音乐：Daydream · 免费可商用');
     </script>
 
 </body>

@@ -85,18 +85,36 @@
         .auth-btn{padding:14px 40px;border:none;border-radius:60px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;flex:1;min-width:120px}
         .auth-btn:active{transform:scale(.94)}
         .auth-btn-primary{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;box-shadow:0 6px 30px rgba(232,128,144,0.2)}
-        .auth-btn-primary:hover{box-shadow:0 8px 40px rgba(232,128,144,0.35)}
         .auth-btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.35);border:1px solid rgba(200,150,160,0.08)}
         .auth-footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:16px;letter-spacing:1px}
 
-        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}}
-        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}}
+        /* 名字艺术画样式 */
+        .art-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99996;display:none;justify-content:center;align-items:center;background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408);padding:20px}
+        .art-overlay.show{display:flex}
+        .art-box{text-align:center;max-width:520px;width:100%;animation:floatUpAuth 0.8s cubic-bezier(.34,1.56,.64,1)}
+        .art-name-container{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+        .art-name{display:inline-block;font-weight:900;font-size:min(15vw,80px);line-height:1.15;filter:drop-shadow(0 0 40px rgba(255,107,157,0.15))}
+        .art-name-left{background:linear-gradient(135deg,#ff6b9d,#ffb6d9,#ff6b9d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;transform:rotate(-6deg) scale(1.05)}
+        .art-name-right{background:linear-gradient(135deg,#ffd700,#ffb347,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;transform:rotate(6deg) scale(1.05)}
+        .art-divider{font-size:min(5vw,30px);color:rgba(255,255,255,0.15);font-weight:300;padding:0 4px}
+        .art-sub{font-size:14px;color:rgba(255,255,255,0.2);letter-spacing:4px;font-weight:300;margin-bottom:20px}
+        .art-canvas-wrap{position:relative;width:100%;padding:30px 20px;border:1px solid rgba(255,255,255,0.04);border-radius:24px;background:rgba(255,255,255,0.01);backdrop-filter:blur(2px);min-height:100px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:6px}
+        .art-char{display:inline-block;font-weight:900;font-size:min(10vw,52px);transition:all .6s cubic-bezier(.34,1.56,.64,1);cursor:default}
+        .art-char:hover{transform:scale(1.3) rotate(8deg)}
+        .art-char-pink{background:linear-gradient(135deg,#ff6b9d,#ffb6d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .art-char-gold{background:linear-gradient(135deg,#ffd700,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .art-char-white{color:rgba(255,255,255,0.06)}
+        .art-btn{margin-top:24px;padding:14px 48px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 6px 30px rgba(232,128,144,0.2)}
+        .art-btn:active{transform:scale(.94)}
+
+        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}.art-canvas-wrap{padding:20px 12px}.art-char{font-size:min(12vw,36px)}}
+        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}.art-char{font-size:min(10vw,28px)}}
     </style>
 </head>
 <body>
 
     <!-- ===== 第一阶段 ===== -->
-    <div class="card" id="stage1" style="display:none;">
+    <div class="card" id="stage1">
         <div class="big-heart" id="bigHeart">❤️</div>
         <div class="question" id="questionEl">你爱我吗？</div>
         <div class="hint" id="hintEl">💖 认真回答哦 💖</div>
@@ -109,7 +127,7 @@
     </div>
 
     <!-- ===== 第二阶段 ===== -->
-    <div class="card card-stage2" id="stage2" style="display:none;">
+    <div class="card card-stage2" id="stage2">
         <div class="big-heart" id="bigHeart2">💕</div>
         <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
         <div class="hint" id="hintEl2">🌹 后面有惊喜哦 🌹</div>
@@ -122,7 +140,7 @@
     </div>
 
     <!-- ===== 第三阶段 ===== -->
-    <div class="card card-stage3" id="stage3" style="display:none;">
+    <div class="card card-stage3" id="stage3">
         <div class="big-heart" id="bigHeart3">💕</div>
         <div class="question" id="questionEl3">点击每条祝福语 💫</div>
         <div class="hint" id="hintEl3">每条都藏着我想对你说的话 🌸</div>
@@ -162,55 +180,48 @@
         </div>
     </div>
 
+    <!-- ===== 名字艺术画 ===== -->
+    <div class="art-overlay" id="artOverlay">
+        <div class="art-box">
+            <div class="art-name-container">
+                <span class="art-name art-name-left" id="artName1"></span>
+                <span class="art-divider">✦</span>
+                <span class="art-name art-name-right" id="artName2"></span>
+            </div>
+            <div class="art-sub">—— 两个名字，一幅画 ——</div>
+            <div class="art-canvas-wrap" id="artCanvas"></div>
+            <button class="art-btn" id="artBtn">💕 继续</button>
+        </div>
+    </div>
+
     <script>
         // ============================================================
-        //  1. 浪漫授权验证（页面加载时弹出）
+        //  统一授权码
         // ============================================================
-
-        // 🗝️ 统一授权码（所有用户共用这一个）
-        // 你想改成什么就改这里的值
         const SECRET_KEY = 'ROSE2026';
 
-        // 🌹 浪漫的提示文案
-        const authMessages = {
-            icon: '💌',
-            title: '你收到了一封来自星星的信件',
-            desc: '轻轻输入星星告诉我的秘密口令，\n就可以打开这扇通往星海的门 ✨',
-            secretHint: '✦ 口令藏在每一朵玫瑰的花蕊里 ✦',
-            placeholder: '请输入秘密口令...',
-            btnText: '✨ 开启星门',
-            demoText: '🌙 先看星星的倒影',
-            success: '✨ 口令正确！星星为你点亮 🌟',
-            error: '🌙 口令不对哦，再试一次吧 💫',
-            footer: '✦ 口令正确，星星为你点亮 ✦'
-        };
-
-        // 检查是否已授权
         function isAuthorized() {
             return localStorage.getItem('azy_romantic_auth') === 'true';
         }
 
-        // 显示授权弹窗
         function showAuthDialog() {
             return new Promise((resolve) => {
                 const overlay = document.createElement('div');
                 overlay.className = 'auth-overlay';
-
                 overlay.innerHTML = `
                         <div class="auth-box">
-                            <span class="auth-icon">${authMessages.icon}</span>
-                            <h2 class="auth-title">${authMessages.title}</h2>
-                            <p class="auth-desc">${authMessages.desc.replace(/\n/g, '<br>')}</p>
-                            <p class="auth-secret">${authMessages.secretHint}</p>
-                            <input type="text" class="auth-input" id="authKeyInput" placeholder="${authMessages.placeholder}" autofocus>
+                            <span class="auth-icon">💌</span>
+                            <h2 class="auth-title">你收到了一封来自星星的信件</h2>
+                            <p class="auth-desc">轻轻输入星星告诉我的秘密口令，<br>就可以打开这扇通往星海的门 ✨</p>
+                            <p class="auth-secret">✦ 口令藏在每一朵玫瑰的花蕊里 ✦</p>
+                            <input type="text" class="auth-input" id="authKeyInput" placeholder="请输入秘密口令..." autofocus>
                             <div class="auth-btn-group">
-                                <button class="auth-btn auth-btn-primary" id="authSubmitBtn">${authMessages.btnText}</button>
-                                <button class="auth-btn auth-btn-secondary" id="authDemoBtn">${authMessages.demoText}</button>
+                                <button class="auth-btn auth-btn-primary" id="authSubmitBtn">✨ 开启星门</button>
+                                <button class="auth-btn auth-btn-secondary" id="authDemoBtn">🌙 先看星星的倒影</button>
                             </div>
-                            <p class="auth-footer">${authMessages.footer}</p>
+                            <p class="auth-footer">✦ 口令正确，星星为你点亮 ✦</p>
                         </div>
                     `;
-
                 document.body.appendChild(overlay);
 
                 const input = overlay.querySelector('#authKeyInput');
@@ -222,15 +233,12 @@
                 function validateKey() {
                     const val = input.value.trim().toUpperCase();
                     if (val === SECRET_KEY) {
-                        // 授权成功
                         localStorage.setItem('azy_romantic_auth', 'true');
                         overlay.innerHTML = `
                                 <div class="auth-box" style="animation:floatUpAuth 0.6s cubic-bezier(0.34,1.56,0.64,1);">
                                     <span class="auth-icon" style="font-size:60px;">🌟</span>
                                     <h2 class="auth-title" style="color:#d47a8a;">✨ 星门已开启 ✨</h2>
-                                    <p style="font-size:16px;color:rgba(90,61,42,0.7);line-height:1.8;margin-bottom:20px;">
-                                        ${authMessages.success}
-                                    </p>
+                                    <p style="font-size:16px;color:rgba(90,61,42,0.7);line-height:1.8;margin-bottom:20px;">✨ 口令正确！星星为你点亮 🌟</p>
                                     <button class="auth-btn auth-btn-primary" id="authEnterBtn" style="padding:14px 50px;">💕 进入星海</button>
                                 </div>
                             `;
@@ -239,7 +247,6 @@
                             resolve(true);
                         };
                     } else {
-                        // 授权失败
                         input.style.borderColor = '#ff6b6b';
                         input.style.animation = 'shakeAuth 0.4s ease';
                         input.value = '';
@@ -247,7 +254,7 @@
                         setTimeout(() => {
                             input.style.borderColor = 'rgba(212,168,106,0.2)';
                             input.style.animation = '';
-                            input.placeholder = authMessages.placeholder;
+                            input.placeholder = '请输入秘密口令...';
                             input.focus();
                         }, 1200);
                     }
@@ -265,45 +272,22 @@
             });
         }
 
-        // ============================================================
-        //  2. 页面启动流程
-        // ============================================================
-
         async function startApp() {
-            // 先检查是否已授权
             if (isAuthorized()) {
-                console.log('✅ 已授权，直接进入');
-                showMainContent();
+                document.getElementById('stage1').style.display = 'block';
                 return;
             }
-
-            // 未授权 → 显示授权弹窗
             const result = await showAuthDialog();
-
             if (result) {
-                console.log('✅ 授权成功！');
-                showMainContent();
+                document.getElementById('stage1').style.display = 'block';
             } else {
-                console.log('ℹ️ 演示模式');
-                showMainContent();
-                // 底部显示演示提示
+                document.getElementById('stage1').style.display = 'block';
                 setTimeout(() => {
                     const banner = document.createElement('div');
-                    banner.style.cssText = `
-                            position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-                            z-index:99998;
-                            background:linear-gradient(135deg,rgba(255,107,129,0.92),rgba(238,90,111,0.92));
-                            color:#fff;padding:12px 24px;border-radius:60px;
-                            font-size:14px;font-weight:500;
-                            backdrop-filter:blur(10px);
-                            border:1px solid rgba(255,255,255,0.2);
-                            box-shadow:0 10px 40px rgba(255,107,129,0.3);
-                            cursor:pointer;transition:all .3s;
-                            text-align:center;max-width:90%;
-                        `;
-                    banner.innerHTML = `
-                            🌷 星星的倒影 · <span style="text-decoration:underline;font-weight:600;">点击输入口令解锁完整星海</span>
-                        `;
+                    banner.style.cssText =
+                        'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99998;background:linear-gradient(135deg,rgba(255,107,129,0.92),rgba(238,90,111,0.92));color:#fff;padding:12px 24px;border-radius:60px;font-size:14px;font-weight:500;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 40px rgba(255,107,129,0.3);cursor:pointer;transition:all .3s;text-align:center;max-width:90%;';
+                    banner.innerHTML =
+                        '🌷 星星的倒影 · <span style="text-decoration:underline;font-weight:600;">点击输入口令解锁完整星海</span>';
                     banner.onclick = function() {
                         localStorage.removeItem('azy_romantic_auth');
                         location.reload();
@@ -313,18 +297,12 @@
             }
         }
 
-        function showMainContent() {
-            document.getElementById('stage1').style.display = 'block';
-        }
-
-        // 启动
         startApp();
 
         // ============================================================
-        //  3. 以下为完整互动逻辑
+        //  完整互动逻辑
         // ============================================================
 
-        // 祝福语 + 小作文数据
         const blessingData = [{
             icon: '✨',
             title: '愿所有美好都如期而至',
@@ -375,212 +353,61 @@
             text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。'
         }];
 
-        // ============================================================
-        //  常用字词库
-        // ============================================================
         const wordMap = {
-            '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期', '爱如潮水将我围绕', '爱是唯一的答案'],
-            '心': ['心之所向皆是你', '心动是最美的风景', '心中有光，眼中有你', '心海深处住着你', '心与心之间没有距离'],
-            '小': ['小小的世界里只有你', '小确幸都关于你', '小雨落时最想你', '小心藏好这份喜欢', '小径深处遇见你'],
-            '美': ['美好都因你而起', '美梦里有你同行', '美得像一首诗', '美眸如画，一眼万年', '美不胜收是你'],
-            '丽': ['丽日清风皆是你', '丽影入我心', '丽人如画', '丽质天生，为你心动', '丽景不及你回眸'],
-            '婷': ['婷婷玉立如初见', '婷影摇摇入梦来', '婷立风中只等你', '婷姿曼妙入我心', '婷花一朵为你开'],
-            '玉': ['玉洁冰清是你', '玉兰花开时想你', '玉手轻抚我心', '玉露凝香都是你', '玉润珠圆是你的笑'],
-            '兰': ['兰花香里忆你', '兰心蕙质是你', '兰花开时遇见你', '兰舟载不动许多愁', '兰亭序里写着你'],
-            '雪': ['雪落无声念你', '雪白的世界里有你', '雪花开时最想你', '雪融成水都是你', '雪夜围炉话你'],
-            '月': ['月下独酌只为你', '月光照亮你眼眸', '月圆之时最想你', '月华如水，你是涟漪', '月上柳梢头，人约黄昏后'],
-            '星': ['星光不负赶路人', '星星眨眼是你笑', '星河里只有你', '星辉斑斓都是你', '星辰大海不及你'],
-            '梦': ['梦里花落知多少', '梦中全是你的笑', '梦醒时分最想你', '梦回长安遇见你', '梦里有你便心安'],
-            '雨': ['雨落时最想你', '雨滴是我想你的声音', '雨中撑着伞等你', '雨过天晴笑如你', '雨打芭蕉念你'],
-            '晴': ['晴空万里皆是你', '晴天里有你的笑', '晴好如你', '晴日暖风为你来', '晴光潋滟是你'],
-            '云': ['云卷云舒都像你', '云端里有你的梦', '云淡风轻时想你', '云深不知处，只知你', '云烟成雨都是你'],
-            '风': ['风起时最想你', '风中传来你的声音', '风过留痕都是你', '风花雪月不如你', '风吹麦浪念你'],
-            '花': ['花开花落都为你', '花香里全是你的味道', '花间一壶酒，独酌无相亲', '花前月下都是你', '花影摇曳是你'],
-            '芳': ['芳华正好遇见你', '芳心暗许只为你', '芳香四溢都是你', '芳草萋萋念你', '芳名永驻我心'],
-            '慧': ['慧心巧思是你', '慧眼如炬看见你', '慧质兰心只为你', '慧光闪闪是你', '慧语如珠念你'],
-            '琳': ['琳琅满目不如你', '琳光闪闪是你的笑', '琳瑯世界只有你', '琳琅一曲为你唱', '琳音袅袅是你'],
-            '瑶': ['瑶台月下遇见你', '瑶琴一曲只为你', '瑶池仙境不如你', '瑶光闪闪都是你', '瑶花琪树为你开'],
-            '琪': ['琪花瑶草是你', '琪玉无瑕只为你', '琪树临风想你', '琪光闪闪入我眼', '琪声如歌念你'],
-            '洁': ['洁白无瑕是你', '洁心如初只为你', '洁身自好等你来', '洁光如月照我心', '洁爱一生是你'],
-            '欣': ['欣喜若狂见到你', '欣然心动只为你', '欣欣向荣都是你', '欣悦满怀念你', '欣光闪闪是你'],
-            '悦': ['悦耳动听你的声音', '悦目赏心是你', '心悦君兮君不知', '悦然一笑倾城', '悦色如春是你'],
-            '怡': ['怡然自得见到你', '怡心怡情只为你', '怡和如风是你', '怡光暖暖入我心', '怡悦一生都是你'],
-            '静': ['静水流深等你来', '静夜思你千万遍', '静好如初是你', '静心只为你一人', '静静守候这份爱'],
-            '柔': ['柔情似水是你', '柔风细雨都是你', '柔肠百转只为你', '柔光如月照我心', '柔声细语念你'],
-            '婉': ['婉转流年遇见你', '婉约如诗是你', '婉然一笑倾城', '婉婉情意只为你', '婉约如画是你'],
-            '雅': ['雅致如你', '雅韵千年只为你', '雅然一笑很倾城', '雅乐一曲为你奏', '雅集之处皆是你'],
-            '诗': ['诗里行间都是你', '诗意人生因为你', '诗酒趁年华，有你在身旁', '诗心只为你一人', '诗词歌赋不如你'],
-            '画': ['画里画外都是你', '画中仙是你', '画屏深处只等你', '画笔勾勒都是你', '画意如诗念你'],
-            '书': ['书里藏着你的名字', '书写不尽的思念', '书香里全是你的味道', '书页翻动想你的声音', '书简成叠都是你'],
-            '一': ['一颦一笑都是你', '一眼万年都是你', '一生一世只为你', '一往情深皆是你', '一念之间都是你'],
-            '念': ['念你千千万万遍', '念念不忘是你', '念及都是你的好', '念想如潮水般涌来', '念你如初'],
-            '思': ['思君不见君', '思念如马，自别离，未停蹄', '思及你时心会跳', '思之如狂是你', '思恋如影随行'],
-            '君': ['君问归期未有期', '君心似我心', '君不见黄河之水天上来', '君临天下不如你', '君影入我心'],
-            '佳': ['佳人如梦', '佳期如梦，柔情似水', '佳音传来都是你', '佳话传颂只为你', '佳影如画'],
-            '乐': ['乐在其中只因你', '乐意为你做一切', '乐声悠扬都是你', '乐此不疲念你', '乐享时光与你'],
-            '安': ['安好如初是你', '安安心心只为你', '安暖相伴一生', '安守一份爱', '安然而来是你'],
-            '宁': ['宁静致远等你来', '宁缺毋滥只为你', '宁心静气念你', '宁可错过全世界，不愿错过你'],
-            '欢': ['欢欢喜喜见到你', '欢声笑语都是你', '欢愉时光只因你', '欢喜只因你一人', '欢然一笑倾城'],
-            '甜': ['甜甜蜜蜜都是你', '甜言蜜语只为你', '甜在心头的你', '糖果再甜不如你', '甜梦里有你'],
-            '蜜': ['蜜语甜言为你', '蜜意柔情都是你', '蜜糖再甜不如你', '蜜月时光与你', '蜜意绵绵'],
-            '春': ['春风十里不如你', '春暖花开为你来', '春华秋实都是你', '春水初生，春林初盛，春风十里，不如你'],
-            '夏': ['夏日炎炎想你的心更热', '夏荷盛开如你', '夏夜星辰都是你', '夏雨如你般清凉', '夏风拂面念你'],
-            '秋': ['秋叶飘落都是思念你', '秋月无边照你', '秋风萧瑟念你', '秋水共长天一色，你共我一生'],
-            '冬': ['冬日暖阳是你', '冬雪皑皑念你', '冬夜漫漫想你', '冬梅傲雪如你', '冬去春来都是你'],
-            '晨': ['晨光熹微看见你', '晨露清新如你', '晨风拂面念你', '晨钟暮鼓为你', '晨星闪闪是你'],
-            '夕': ['夕阳西下想你的剪影', '夕照如画都是你', '夕光温柔如你', '夕烟袅袅念你', '夕露沾衣想你'],
-            '光': ['光芒万丈是你', '光与影里都是你', '光照我心是你', '光年之外仍念你', '光风霁月为你'],
-            '影': ['影影绰绰都是你的样子', '影入我心是你', '影随心动念你', '影落花开皆是你', '影如画，心如你'],
-            '歌': ['歌声悠扬都是你', '歌唱不完对你的爱', '歌里有你的名字', '歌谣传唱只为你', '歌声绕梁如你'],
-            '舞': ['舞姿翩翩如你', '舞动青春念你', '舞袖飘飘是你', '舞影如梦是你', '舞动心弦为你'],
-            '笑': ['笑靥如花是你', '笑声清脆如铃', '笑颜如春是你', '笑里藏着的都是你', '笑傲人生只因你'],
-            '海': ['海誓山盟只为你', '海枯石烂不变心', '海天一色都是你', '海纳百川如你', '海风拂面念你'],
-            '山': ['山盟海誓为你', '山高水远念你', '山花烂漫如你', '山月不知心里事', '山间清风都是你'],
-            '水': ['水光潋滟是你', '水波温柔如你', '水天一色念你', '水润万物如你', '水云间里都是你'],
-            '火': ['火热的心只为你', '火光温暖如你', '火树银花念你', '火热情怀是你', '火炬般照亮我'],
-            '木': ['木槿花开如你', '木叶飘落念你', '木屋门前等你', '木香淡淡是你', '木棉花的春天'],
-            '金': ['金风玉露相逢时', '金光闪闪是你', '金玉良缘只为你', '金声玉振念你', '金波荡漾是你'],
-            '银': ['银汉迢迢暗渡你', '银光如月照我心', '银铃笑声是你', '银装素裹念你', '银河倒泻都是你'],
-            '龙': ['龙飞凤舞是你', '龙吟虎啸念你', '龙行天下不如你', '龙腾四海只为你', '龙心大悦是你'],
-            '凤': ['凤凰涅槃是你', '凤舞九天念你', '凤鸣岐山为你', '凤求凰里只有你', '凤羽轻扬如你'],
-            '飞': ['飞鸟归林念你', '飞花逐月都是你', '飞雪连天想你', '飞鸿踏雪是你', '飞燕传书只为你'],
-            '天': ['天若有情天亦老', '天边云彩是你', '天荒地老只为你', '天下无双是你', '天作之合念你'],
-            '地': ['地久天长只为你', '地老天荒念你', '地动山摇不如你', '地心引力是你', '地覆天翻都是你'],
-            '人': ['人间值得是你', '人生若只如初见', '人海茫茫遇见你', '人面桃花相映红', '人心所向皆是你'],
-            '生': ['生命因你而精彩', '生生世世只为你', '生如夏花是你', '生离死别念你', '生来只为遇见你'],
-            '日': ['日出东方是你', '日日夜夜念你', '日暖风轻如你', '日新月异都是你', '日照我心是你'],
-            '年': ['年年岁岁都是你', '年少轻狂只为你', '年复一年念你', '年华不负你', '年光如你般温柔'],
-            '时': ['时光静好如你', '时时刻刻念你', '时光不老，我们不散', '时间煮雨，都是你', '时过境迁仍念你'],
-            '世': ['世界再大不如你', '世外桃源是你', '世世代代只为你', '世间美好皆是你', '世事如棋，你是唯一'],
-            '明': ['明月几时有，把酒问青天', '明眸善睐是你', '明日天涯念你', '明心见性只为你', '明光如水照你'],
-            '亮': ['亮晶晶的眼睛是你', '亮光照亮我世界', '亮色如你般温暖', '亮闪闪都是你的笑'],
-            '新': ['新的开始只因你', '新雪初霁如你', '新年快乐只为你', '新芽初绽是你', '新梦里有你'],
-            '大': ['大千世界只有你', '大海星辰不及你', '大梦初醒是你', '大道至简，爱你至深'],
-            '高': ['高山流水遇知音', '高远天空如你', '高飞远走念你', '高光时刻都是你'],
-            '长': ['长路漫漫只有你', '长夜漫漫念你', '长长久久只为你', '长风破浪会是你'],
-            '远': ['远方的你是否在想我', '远山如黛是你', '远道而来只为你', '远走高飞念你'],
-            '近': ['近在咫尺却想念', '近水楼台先得月', '近乡情更怯，不敢问来人'],
-            '深': ['深情不及久伴', '深深的爱只为你', '深夜想起你的笑', '深谷幽兰如你'],
-            '浅': ['浅笑安然是你', '浅尝辄止是喜欢', '浅吟低唱念你', '浅梦里有你'],
-            '浓': ['浓情蜜意只为你', '浓墨重彩写你', '浓雾散去是你', '浓郁花香都是你'],
-            '淡': ['淡雅如你', '淡泊名利只为你', '淡香是熟悉的味道', '淡月疏星是你'],
-            '清': ['清风吹过都是你', '清新如你', '清泉石上流', '清茶一盏，想你的味道'],
-            '白': ['白月光是你', '白色婚纱为你', '白头偕老只为你', '白鹭青天念你'],
-            '红': ['红豆生南国，春来发几枝', '红颜如你', '红烛映照你的笑', '红妆十里只为你'],
-            '蓝': ['蓝色天空如你', '蓝田日暖念你', '蓝调悠悠是你', '蓝海之心只为你'],
-            '绿': ['绿草如茵是你', '绿野仙踪念你', '绿意盎然如你', '绿水青山只为你'],
-            '紫': ['紫气东来是你', '紫罗兰香如你', '紫陌红尘念你', '紫色浪漫只为你'],
-            '粉': ['粉色少女心是你', '粉红回忆只为你', '粉妆玉砌如你', '粉色的梦里都是你'],
-            '青': ['青山绿水都是你', '青梅竹马是你', '青春岁月只为你', '青丝白发念你'],
-            '黄': ['黄昏日落都是你', '黄金时代只为你', '黄粱一梦是你', '黄河之水天上来'],
-            '橙': ['橙色温暖如你', '橙黄橘绿念你', '橙香淡淡是你', '橙色的光是你'],
-            '彩': ['彩虹般绚烂是你', '色彩斑斓都是你', '彩云追月念你', '彩蝶翩翩是你'],
-            '虹': ['虹桥连接你我', '虹影如梦是你', '虹光闪闪念你', '彩虹之上有你'],
-            '霞': ['霞光万道是你', '霞染天际如你', '霞光暮色念你', '霞蔚云蒸只为你'],
-            '雾': ['雾里看花是你', '雾散天晴念你', '雾锁山头山锁雾', '雾中影是你'],
-            '霜': ['霜叶红于二月花', '霜天月落念你', '霜染枫林是你', '霜白如你发梢'],
-            '露': ['露从今夜白，月是故乡明', '露珠闪烁是你', '露华浓念你', '露水心是你'],
-            '朝': ['朝朝暮暮都是你', '朝夕相处只为你', '朝霞满天如你', '朝花夕拾念你'],
-            '夜': ['夜色温柔如你', '夜空中最亮的星是你', '夜不能寐想你', '夜话绵绵只为你'],
-            '午': ['午后阳光如你', '午夜梦回念你', '午时花开是你', '午后的咖啡想你'],
-            '晚': ['晚风拂柳是你', '晚霞满天念你', '晚钟声声想你', '晚星闪烁只为你'],
-            '早': ['早安是你', '早春二月念你', '早知如此绊人心，何如当初莫相识'],
-            '情': ['情不知所起，一往而深', '情深缘浅只为你', '情到浓时人自醉', '情意绵绵无绝期'],
-            '缘': ['缘起缘落都是你', '缘定三生只为你', '缘分天注定，珍惜眼前人', '缘来是你'],
-            '福': ['福如东海长流水', '福气满满是你', '福星高照念你', '福至心灵只为你'],
-            '喜': ['喜上眉梢是你', '喜从天降念你', '喜笑颜开如你', '喜结良缘只为你'],
-            '吉': ['吉祥如意是你', '吉星高照念你', '吉庆有余是你', '吉人天相只为你'],
-            '如': ['如沐春风是你', '如花似玉念你', '如影随形是你', '如约而至只为你'],
-            '意': ['意中人是你', '意气风发念你', '意味深长是你', '意犹未尽只为你'],
-            '你': ['你是人间四月天', '你是我的全世界', '你是我藏不住的欢喜', '你一笑，整个世界都亮了'],
-            '我': ['我欲与君相知', '我住长江头，君住长江尾', '我自倾杯，君且随意', '我寄愁心与明月'],
-            '她': ['她是我的玫瑰', '她一笑倾城', '她在我心上', '她是人间的美好'],
-            '他': ['他是我眼中的星辰', '他一笑，万物生', '他在我心尖上', '他是我的太阳'],
-            '有': ['有你的地方就是家', '有你便是晴天', '有缘千里来相会', '有情人终成眷属'],
-            '无': ['无你之处皆是他乡', '无问西东只为你', '无怨无悔爱着你', '无与伦比的你'],
-            '在': ['在最好的年华遇见你', '在梦里都是你', '在心尖上是你', '在有你的地方'],
-            '不': ['不负如来不负卿', '不将就只为你', '不悔梦归处，只恨太匆匆', '不辞冰雪为卿热'],
-            '是': ['是你是你就是你', '是心动啊', '是风是雨都是你', '是梦终醒是你'],
-            '这': ['这是最好的安排', '这一生只为你', '这世界那么多人', '这次第，怎一个愁字了得'],
-            '那': ['那年初见你', '那时花开', '那个人是你', '那段时光只为你'],
-            '从': ['从今往后只为你', '从你的全世界路过', '从此君王不早朝', '从别后，忆相逢'],
-            '到': ['到此一游是你', '到老都是你', '到远方只为你', '到时再续前缘'],
-            '过': ['过尽千帆皆不是', '过眼云烟是你', '过客匆匆只为你', '过而能改善莫大焉'],
-            '与': ['与君初相识，犹如故人归', '与你相遇好幸运', '与子偕老只为你', '与天地兮比寿，与日月兮齐光'],
-            '共': ['共度余生是你', '共剪西窗烛', '共饮长江水', '共赴白头约'],
-            '同': ['同是天涯沦落人', '同甘共苦只为你', '同心同德是你', '同舟共济只为你'],
-            '会': ['会当凌绝顶，一览众山小', '会有时，直挂云帆济沧海', '会心一笑是你', '会者定离，去者必返'],
-            '能': ['能遇见你是最大的幸运', '能上九天揽月', '能下五洋捉鳖', '能屈能伸是你'],
-            '可': ['可盐可甜是你', '可是你', '可遇不可求', '可见一斑是你'],
-            '以': ['以梦为马，不负韶华', '以你为荣', '以爱之名只为你', '以心换心是你'],
-            '知': ['知否知否，应是绿肥红瘦', '知己是你', '知心爱人只为你', '知足常乐是你'],
-            '为': ['为伊消得人憔悴', '为你写诗', '为你静止', '为你做不可能的事'],
-            '所': ['所爱隔山海，山海皆可平', '所念皆星河', '所思在远道', '所遇皆良人'],
-            '得': ['得成比目何辞死', '得之我幸，失之我命', '得意忘形是你', '得道多助只为你'],
-            '失': ['失去你，世界便失了颜色', '失而复得是你', '失之东隅，收之桑榆', '失魂落魄只为你'],
-            '来': ['来日方长只为你', '来生再续前缘', '来来往往都是你', '来者是你'],
-            '去': ['去留无意是你', '去远方只为你', '去时雪满天山路', '去日苦多念你'],
-            '往': ['往事如烟是你', '往日时光念你', '往来无白丁是你', '往生桥等你'],
-            '回': ['回首向来萧瑟处', '回眸一笑百媚生', '回肠荡气是你', '回响梦里都是你'],
-            '归': ['归去来兮是你', '归心似箭念你', '归途有你', '归期未定只为你'],
-            '家': ['家是温暖的港湾', '家庭幸福只为你', '家乡的味道是你', '家书抵万金']
+            '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
+            '心': ['心之所向皆是你', '心动是最美的风景', '心中有光，眼中有你'],
+            '小': ['小小的世界里只有你', '小确幸都关于你', '小雨落时最想你'],
+            '美': ['美好都因你而起', '美梦里有你同行', '美得像一首诗'],
+            '丽': ['丽日清风皆是你', '丽影入我心', '丽人如画'],
+            '婷': ['婷婷玉立如初见', '婷影摇摇入梦来', '婷立风中只等你'],
+            '玉': ['玉洁冰清是你', '玉兰花开时想你', '玉手轻抚我心'],
+            '兰': ['兰花香里忆你', '兰心蕙质是你', '兰花开时遇见你'],
+            '雪': ['雪落无声念你', '雪白的世界里有你', '雪花开时最想你'],
+            '月': ['月下独酌只为你', '月光照亮你眼眸', '月圆之时最想你'],
+            '星': ['星光不负赶路人', '星星眨眼是你笑', '星河里只有你'],
+            '梦': ['梦里花落知多少', '梦中全是你的笑', '梦醒时分最想你'],
+            '雨': ['雨落时最想你', '雨滴是我想你的声音', '雨中撑着伞等你'],
+            '晴': ['晴空万里皆是你', '晴天里有你的笑', '晴好如你'],
+            '云': ['云卷云舒都像你', '云端里有你的梦', '云淡风轻时想你'],
+            '风': ['风起时最想你', '风中传来你的声音', '风过留痕都是你'],
+            '花': ['花开花落都为你', '花香里全是你的味道', '花前月下都是你'],
+            '芳': ['芳华正好遇见你', '芳心暗许只为你', '芳香四溢都是你'],
+            '慧': ['慧心巧思是你', '慧眼如炬看见你', '慧质兰心只为你'],
+            '琳': ['琳琅满目不如你', '琳光闪闪是你的笑', '琳瑯世界只有你'],
+            '瑶': ['瑶台月下遇见你', '瑶琴一曲只为你', '瑶池仙境不如你'],
+            '琪': ['琪花瑶草是你', '琪玉无瑕只为你', '琪树临风想你'],
+            '洁': ['洁白无瑕是你', '洁心如初只为你', '洁身自好等你来'],
+            '欣': ['欣喜若狂见到你', '欣然心动只为你', '欣欣向荣都是你'],
+            '悦': ['悦耳动听你的声音', '悦目赏心是你', '心悦君兮君不知'],
+            '怡': ['怡然自得见到你', '怡心怡情只为你', '怡和如风是你'],
+            '静': ['静水流深等你来', '静夜思你千万遍', '静好如初是你'],
+            '柔': ['柔情似水是你', '柔风细雨都是你', '柔肠百转只为你'],
+            '婉': ['婉转流年遇见你', '婉约如诗是你', '婉然一笑倾城'],
+            '雅': ['雅致如你', '雅韵千年只为你', '雅然一笑很倾城'],
+            '诗': ['诗里行间都是你', '诗意人生因为你', '诗酒趁年华，有你在身旁'],
+            '画': ['画里画外都是你', '画中仙是你', '画屏深处只等你'],
+            '书': ['书里藏着你的名字', '书写不尽的思念', '书香里全是你的味道'],
+            '一': ['一颦一笑都是你', '一眼万年都是你', '一生一世只为你'],
+            '念': ['念你千千万万遍', '念念不忘是你', '念及都是你的好'],
+            '思': ['思君不见君', '思念如马，自别离，未停蹄', '思及你时心会跳'],
+            '君': ['君问归期未有期', '君心似我心', '君临天下不如你'],
+            '佳': ['佳人如梦', '佳期如梦，柔情似水', '佳音传来都是你'],
+            '乐': ['乐在其中只因你', '乐意为你做一切', '乐声悠扬都是你'],
+            '安': ['安好如初是你', '安安心心只为你', '安暖相伴一生'],
+            '宁': ['宁静致远等你来', '宁缺毋滥只为你', '宁心静气念你'],
+            '欢': ['欢欢喜喜见到你', '欢声笑语都是你', '欢愉时光只因你'],
+            '甜': ['甜甜蜜蜜都是你', '甜言蜜语只为你', '甜在心头的你'],
+            '春': ['春风十里不如你', '春暖花开为你来', '春华秋实都是你'],
+            '夏': ['夏日炎炎想你的心更热', '夏荷盛开如你', '夏夜星辰都是你'],
+            '秋': ['秋叶飘落都是思念你', '秋月无边照你', '秋风萧瑟念你'],
+            '冬': ['冬日暖阳是你', '冬雪皑皑念你', '冬夜漫漫想你']
         };
 
-        // ============================================================
-        //  浪漫词库（备用）
-        // ============================================================
         const romanticLines = [
-            '你是我写过最美的诗',
-            '你的名字，是我见过最温柔的风景',
-            '念你千千万万遍',
-            '余生都是你',
-            '你是我的全世界',
-            '遇见你，花光了我所有运气',
-            '你是人间值得',
-            '一眼万年，都是你',
-            '愿做你一生的读者',
-            '你是我藏不住的欢喜',
-            '星河滚烫，你是人间理想',
-            '你是我所有温柔的来源',
-            '春风十里不如你',
-            '你是人间四月天',
-            '此心安处是你'
+            '你是我写过最美的诗', '你的名字，是我见过最温柔的风景',
+            '念你千千万万遍', '余生都是你', '你是我的全世界',
+            '遇见你，花光了我所有运气', '你是人间值得', '一眼万年，都是你'
         ];
-
-        function generatePoem(name, title) {
-            if (!name || name.trim() === '') return '请先输入你的名字哦 💕';
-            const chars = name.trim().split('');
-            const lines = [];
-            let foundWords = 0;
-            chars.forEach((char) => {
-                if (wordMap[char]) {
-                    const options = wordMap[char];
-                    const line = options[Math.floor(Math.random() * options.length)];
-                    lines.push(line);
-                    foundWords++;
-                }
-            });
-            if (foundWords < chars.length) {
-                const extraCount = chars.length - foundWords + 2;
-                for (let i = 0; i < extraCount && lines.length < 8; i++) {
-                    const randomLine = romanticLines[Math.floor(Math.random() * romanticLines.length)];
-                    if (!lines.includes(randomLine)) {
-                        lines.push(randomLine);
-                    }
-                }
-            }
-            while (lines.length < 3) {
-                lines.push(romanticLines[Math.floor(Math.random() * romanticLines.length)]);
-            }
-            const finalLines = [];
-            finalLines.push('✦ ' + title + ' ✦');
-            finalLines.push('');
-            const shuffledLines = shuffleArray([...lines]);
-            shuffledLines.forEach(line => { finalLines.push(line); });
-            finalLines.push('');
-            finalLines.push('—— 你的名字，是我写过最美的诗 ——');
-            return finalLines.join('\n');
-        }
 
         function shuffleArray(arr) {
             for (let i = arr.length - 1; i > 0; i--) {
@@ -590,80 +417,113 @@
             return arr;
         }
 
-        function generateFortuneReport(name1, name2) {
-            if (!name1 || !name1.trim() || !name2 || !name2.trim()) {
-                return '请先输入两个名字哦 💕';
+        function generatePoem(name, title) {
+            if (!name || name.trim() === '') return '请先输入你的名字哦 💕';
+            const chars = name.trim().split('');
+            const lines = [];
+            chars.forEach((char) => {
+                if (wordMap[char]) {
+                    const options = wordMap[char];
+                    lines.push(options[Math.floor(Math.random() * options.length)]);
+                }
+            });
+            while (lines.length < 3) {
+                lines.push(romanticLines[Math.floor(Math.random() * romanticLines.length)]);
             }
-            const n1 = name1.trim();
-            const n2 = name2.trim();
-            const fortuneWords = [
-                '天作之合', '琴瑟和鸣', '比翼双飞', '心有灵犀', '相濡以沫',
-                '白头偕老', '岁月静好', '一生所爱', '深情不渝', '良缘天定',
-                '花好月圆', '百年好合', '珠联璧合', '佳偶天成', '情深似海',
-                '不离不弃', '朝朝暮暮', '天长地久', '执子之手', '与子偕老'
-            ];
-            const loveQuotes = [
-                '你们的相遇，是星辰写下的诗篇',
-                '两个名字，一段缘分，一生故事',
-                '这世间所有的美好，都抵不过你们的刚刚好',
-                '爱不是寻找完美的人，而是学会用完美的眼光欣赏不完美的人',
-                '山河远阔，人间烟火，无一是你，无一不是你',
-                '愿有岁月可回首，且以深情共白头',
-                '春风十里，不如你。夏雨绵绵，不如你。秋月无边，不如你。冬雪皑皑，不如你。'
-            ];
-            const blessings = [
-                '愿你们的爱情，如春日的暖阳，温暖而不灼热',
-                '愿你们的岁月，如夏夜的星空，璀璨而宁静',
-                '愿你们的生活，如秋天的果实，丰盈而甜蜜',
-                '愿你们的未来，如冬日的炉火，温暖而长存',
-                '愿时光善待你们，愿岁月温柔以待'
-            ];
-            const randomWords = shuffleArray([...fortuneWords]).slice(0, 3);
-            const randomQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
-            const randomBless = blessings[Math.floor(Math.random() * blessings.length)];
-            const getStrokeCount = (name) => {
-                const base = name.length * 5 + 3;
-                return base + Math.floor(Math.random() * 3);
-            };
-            const stroke1 = getStrokeCount(n1);
-            const stroke2 = getStrokeCount(n2);
-            const totalStroke = stroke1 + stroke2;
+            const finalLines = [];
+            finalLines.push('✦ ' + title + ' ✦');
+            finalLines.push('');
+            shuffleArray(lines).forEach(line => { finalLines.push(line); });
+            finalLines.push('');
+            finalLines.push('—— 你的名字，是我写过最美的诗 ——');
+            return finalLines.join('\n');
+        }
+
+        function generateFortuneReport(name1, name2) {
+            if (!name1 || !name1.trim() || !name2 || !name2.trim()) return '请先输入两个名字哦 💕';
+            const n1 = name1.trim(),
+                n2 = name2.trim();
+            const words = ['天作之合', '琴瑟和鸣', '比翼双飞', '心有灵犀', '相濡以沫', '白头偕老', '岁月静好', '一生所爱', '良缘天定', '花好月圆', '百年好合', '珠联璧合', '佳偶天成', '不离不弃', '天长地久'];
+            const quotes = ['你们的相遇，是星辰写下的诗篇', '两个名字，一段缘分，一生故事', '山河远阔，人间烟火，无一是你，无一不是你', '愿有岁月可回首，且以深情共白头'];
+            const blessings = ['愿你们的爱情，如春日的暖阳，温暖而不灼热', '愿你们的岁月，如夏夜的星空，璀璨而宁静', '愿时光善待你们，愿岁月温柔以待'];
+            const rw = shuffleArray([...words]).slice(0, 3);
+            const rq = quotes[Math.floor(Math.random() * quotes.length)];
+            const rb = blessings[Math.floor(Math.random() * blessings.length)];
+            const s1 = n1.length * 5 + 3 + Math.floor(Math.random() * 3);
+            const s2 = n2.length * 5 + 3 + Math.floor(Math.random() * 3);
             const report = [
-                '═══════════════════════',
-                '  💕 命 名 吉 祥 笺  💕',
-                '═══════════════════════',
-                '',
-                '  ✦ ' + n1 + ' ✦ 与 ✦ ' + n2 + ' ✦',
-                '',
-                '  【姓名格局】',
-                '  ' + n1 + ' · 笔韵 ' + stroke1 + ' 画',
-                '  ' + n2 + ' · 笔韵 ' + stroke2 + ' 画',
-                '  双名合璧 · ' + totalStroke + ' 画成吉',
-                '',
-                '  【缘分天定】',
-                '  天格 · 地格 · 人格 · 三才相生',
-                '  ' + randomWords[0] + ' · ' + randomWords[1] + ' · ' + randomWords[2],
-                '',
-                '  【命理箴言】',
-                '  ' + randomQuote,
-                '',
-                '  【岁岁平安】',
-                '  ' + randomBless,
-                '',
-                '  【大吉之兆】',
-                '  ★ 良缘天定 · 佳偶天成 ★',
-                '  ★ 执子之手 · 与子偕老 ★',
-                '',
-                '  🏮 此命格为上上签 🏮',
-                '  情意绵绵 · 福泽深厚 · 天长地久',
-                '',
-                '  —— 星月为证，缘定今生 ——',
-                '',
-                '═══════════════════════',
-                '  💕 愿所有美好都如期而至 💕',
-                '═══════════════════════'
+                '═══════════════════════', '  💕 命 名 吉 祥 笺  💕', '═══════════════════════', '',
+                '  ✦ ' + n1 + ' ✦ 与 ✦ ' + n2 + ' ✦', '', '  【姓名格局】', '  ' + n1 + ' · 笔韵 ' + s1 + ' 画',
+                '  ' + n2 + ' · 笔韵 ' + s2 + ' 画', '  双名合璧 · ' + (s1 + s2) + ' 画成吉', '',
+                '  【缘分天定】', '  ' + rw[0] + ' · ' + rw[1] + ' · ' + rw[2], '', '  【命理箴言】', '  ' + rq, '',
+                '  【岁岁平安】', '  ' + rb, '', '  【大吉之兆】', '  ★ 良缘天定 · 佳偶天成 ★',
+                '  ★ 执子之手 · 与子偕老 ★', '', '  🏮 此命格为上上签 🏮', '  情意绵绵 · 福泽深厚 · 天长地久', '',
+                '  —— 星月为证，缘定今生 ——', '', '═══════════════════════',
+                '  💕 愿所有美好都如期而至 💕', '═══════════════════════'
             ];
             return report.join('\n');
+        }
+
+        // ============================================================
+        //  名字艺术画
+        // ============================================================
+        function showNameArt(name1, name2) {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('artOverlay');
+                const name1El = document.getElementById('artName1');
+                const name2El = document.getElementById('artName2');
+                const canvas = document.getElementById('artCanvas');
+                const btn = document.getElementById('artBtn');
+
+                // 设置名字
+                name1El.textContent = name1.trim();
+                name2El.textContent = name2.trim();
+
+                // 生成艺术字符
+                const chars1 = name1.trim().split('');
+                const chars2 = name2.trim().split('');
+                const allChars = [];
+
+                // 粉色系（第一个名字）
+                chars1.forEach((char, i) => {
+                    allChars.push({ char: char, type: 'pink', delay: i * 100 });
+                });
+
+                // 金色系（第二个名字）
+                chars2.forEach((char, i) => {
+                    allChars.push({ char: char, type: 'gold', delay: (chars1.length + i) * 100 });
+                });
+
+                // 随机打乱并插入分隔符
+                shuffleArray(allChars);
+
+                // 构建画布
+                canvas.innerHTML = '';
+                allChars.forEach((item, index) => {
+                    const span = document.createElement('span');
+                    span.className = 'art-char art-char-' + item.type;
+                    span.textContent = item.char;
+                    span.style.animationDelay = item.delay + 'ms';
+                    span.style.opacity = '0';
+                    span.style.transform = 'scale(0.5) rotate(-10deg)';
+                    canvas.appendChild(span);
+
+                    // 触发入场动画
+                    setTimeout(() => {
+                        span.style.opacity = '1';
+                        span.style.transform = 'scale(1) rotate(0deg)';
+                    }, 100 + item.delay);
+                });
+
+                // 显示
+                overlay.classList.add('show');
+
+                // 按钮事件
+                btn.onclick = function() {
+                    overlay.classList.remove('show');
+                    resolve();
+                };
+            });
         }
 
         // ============================================================
@@ -905,21 +765,19 @@
                                         '🌹 给最特别的你',
                                         '—— ' + loverName + '，你也是我写过最美的诗 ——',
                                         poem2,
-                                        function() {
+                                        async function() {
+                                            // 展示名字艺术画
+                                            await showNameArt(myName, loverName);
+
+                                            // 算命名报告 + 结尾
                                             const report = generateFortuneReport(myName, loverName);
                                             const ending = [
-                                                '',
-                                                '',
-                                                '💕 今天的故事在这里告一段落 💕',
-                                                '',
-                                                '但你们的故事，才刚刚开始。',
-                                                '',
+                                                '', '', '💕 今天的故事在这里告一段落 💕', '',
+                                                '但你们的故事，才刚刚开始。', '',
                                                 '愿岁月温柔，愿深情不负，',
-                                                '愿每一次回眸，都有彼此在灯火阑珊处。',
-                                                '',
+                                                '愿每一次回眸，都有彼此在灯火阑珊处。', '',
                                                 '✨ 山水万程，皆有好运。✨',
-                                                '💫 人间烟火，皆是温柔。💫',
-                                                '',
+                                                '💫 人间烟火，皆是温柔。💫', '',
                                                 '—— 愿所有美好，都与你们环环相扣 ——'
                                             ];
                                             const fullText = report + '\n\n' + ending.join('\n');

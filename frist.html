@@ -67,7 +67,7 @@
         .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px}
         .poem-box .btn{margin-top:18px}
 
-        /* 浪漫授权弹窗样式 */
+        /* 浪漫授权弹窗 */
         .auth-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:fadeInAuth .6s ease}
         @keyframes fadeInAuth{0%{opacity:0}100%{opacity:1}}
         @keyframes floatUpAuth{0%{opacity:0;transform:translateY(40px) scale(0.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
@@ -88,7 +88,7 @@
         .auth-btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.35);border:1px solid rgba(200,150,160,0.08)}
         .auth-footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:16px;letter-spacing:1px}
 
-        /* 笔画融合艺术画样式 */
+        /* 笔画融合艺术画 */
         .art-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99996;display:none;justify-content:center;align-items:center;background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408);padding:20px}
         .art-overlay.show{display:flex}
         .art-box{text-align:center;max-width:560px;width:100%;animation:floatUpAuth 0.8s cubic-bezier(.34,1.56,.64,1)}
@@ -99,10 +99,8 @@
         .art-stroke.pink{background:linear-gradient(135deg,#ff6b9d,#ffb6d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,107,157,0.15))}
         .art-stroke.gold{background:linear-gradient(135deg,#ffd700,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,215,0,0.12))}
         .art-stroke.white{color:rgba(255,255,255,0.06);font-size:min(8vw,36px)}
-        .art-stroke:hover{transform:scale(1.4) rotate(12deg)!important}
         .art-btn{margin-top:24px;padding:14px 48px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 6px 30px rgba(232,128,144,0.2)}
         .art-btn:active{transform:scale(.94)}
-        .art-name-label{font-size:12px;color:rgba(255,255,255,0.08);letter-spacing:2px;margin-bottom:8px}
 
         @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}.art-canvas-wrap{padding:16px 12px}.art-stroke{font-size:min(12vw,32px)}}
         @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}.art-stroke{font-size:min(10vw,26px)}}
@@ -145,7 +143,6 @@
         <button class="btn btn-gold" id="btnNext" style="display:none;margin-top:20px;">继续 💕</button>
     </div>
 
-    <!-- ===== 弹窗 ===== -->
     <div id="popup">
         <div class="popup-content">
             <div class="popup-title" id="popupTitle">💕</div>
@@ -154,7 +151,6 @@
         </div>
     </div>
 
-    <!-- ===== 名字输入 ===== -->
     <div id="nameInput">
         <div class="name-box">
             <h2 id="nameTitle">✍️ 写出你的名字</h2>
@@ -166,7 +162,6 @@
         </div>
     </div>
 
-    <!-- ===== 小诗展示 ===== -->
     <div id="poemDisplay">
         <div class="poem-box">
             <h2 id="poemTitle">🌹 给独一无二的你</h2>
@@ -465,14 +460,11 @@
                 const canvas = document.getElementById('artCanvas');
                 const btn = document.getElementById('artBtn');
 
-                // 清空
                 canvas.innerHTML = '';
 
-                // 把两个名字拆成单个字符
                 const chars1 = name1.trim().split('');
                 const chars2 = name2.trim().split('');
 
-                // 构建笔画数据：交替排列，粉色和金色
                 const strokes = [];
                 const maxLen = Math.max(chars1.length, chars2.length);
 
@@ -485,14 +477,11 @@
                     }
                 }
 
-                // 随机打乱顺序，让笔画交织更自然
                 shuffleArray(strokes);
 
-                // 添加一个分隔符在中间
                 const midIndex = Math.floor(strokes.length / 2);
                 strokes.splice(midIndex, 0, { char: '✦', type: 'white', delay: strokes.length * 120 });
 
-                // 渲染
                 strokes.forEach((item) => {
                     const span = document.createElement('span');
                     span.className = 'art-stroke ' + item.type;
@@ -500,13 +489,11 @@
                     span.style.transitionDelay = item.delay + 'ms';
                     canvas.appendChild(span);
 
-                    // 触发入场动画
                     setTimeout(() => {
                         span.classList.add('show');
                     }, 200 + item.delay);
                 });
 
-                // 显示
                 overlay.classList.add('show');
 
                 btn.onclick = function() {

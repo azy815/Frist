@@ -79,6 +79,7 @@
         .auth-box .btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.3);border:1px solid rgba(200,150,160,0.08)}
         .auth-box .footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:14px}
 
+        /* ===== 情侣名展示 - 颜色加深 ===== */
         .couple-box{background:rgba(255,255,255,0.05);border-radius:24px;padding:20px;margin:12px 0;border:1px solid rgba(255,255,255,0.06)}
         .couple-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
         .couple-item{flex:1;min-width:70px;text-align:center}
@@ -88,8 +89,9 @@
         .couple-item .name.gold{background:linear-gradient(135deg,#f5a623,#d4891a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .couple-item .desc{font-size:10px;color:rgba(90,61,74,0.15);margin-top:2px;letter-spacing:2px}
         .couple-divider{font-size:18px;color:rgba(90,61,74,0.08);font-weight:300}
-        .couple-tagline{font-size:12px;color:rgba(90,61,74,0.25);font-style:italic;margin-top:10px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(200,100,120,0.05);padding-top:10px}
-        .couple-intro{font-size:13px;color:rgba(90,61,74,0.3);margin-bottom:10px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(200,100,120,0.05);padding-bottom:10px}
+        /* 颜色加深 */
+        .couple-tagline{font-size:12px;color:#7a5a5a;font-style:italic;margin-top:10px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(200,100,120,0.05);padding-top:10px}
+        .couple-intro{font-size:13px;color:#8a6a6a;margin-bottom:10px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(200,100,120,0.05);padding-bottom:10px}
 
         @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-box h2{font-size:19px}.couple-item .name{font-size:20px}}
         @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-box h2{font-size:17px}.couple-item .name{font-size:16px}}
@@ -502,7 +504,6 @@
             btnHate.style.display = 'none';
             btnLove.disabled = true;
             btnLove.style.opacity = '0.7';
-            // 切换到第二阶段
             stage1.style.display = 'none';
             stage2.style.display = 'block';
             stage2.classList.add('active');
@@ -548,7 +549,6 @@
             btnNo.style.display = 'none';
             btnYes.disabled = true;
             btnYes.style.opacity = '0.7';
-            // 切换到第三阶段
             stage2.style.display = 'none';
             stage2.classList.remove('active');
             stage3.style.display = 'block';
@@ -742,7 +742,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="couple-tagline">${couple.intro}</div>
-                                                        <div class="couple-tagline" style="font-size:12px;border-top:none;padding-top:4px;opacity:0.5;">${couple.tagline}</div>
+                                                        <div class="couple-tagline" style="font-size:12px;border-top:none;padding-top:4px;opacity:0.8;">${couple.tagline}</div>
                                                     </div>
                                                 `;
                                             const report = generateFortuneReport(myName,

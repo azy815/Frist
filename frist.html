@@ -67,7 +67,7 @@
         .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px}
         .poem-box .btn{margin-top:18px}
 
-        /* 浪漫授权弹窗 */
+        /* 授权弹窗样式 */
         .auth-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:fadeInAuth .6s ease}
         @keyframes fadeInAuth{0%{opacity:0}100%{opacity:1}}
         @keyframes floatUpAuth{0%{opacity:0;transform:translateY(40px) scale(0.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
@@ -88,22 +88,20 @@
         .auth-btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.35);border:1px solid rgba(200,150,160,0.08)}
         .auth-footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:16px;letter-spacing:1px}
 
-        /* 笔画融合艺术画 */
-        .art-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99996;display:none;justify-content:center;align-items:center;background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408);padding:20px}
-        .art-overlay.show{display:flex}
-        .art-box{text-align:center;max-width:560px;width:100%;animation:floatUpAuth 0.8s cubic-bezier(.34,1.56,.64,1)}
-        .art-title{font-size:14px;color:rgba(255,255,255,0.2);letter-spacing:4px;font-weight:300;margin-bottom:20px}
-        .art-canvas-wrap{position:relative;width:100%;padding:20px;border:1px solid rgba(255,255,255,0.04);border-radius:24px;background:rgba(255,255,255,0.01);min-height:200px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:6px}
-        .art-stroke{display:inline-block;font-weight:900;font-size:min(10vw,48px);transition:all .8s cubic-bezier(.34,1.56,.64,1);cursor:default;opacity:0;transform:scale(0.3) rotate(-20deg)}
-        .art-stroke.show{opacity:1;transform:scale(1) rotate(0deg)}
-        .art-stroke.pink{background:linear-gradient(135deg,#ff6b9d,#ffb6d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,107,157,0.15))}
-        .art-stroke.gold{background:linear-gradient(135deg,#ffd700,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,215,0,0.12))}
-        .art-stroke.white{color:rgba(255,255,255,0.06);font-size:min(8vw,36px)}
-        .art-btn{margin-top:24px;padding:14px 48px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 6px 30px rgba(232,128,144,0.2)}
-        .art-btn:active{transform:scale(.94)}
+        /* 情侣网名展示样式 */
+        .couple-box{background:rgba(255,255,255,0.03);border-radius:24px;padding:24px 20px;margin:12px 0;border:1px solid rgba(255,255,255,0.06)}
+        .couple-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+        .couple-item{flex:1;min-width:80px;text-align:center}
+        .couple-item .icon{font-size:20px;color:rgba(255,255,255,0.2);margin-bottom:4px}
+        .couple-item .name{font-size:26px;font-weight:900;letter-spacing:2px}
+        .couple-item .name.pink{background:linear-gradient(135deg,#ffb6d9,#ff6b9d);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .couple-item .name.gold{background:linear-gradient(135deg,#ffd700,#f0a030);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .couple-item .desc{font-size:11px;color:rgba(255,255,255,0.2);margin-top:4px;letter-spacing:2px}
+        .couple-divider{font-size:20px;color:rgba(255,255,255,0.1);font-weight:300;padding:0 4px}
+        .couple-tagline{font-size:13px;color:rgba(255,255,255,0.25);font-style:italic;margin-top:12px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.04);padding-top:12px}
 
-        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}.art-canvas-wrap{padding:16px 12px}.art-stroke{font-size:min(12vw,32px)}}
-        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}.art-stroke{font-size:min(10vw,26px)}}
+        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}.couple-item .name{font-size:20px}}
+        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}.couple-item .name{font-size:16px}}
     </style>
 </head>
 <body>
@@ -143,6 +141,7 @@
         <button class="btn btn-gold" id="btnNext" style="display:none;margin-top:20px;">继续 💕</button>
     </div>
 
+    <!-- ===== 弹窗 ===== -->
     <div id="popup">
         <div class="popup-content">
             <div class="popup-title" id="popupTitle">💕</div>
@@ -151,6 +150,7 @@
         </div>
     </div>
 
+    <!-- ===== 名字输入 ===== -->
     <div id="nameInput">
         <div class="name-box">
             <h2 id="nameTitle">✍️ 写出你的名字</h2>
@@ -162,6 +162,7 @@
         </div>
     </div>
 
+    <!-- ===== 小诗展示 ===== -->
     <div id="poemDisplay">
         <div class="poem-box">
             <h2 id="poemTitle">🌹 给独一无二的你</h2>
@@ -169,15 +170,6 @@
             <div class="poem-divider"></div>
             <div class="poem-text" id="poemText"></div>
             <button class="btn btn-gold" id="poemNext">继续 💕</button>
-        </div>
-    </div>
-
-    <!-- ===== 笔画融合艺术画 ===== -->
-    <div class="art-overlay" id="artOverlay">
-        <div class="art-box">
-            <div class="art-title">✦ 两个名字，一笔一画，融成一幅画 ✦</div>
-            <div class="art-canvas-wrap" id="artCanvas"></div>
-            <button class="art-btn" id="artBtn">💕 继续</button>
         </div>
     </div>
 
@@ -340,6 +332,11 @@
             text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。'
         }];
 
+        // ============================================================
+        //  名字→小诗 + 文艺情侣名
+        // ============================================================
+
+        // 汉字→诗句映射
         const wordMap = {
             '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
             '心': ['心之所向皆是你', '心动是最美的风景', '心中有光，眼中有你'],
@@ -426,6 +423,153 @@
             return finalLines.join('\n');
         }
 
+        // ============================================================
+        //  文艺情侣名生成器（自然版）
+        // ============================================================
+
+        function generateCoupleNames(name1, name2) {
+            const n1 = name1.trim();
+            const n2 = name2.trim();
+
+            if (!n1 || !n2) return {
+                his: '✨',
+                hers: '✨',
+                tagline: '请先输入两个名字哦'
+            };
+
+            // 取首字和尾字
+            const first1 = n1.charAt(0);
+            const last1 = n1.charAt(n1.length - 1);
+            const first2 = n2.charAt(0);
+            const last2 = n2.charAt(n2.length - 1);
+
+            // 意象词库（文艺向）
+            const imagery = {
+                '伟': ['岸', '屹', '峰'],
+                '婷': ['汀', '停', '亭'],
+                '浩': ['远', '阔', '瀚'],
+                '雪': ['初', '落', '清'],
+                '阳': ['光', '暖', '晴'],
+                '月': ['光', '色', '影'],
+                '晨': ['光', '曦', '露'],
+                '曦': ['光', '晨', '微'],
+                '磊': ['石', '山', '嶙'],
+                '雨': ['落', '水', '霁'],
+                '航': ['行', '远', '舟'],
+                '梦': ['归', '里', '中'],
+                '明': ['光', '月', '朗'],
+                '辰': ['星', '光', '夜'],
+                '枫': ['晚', '落', '岸'],
+                '烟': ['波', '雨', '水'],
+                '舟': ['同', '行', '归'],
+                '晚': ['风', '安', '宁'],
+                '安': ['静', '宁', '暖'],
+                '念': ['忘', '想', '归'],
+                '钧': ['天', '衡', '音'],
+                '安': ['静', '宁', '暖'],
+                '枫': ['晚', '落', '岸'],
+                '宁': ['静', '安', '和'],
+                '清': ['风', '水', '浅'],
+                '顾': ['盼', '影', '望'],
+                '汐': ['潮', '水', '落'],
+                '笙': ['歌', '乐', '音'],
+                '暮': ['色', '光', '落'],
+                '陆': ['地', '岸', '途'],
+                '林': ['木', '间', '深'],
+                '长': ['安', '风', '久'],
+                '向': ['晚', '阳', '往'],
+                '远': ['行', '方', '梦'],
+                '归': ['来', '去', '途'],
+                '南': ['风', '山', '国'],
+                '北': ['雪', '风', '城']
+            };
+
+            // 默认词库
+            const defaultImagery = ['光', '风', '月', '雨', '星', '梦', '雪', '霜', '霞', '露'];
+
+            // 获取意象
+            const getImage = (char) => {
+                if (imagery[char]) return imagery[char];
+                // 尝试用最后一个字
+                const lastChar = char;
+                if (imagery[lastChar]) return imagery[lastChar];
+                return defaultImagery;
+            };
+
+            // 生成第一个名字的网名
+            const img1 = getImage(first1);
+            const img2 = getImage(first2);
+
+            // 随机取意象
+            const img1_1 = img1[Math.floor(Math.random() * img1.length)];
+            const img2_1 = img2[Math.floor(Math.random() * img2.length)];
+
+            // 确保两个字不同
+            let final1 = img1_1;
+            let final2 = img2_1;
+            if (final1 === final2) {
+                final2 = img2[(Math.floor(Math.random() * img2.length) + 1) % img2.length];
+            }
+
+            // 生成4种风格，随机选一种
+            const styles = [];
+
+            // 风格1：意象单字（最简洁）
+            styles.push({
+                his: final1,
+                hers: final2,
+                tagline: `${final1}与${final2}，一个在左，一个在右`
+            });
+
+            // 风格2：意象双字（加一个浪漫字）
+            const prefix1 = ['长', '清', '微', '轻', '晚', '初', '向', '南'][Math.floor(Math.random() * 8)];
+            const prefix2 = ['长', '清', '微', '轻', '晚', '初', '向', '北'][Math.floor(Math.random() * 8)];
+            styles.push({
+                his: prefix1 + final1,
+                hers: prefix2 + final2,
+                tagline: `${prefix1}${final1}，${prefix2}${final2}——遥遥相望，各自安好`
+            });
+
+            // 风格3：加一个修饰字
+            const mod1 = ['落', '入', '有', '无', '在', '若'][Math.floor(Math.random() * 6)];
+            const mod2 = ['落', '入', '有', '无', '在', '若'][Math.floor(Math.random() * 6)];
+            styles.push({
+                his: mod1 + final1,
+                hers: mod2 + final2,
+                tagline: `${mod1}${final1}，${mod2}${final2}——有风有月，有你有我`
+            });
+
+            // 风格4：留白式
+            const space1 = ['山', '水', '云', '风', '月', '星'][Math.floor(Math.random() * 6)];
+            const space2 = ['山', '水', '云', '风', '月', '星'][Math.floor(Math.random() * 6)];
+            styles.push({
+                his: space1 + '间' + final1,
+                hers: space2 + '中' + final2,
+                tagline: `${space1}间${final1}，${space2}中${final2}——山高水长，来日方长`
+            });
+
+            const selected = styles[Math.floor(Math.random() * styles.length)];
+
+            // 生成浪漫介绍
+            const intro = [
+                `“${selected.his}”是风，“${selected.hers}”是月，风月无边。`,
+                `你是“${selected.his}”，我是“${selected.hers}”，刚刚好。`,
+                `“${selected.his}”与“${selected.hers}”，隔着一整个世界的距离，却落在同一行诗里。`,
+                `世间万物，都不如“${selected.his}”和“${selected.hers}”凑在一起好看。`
+            ];
+
+            return {
+                his: selected.his,
+                hers: selected.hers,
+                tagline: selected.tagline,
+                intro: intro[Math.floor(Math.random() * intro.length)]
+            };
+        }
+
+        // ============================================================
+        //  算命名报告
+        // ============================================================
+
         function generateFortuneReport(name1, name2) {
             if (!name1 || !name1.trim() || !name2 || !name2.trim()) return '请先输入两个名字哦 💕';
             const n1 = name1.trim(),
@@ -449,58 +593,6 @@
                 '  💕 愿所有美好都如期而至 💕', '═══════════════════════'
             ];
             return report.join('\n');
-        }
-
-        // ============================================================
-        //  笔画融合艺术画
-        // ============================================================
-        function showArt(name1, name2) {
-            return new Promise((resolve) => {
-                const overlay = document.getElementById('artOverlay');
-                const canvas = document.getElementById('artCanvas');
-                const btn = document.getElementById('artBtn');
-
-                canvas.innerHTML = '';
-
-                const chars1 = name1.trim().split('');
-                const chars2 = name2.trim().split('');
-
-                const strokes = [];
-                const maxLen = Math.max(chars1.length, chars2.length);
-
-                for (let i = 0; i < maxLen; i++) {
-                    if (i < chars1.length) {
-                        strokes.push({ char: chars1[i], type: 'pink', delay: strokes.length * 120 });
-                    }
-                    if (i < chars2.length) {
-                        strokes.push({ char: chars2[i], type: 'gold', delay: strokes.length * 120 });
-                    }
-                }
-
-                shuffleArray(strokes);
-
-                const midIndex = Math.floor(strokes.length / 2);
-                strokes.splice(midIndex, 0, { char: '✦', type: 'white', delay: strokes.length * 120 });
-
-                strokes.forEach((item) => {
-                    const span = document.createElement('span');
-                    span.className = 'art-stroke ' + item.type;
-                    span.textContent = item.char;
-                    span.style.transitionDelay = item.delay + 'ms';
-                    canvas.appendChild(span);
-
-                    setTimeout(() => {
-                        span.classList.add('show');
-                    }, 200 + item.delay);
-                });
-
-                overlay.classList.add('show');
-
-                btn.onclick = function() {
-                    overlay.classList.remove('show');
-                    resolve();
-                };
-            });
         }
 
         // ============================================================
@@ -742,11 +834,31 @@
                                         '🌹 给最特别的你',
                                         '—— ' + loverName + '，你也是我写过最美的诗 ——',
                                         poem2,
-                                        async function() {
-                                            // 展示笔画融合艺术画
-                                            await showArt(myName, loverName);
+                                        function() {
+                                            // 生成文艺情侣名
+                                            const couple = generateCoupleNames(myName, loverName);
 
-                                            // 算命名报告 + 结尾
+                                            // 构建情侣名展示HTML
+                                            const coupleHTML = `
+                                                    <div class="couple-box">
+                                                        <div class="couple-row">
+                                                            <div class="couple-item">
+                                                                <div class="icon">✦</div>
+                                                                <div class="name pink">${couple.his}</div>
+                                                                <div class="desc">他的名</div>
+                                                            </div>
+                                                            <div class="couple-divider">💕</div>
+                                                            <div class="couple-item">
+                                                                <div class="icon">✦</div>
+                                                                <div class="name gold">${couple.hers}</div>
+                                                                <div class="desc">她的名</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="couple-tagline">${couple.intro}</div>
+                                                        <div class="couple-tagline" style="font-size:12px;border-top:none;padding-top:4px;opacity:0.5;">${couple.tagline}</div>
+                                                    </div>
+                                                `;
+
                                             const report = generateFortuneReport(myName, loverName);
                                             const ending = [
                                                 '', '', '💕 今天的故事在这里告一段落 💕', '',
@@ -757,7 +869,8 @@
                                                 '💫 人间烟火，皆是温柔。💫', '',
                                                 '—— 愿所有美好，都与你们环环相扣 ——'
                                             ];
-                                            const fullText = report + '\n\n' + ending.join('\n');
+                                            const fullText = coupleHTML + '\n\n' + report + '\n\n' + ending
+                                                .join('\n');
                                             showPoemDisplay(
                                                 '💕 命 名 吉 祥 笺 · 上上签 💕',
                                                 '—— ' + myName + ' ✦ ' + loverName + ' —— 缘定今生',
@@ -819,7 +932,12 @@
             const container = document.getElementById('poemDisplay');
             document.getElementById('poemTitle').textContent = title;
             document.getElementById('poemSub').textContent = sub;
-            document.getElementById('poemText').textContent = text;
+            // 如果是HTML内容，直接设置innerHTML
+            if (text.includes('<div class="couple-box">')) {
+                document.getElementById('poemText').innerHTML = text;
+            } else {
+                document.getElementById('poemText').textContent = text;
+            }
             container.classList.add('show');
             poemCallback = callback;
 

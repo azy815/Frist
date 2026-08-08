@@ -108,6 +108,7 @@
         .couple-item .desc{font-size:11px;color:rgba(255,255,255,0.2);margin-top:4px;letter-spacing:2px}
         .couple-divider{font-size:20px;color:rgba(255,255,255,0.1);font-weight:300;padding:0 4px}
         .couple-tagline{font-size:13px;color:rgba(255,255,255,0.25);font-style:italic;margin-top:12px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.04);padding-top:12px}
+        .couple-intro{font-size:14px;color:rgba(255,200,180,0.4);margin-bottom:12px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px}
 
         @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}.couple-item .name{font-size:20px}}
         @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}.couple-item .name{font-size:16px}}
@@ -225,20 +226,20 @@
                 isMusicPlaying = false;
                 btn.classList.remove('playing');
             } else {
-                audio.play().catch(e => console.log('音乐播放需要用户交互'));
-                isMusicPlaying = true;
-                btn.classList.add('playing');
+                audio.play().then(() => {
+                    isMusicPlaying = true;
+                    btn.classList.add('playing');
+                }).catch(e => console.log('播放被拦截'));
             }
         }
 
-        function tryAutoPlayMusic() {
-            initAudio();
+        function startMusic() {
+            if (!musicReady) initAudio();
+            if (isMusicPlaying) return;
             audio.play().then(() => {
                 isMusicPlaying = true;
                 document.getElementById('musicBtn').classList.add('playing');
-            }).catch(() => {
-                console.log('自动播放被浏览器阻止，等待用户点击');
-            });
+            }).catch(() => console.log('音乐播放被拦截'));
         }
 
         // ============================================================
@@ -316,18 +317,24 @@
         //  启动应用
         // ============================================================
         async function startApp() {
-            // 先尝试自动播放音乐
-            tryAutoPlayMusic();
+            // 先创建音乐按钮
+            createMusicBtn();
 
             if (isAuthorized()) {
                 document.getElementById('stage1').style.display = 'block';
+                // 已授权用户自动播放音乐
+                setTimeout(startMusic, 300);
                 return;
             }
             const result = await showAuthDialog();
             if (result) {
                 document.getElementById('stage1').style.display = 'block';
+                // 授权成功后播放音乐
+                setTimeout(startMusic, 300);
             } else {
                 document.getElementById('stage1').style.display = 'block';
+                // 演示模式也播放音乐
+                setTimeout(startMusic, 300);
                 setTimeout(() => {
                     const banner = document.createElement('div');
                     banner.style.cssText =
@@ -343,8 +350,8 @@
             }
         }
 
-        // 创建音乐按钮（在页面加载后显示）
-        document.addEventListener('DOMContentLoaded', function() {
+        function createMusicBtn() {
+            if (document.getElementById('musicBtn')) return;
             const btn = document.createElement('button');
             btn.id = 'musicBtn';
             btn.className = 'music-btn';
@@ -352,9 +359,7 @@
             btn.title = '播放/暂停背景音乐';
             btn.onclick = toggleMusic;
             document.body.appendChild(btn);
-        });
-
-        startApp();
+        }
 
         // ============================================================
         //  完整互动逻辑
@@ -842,6 +847,10 @@
                                             loverName);
                                             const coupleHTML = `
                                                     <div class="couple-box">
+                                                        <div class="couple-intro">
+                                                            🌸 星海为你择名，人间从此成双。<br>
+                                                            你的名字，ta的名字，刚好凑成一首诗。
+                                                        </div>
                                                         <div class="couple-row">
                                                             <div class="couple-item">
                                                                 <div class="icon">✦</div>
@@ -979,6 +988,9 @@
                 if (e.target === this) this.remove();
             });
         }
+
+        // 启动应用
+        startApp();
 
         console.log('💕 完整旅程已加载！');
         console.log('🗝️ 统一授权码：' + SECRET_KEY);

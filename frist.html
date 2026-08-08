@@ -7,103 +7,103 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         html,body{width:100%;min-height:100vh;overflow:hidden}
-        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408);overflow:hidden;position:relative}
-        body.pink-bg{background:radial-gradient(ellipse at center,#1a0a2e,#0d0d1a,#08080e)!important}
+        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;transition:background .8s ease;overflow:hidden;position:relative}
+        body.pink-bg{background:radial-gradient(ellipse at center,#ffe4ec,#ffd0d8,#ffb8c6)!important}
         body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
 
-        /* 音乐按钮 */
-        .music-btn{position:fixed;top:20px;right:20px;z-index:99998;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;transition:all .3s;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
-        .music-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7)}
-        .music-btn.playing{color:#ffb6d9;border-color:rgba(255,182,217,0.25);animation:musicPulse 1.5s ease-in-out infinite}
-        @keyframes musicPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,157,0.1)}50%{box-shadow:0 0 0 10px rgba(255,107,157,0)}}
+        /* 音乐按钮（可手动开关） */
+        .music-btn{position:fixed;top:20px;right:20px;z-index:99998;width:44px;height:44px;border-radius:50%;border:2px solid rgba(200,100,120,0.12);background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);color:rgba(90,61,74,0.4);font-size:20px;cursor:pointer;transition:all .3s;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+        .music-btn:hover{background:rgba(255,255,255,0.25);border-color:rgba(200,100,120,0.2);color:rgba(90,61,74,0.7)}
+        .music-btn.playing{color:#d47a8a;border-color:rgba(200,100,120,0.2);animation:musicPulse 1.5s ease-in-out infinite}
+        @keyframes musicPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,100,120,0.1)}50%{box-shadow:0 0 0 10px rgba(200,100,120,0)}}
         .music-btn .note{display:inline-block}
         .music-btn.playing .note{animation:noteDance 0.6s ease-in-out infinite alternate}
         @keyframes noteDance{0%{transform:scale(1)}100%{transform:scale(1.2)}}
 
         /* 卡片 */
-        .card{position:relative;z-index:20;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.08);margin:0 auto;transition:all .5s ease}
-        .card.champagne{background:linear-gradient(145deg,#2a1a1a,#1a0a0a)!important;border:2px solid #d4a86a!important}
+        .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
+        .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
         .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
         .card.hidden{display:none}
 
         .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-        .question{font-size:24px;font-weight:700;color:#f0e6ff;margin:10px 0 4px;text-shadow:0 0 30px rgba(255,200,255,0.1)}
-        .hint{color:rgba(255,255,255,0.4);font-size:14px;margin-bottom:20px}
-        .love-verse{color:rgba(255,255,255,0.25);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(255,255,255,0.05);padding-top:14px;font-style:italic}
+        .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
+        .hint{color:rgba(90,61,74,.6);font-size:14px;margin-bottom:20px}
+        .love-verse{color:rgba(90,61,74,.5);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(200,100,120,.1);padding-top:14px;font-style:italic}
         .love-verse .highlight{color:#d47a8a;font-weight:500}
         .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
         .btn{padding:14px 32px;border:none;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;min-width:100px;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
         .btn:active{transform:scale(.94)}
         .btn-love{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff}
-        .btn-hate{background:rgba(200,150,160,.12);color:rgba(255,255,255,.4);border:1px solid rgba(200,150,160,.12)}
+        .btn-hate{background:rgba(200,150,160,.15);color:rgba(90,61,74,.5);border:1px solid rgba(200,150,160,.15)}
         .btn-primary{background:linear-gradient(135deg,#e8b0c0,#d490a0);color:#fff}
         .btn-gold{background:linear-gradient(135deg,#d4a86a,#c89850);color:#fff;box-shadow:0 6px 30px rgba(180,130,80,.2)}
-        .result{margin-top:18px;font-size:18px;font-weight:600;color:#f0e6ff;min-height:44px}
+        .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
         .card-stage2{display:none}.card-stage2.active{display:block}
         .card-stage3{display:none}.card-stage3.active{display:block}
 
-        .bless{position:fixed;z-index:25;font-size:16px;font-weight:600;color:#d4a86a;padding:10px 22px;border-radius:30px;background:rgba(255,255,255,0.05);border:1px solid rgba(212,168,106,0.2);backdrop-filter:blur(4px);white-space:nowrap;animation:floatBless linear forwards;opacity:0;cursor:pointer;transition:all .3s;user-select:none;-webkit-tap-highlight-color:transparent}
+        .bless{position:fixed;z-index:25;font-size:16px;font-weight:600;color:#5a3d2a;padding:10px 22px;border-radius:30px;background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(4px);white-space:nowrap;animation:floatBless linear forwards;opacity:0;cursor:pointer;transition:all .3s;user-select:none;-webkit-tap-highlight-color:transparent}
         .bless:active{transform:scale(.95)}
         @keyframes floatBless{0%{opacity:0;transform:translateY(20px) scale(.9)}12%{opacity:1;transform:translateY(0) scale(1)}85%{opacity:1;transform:translateY(-100px) scale(1)}100%{opacity:0;transform:translateY(-160px) scale(.9)}}
 
-        #popup{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(8px)}
+        #popup{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.4);backdrop-filter:blur(8px)}
         #popup.show{display:flex}
-        .popup-content{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:30px;padding:36px 28px;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
-        .popup-title{font-size:22px;font-weight:700;color:#d4a86a;margin-bottom:12px}
-        .popup-body{font-size:16px;line-height:1.8;color:rgba(255,255,255,0.7);text-align:left;white-space:pre-wrap;word-break:break-word}
+        .popup-content{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:30px;padding:36px 28px;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .popup-title{font-size:22px;font-weight:700;color:#5a3d2a;margin-bottom:12px}
+        .popup-body{font-size:16px;line-height:1.8;color:#4a3d3a;text-align:left;white-space:pre-wrap;word-break:break-word}
         .popup-close{display:block;margin:18px auto 0;padding:12px 40px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s}
         .popup-close:active{transform:scale(.94)}
 
-        #nameInput{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9998;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.6);backdrop-filter:blur(10px)}
+        #nameInput{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9998;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(10px)}
         #nameInput.show{display:flex}
-        .name-box{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:36px 28px;max-width:420px;width:90%;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
-        .name-box h2{font-size:22px;color:#d4a86a;margin-bottom:8px}
-        .name-box .sub-hint{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:20px;line-height:1.6}
-        .name-box input{width:100%;padding:16px 20px;border:2px solid rgba(212,168,106,0.2);border-radius:30px;font-size:20px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;outline:none;background:rgba(255,255,255,0.06);transition:all .3s;text-align:center;color:#f0e6ff;letter-spacing:2px}
-        .name-box input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.1)}
-        .name-box input::placeholder{color:rgba(255,255,255,0.2);font-size:16px;letter-spacing:0}
+        .name-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .name-box h2{font-size:22px;color:#5a3d2a;margin-bottom:8px}
+        .name-box .sub-hint{font-size:14px;color:rgba(90,61,42,.6);margin-bottom:20px;line-height:1.6}
+        .name-box input{width:100%;padding:16px 20px;border:2px solid #d4a86a;border-radius:30px;font-size:20px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;outline:none;background:rgba(255,255,255,.6);transition:all .3s;text-align:center;color:#5a3d2a;letter-spacing:2px}
+        .name-box input:focus{border-color:#c89850;background:rgba(255,255,255,.8);box-shadow:0 0 30px rgba(180,130,80,.15)}
+        .name-box input::placeholder{color:rgba(90,61,42,.25);font-size:16px;letter-spacing:0}
         .name-box .btn-group{margin-top:20px;gap:12px;display:flex;justify-content:center;flex-wrap:wrap}
         .name-box .btn{min-width:120px}
 
-        #poemDisplay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9997;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);padding:20px}
+        #poemDisplay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9997;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);padding:20px}
         #poemDisplay.show{display:flex}
-        .poem-box{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:36px 28px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
-        .poem-box h2{font-size:20px;color:#d4a86a;margin-bottom:4px}
-        .poem-box .sub{font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:12px}
+        .poem-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .poem-box h2{font-size:20px;color:#5a3d2a;margin-bottom:4px}
+        .poem-box .sub{font-size:13px;color:rgba(90,61,42,.5);margin-bottom:12px}
         .poem-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,#d4a86a,transparent);margin:14px auto}
-        .poem-text{font-size:16px;line-height:2.2;color:rgba(255,255,255,0.7);white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px;text-align:left}
+        .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px;text-align:left}
         .poem-box .btn{margin-top:18px}
 
         /* 星门弹窗 */
-        #authOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.8);backdrop-filter:blur(16px)}
+        #authOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px)}
         #authOverlay.hidden{display:none}
-        .auth-box{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:40px 32px;max-width:420px;width:90%;border:2px solid rgba(212,168,106,0.2);box-shadow:0 40px 100px rgba(0,0,0,0.3);text-align:center}
+        .auth-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 32px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 40px 100px rgba(0,0,0,0.2);text-align:center}
         .auth-box .icon{font-size:48px;display:block;margin-bottom:8px}
-        .auth-box h2{font-size:20px;color:#d4a86a;margin-bottom:6px}
-        .auth-box p{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:6px;line-height:1.6}
-        .auth-box input{width:100%;padding:14px 20px;border:2px solid rgba(212,168,106,0.2);border-radius:60px;font-size:18px;outline:none;background:rgba(255,255,255,0.06);text-align:center;color:#f0e6ff;margin-bottom:14px;box-sizing:border-box;transition:all .3s}
-        .auth-box input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.1)}
-        .auth-box input::placeholder{color:rgba(255,255,255,0.2)}
+        .auth-box h2{font-size:20px;color:#5a3d2a;margin-bottom:6px}
+        .auth-box p{font-size:14px;color:rgba(90,61,42,0.5);margin-bottom:6px;line-height:1.6}
+        .auth-box input{width:100%;padding:14px 20px;border:2px solid rgba(212,168,106,0.2);border-radius:60px;font-size:18px;outline:none;background:rgba(255,255,255,0.4);text-align:center;color:#5a3d2a;margin-bottom:14px;box-sizing:border-box;transition:all .3s}
+        .auth-box input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.7)}
+        .auth-box input::placeholder{color:rgba(90,61,42,0.2)}
         .auth-box .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
         .auth-box .btn{padding:12px 36px;border:none;border-radius:60px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;min-width:120px}
         .auth-box .btn:active{transform:scale(.94)}
         .auth-box .btn-primary{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff}
-        .auth-box .btn-secondary{background:rgba(200,150,160,0.08);color:rgba(255,255,255,0.3);border:1px solid rgba(200,150,160,0.08)}
-        .auth-box .footer{font-size:11px;color:rgba(255,255,255,0.15);margin-top:14px}
+        .auth-box .btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.3);border:1px solid rgba(200,150,160,0.08)}
+        .auth-box .footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:14px}
 
         /* 情侣名展示 */
-        .couple-box{background:rgba(255,255,255,0.03);border-radius:24px;padding:20px;margin:12px 0;border:1px solid rgba(255,255,255,0.05)}
+        .couple-box{background:rgba(255,255,255,0.05);border-radius:24px;padding:20px;margin:12px 0;border:1px solid rgba(255,255,255,0.06)}
         .couple-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
         .couple-item{flex:1;min-width:70px;text-align:center}
-        .couple-item .icon{font-size:18px;color:rgba(255,255,255,0.15);margin-bottom:2px}
+        .couple-item .icon{font-size:18px;color:rgba(90,61,74,0.15);margin-bottom:2px}
         .couple-item .name{font-size:24px;font-weight:900;letter-spacing:2px}
-        .couple-item .name.pink{background:linear-gradient(135deg,#ff4d7a,#d6336b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,77,122,0.15))}
-        .couple-item .name.gold{background:linear-gradient(135deg,#f5a623,#d4891a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(245,166,35,0.12))}
-        .couple-item .desc{font-size:10px;color:rgba(255,255,255,0.15);margin-top:2px;letter-spacing:2px}
-        .couple-divider{font-size:18px;color:rgba(255,255,255,0.08);font-weight:300}
-        .couple-tagline{font-size:12px;color:rgba(255,200,180,0.25);font-style:italic;margin-top:10px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.03);padding-top:10px}
-        .couple-intro{font-size:13px;color:rgba(255,200,180,0.35);margin-bottom:10px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:10px}
+        .couple-item .name.pink{background:linear-gradient(135deg,#ff4d7a,#d6336b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .couple-item .name.gold{background:linear-gradient(135deg,#f5a623,#d4891a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .couple-item .desc{font-size:10px;color:rgba(90,61,74,0.15);margin-top:2px;letter-spacing:2px}
+        .couple-divider{font-size:18px;color:rgba(90,61,74,0.08);font-weight:300}
+        .couple-tagline{font-size:12px;color:rgba(90,61,74,0.25);font-style:italic;margin-top:10px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(200,100,120,0.05);padding-top:10px}
+        .couple-intro{font-size:13px;color:rgba(90,61,74,0.3);margin-bottom:10px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(200,100,120,0.05);padding-bottom:10px}
 
         @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-box h2{font-size:19px}.couple-item .name{font-size:20px}}
         @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-box h2{font-size:17px}.couple-item .name{font-size:16px}}
@@ -112,8 +112,8 @@
 <body>
 
     <!-- ===== 音乐按钮 ===== -->
-    <button class="music-btn" id="musicBtn" title="播放/暂停背景音乐">
-        <span class="note">♪</span>
+    <button class="music-btn" id="musicBtn" title="点击开关音乐">
+        <span class="note">♫</span>
     </button>
 
     <!-- ===== 星门弹窗 ===== -->
@@ -200,7 +200,7 @@
 
     <script>
         // ============================================================
-        //  🎵 背景音乐
+        //  🎵 背景音乐（自动播放 + 循环）
         // ============================================================
         const MUSIC_URL = 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Steve_Combs/Transitions/Steve_Combs_-_Daydream.mp3';
         const SECRET_KEY = 'ROSE2026';
@@ -218,6 +218,25 @@
             return audio;
         }
 
+        function startMusic() {
+            initAudio();
+            audio.play().then(() => {
+                isMusicPlaying = true;
+                document.getElementById('musicBtn').classList.add('playing');
+                document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
+            }).catch(() => {
+                // 浏览器拦截，点击页面任意位置后重试
+                document.addEventListener('click', function playOnClick() {
+                    audio.play().then(() => {
+                        isMusicPlaying = true;
+                        document.getElementById('musicBtn').classList.add('playing');
+                        document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
+                    }).catch(() => {});
+                    document.removeEventListener('click', playOnClick);
+                });
+            });
+        }
+
         function toggleMusic() {
             const btn = document.getElementById('musicBtn');
             initAudio();
@@ -232,9 +251,7 @@
                     isMusicPlaying = true;
                     btn.classList.add('playing');
                     btn.innerHTML = '<span class="note">♫</span>';
-                }).catch(() => {
-                    alert('🎵 请点击页面任意位置后重试播放音乐');
-                });
+                }).catch(() => {});
             }
         }
 
@@ -246,15 +263,16 @@
         const authBtn = document.getElementById('authBtn');
         const demoBtn = document.getElementById('demoBtn');
 
+        // 页面加载后立即尝试播放音乐
+        startMusic();
+
         function showMainContent() {
             authOverlay.classList.add('hidden');
             document.getElementById('stage1').style.display = 'block';
-            initAudio();
-            audio.play().then(() => {
-                isMusicPlaying = true;
-                document.getElementById('musicBtn').classList.add('playing');
-                document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
-            }).catch(() => {});
+            // 确保音乐播放
+            if (!isMusicPlaying) {
+                startMusic();
+            }
         }
 
         function validateKey() {
@@ -282,7 +300,7 @@
             setTimeout(() => {
                 const banner = document.createElement('div');
                 banner.style.cssText =
-                    'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99998;background:rgba(255,107,129,0.85);color:#fff;padding:10px 22px;border-radius:60px;font-size:13px;font-weight:500;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 10px 40px rgba(255,107,129,0.15);cursor:pointer;transition:all .3s;text-align:center;max-width:90%;';
+                    'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99998;background:rgba(200,100,120,0.85);color:#fff;padding:10px 22px;border-radius:60px;font-size:13px;font-weight:500;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 10px 40px rgba(200,100,120,0.1);cursor:pointer;transition:all .3s;text-align:center;max-width:90%;';
                 banner.innerHTML =
                     '🌷 星星的倒影 · <span style="text-decoration:underline;font-weight:600;">点击输入口令解锁完整星海</span>';
                 banner.onclick = function() {
@@ -314,9 +332,6 @@
             { icon: '💕', title: '爱意随风起，风止意难平', text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。' }
         ];
 
-        // ============================================================
-        //  情侣名生成词库（扩展版）
-        // ============================================================
         const coupleNameMap = {
             '伟': ['岸', '屹', '峰', '岳', '峦'],
             '婷': ['汀', '停', '亭', '静', '立'],
@@ -373,12 +388,9 @@
             '秋': ['月', '风', '色', '叶', '光'],
             '冬': ['雪', '风', '夜', '光', '暖']
         };
-
         const defaultImagery = ['光', '风', '月', '雨', '星', '梦', '雪', '云', '水', '山'];
 
         function getCoupleImage(char) {
-            if (coupleNameMap[char]) return coupleNameMap[char];
-            // 尝试用最后一位
             if (coupleNameMap[char]) return coupleNameMap[char];
             return defaultImagery;
         }
@@ -902,16 +914,16 @@
         function showFinalMessage() {
             const card = document.createElement('div');
             card.style.cssText =
-                'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9996;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);';
+                'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9996;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.4);backdrop-filter:blur(10px);';
             card.innerHTML = `
-                    <div style="background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:40px 30px;max-width:420px;width:90%;text-align:center;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);">
+                    <div style="background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 30px;max-width:420px;width:90%;text-align:center;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.2);">
                         <div style="font-size:72px;margin-bottom:16px;">💕</div>
-                        <h2 style="font-size:24px;color:#d4a86a;margin-bottom:8px;">故事还在继续</h2>
-                        <p style="font-size:16px;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:20px;">
+                        <h2 style="font-size:24px;color:#5a3d2a;margin-bottom:8px;">故事还在继续</h2>
+                        <p style="font-size:16px;color:rgba(90,61,42,.6);line-height:1.8;margin-bottom:20px;">
                             <strong style="color:#d47a8a;">${myName}</strong> 和 <strong style="color:#d47a8a;">${loverName}</strong><br>
                             两个名字，已经写进了同一个故事里。<br>
                             每一笔都是心动，每一划都是温柔。<br>
-                            <span style="color:#d4a86a;font-weight:600;">愿所有的美好，都与你们环环相扣。</span>
+                            <span style="color:#d47a8a;font-weight:600;">愿所有的美好，都与你们环环相扣。</span>
                         </p>
                         <button onclick="this.parentElement.parentElement.remove()" style="padding:14px 40px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;">
                             💕 我会永远记得
@@ -926,6 +938,7 @@
 
         console.log('💕 完整旅程已加载！');
         console.log('🗝️ 授权码：' + SECRET_KEY);
+        console.log('🎵 音乐已自动播放');
     </script>
 
 </body>

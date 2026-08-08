@@ -24,14 +24,12 @@
         .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
         .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
         .card.hidden{display:none}
-
         .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
         .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
         .hint{color:rgba(90,61,74,.6);font-size:14px;margin-bottom:20px}
         .love-verse{color:rgba(90,61,74,.5);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(200,100,120,.1);padding-top:14px;font-style:italic}
         .love-verse .highlight{color:#d47a8a;font-weight:500}
-
         .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
         .btn{padding:14px 32px;border:none;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;min-width:100px;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
         .btn:active{transform:scale(.94)}
@@ -42,11 +40,9 @@
         .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
         .card-stage2{display:none}.card-stage2.active{display:block}
         .card-stage3{display:none}.card-stage3.active{display:block}
-
         .bless{position:fixed;z-index:25;font-size:16px;font-weight:600;color:#5a3d2a;padding:10px 22px;border-radius:30px;background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0);border:2px solid #d4a86a;box-shadow:0 4px 20px rgba(180,130,80,.2);white-space:nowrap;animation:floatBless linear forwards;opacity:0;cursor:pointer;transition:all .3s ease;user-select:none;-webkit-tap-highlight-color:transparent}
         .bless:active{transform:scale(.95)}
         @keyframes floatBless{0%{opacity:0;transform:translateY(20px) scale(.9)}12%{opacity:1;transform:translateY(0) scale(1)}85%{opacity:1;transform:translateY(-100px) scale(1)}100%{opacity:0;transform:translateY(-160px) scale(.9)}}
-
         #popup{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
         #popup.show{display:flex}
         .popup-content{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:30px;padding:36px 28px;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.3);border:2px solid #d4a86a;animation:popUp .4s cubic-bezier(.34,1.56,.64,1)}
@@ -55,7 +51,6 @@
         .popup-body{font-size:16px;line-height:1.8;color:#4a3d3a;text-align:left;white-space:pre-wrap;word-break:break-word}
         .popup-close{display:block;margin:18px auto 0;padding:12px 40px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s}
         .popup-close:active{transform:scale(.94)}
-
         #nameInput{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9998;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
         #nameInput.show{display:flex}
         .name-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
@@ -66,7 +61,6 @@
         .name-box input::placeholder{color:rgba(90,61,42,.25);font-size:16px;letter-spacing:0}
         .name-box .btn-group{margin-top:20px;gap:12px}
         .name-box .btn{min-width:120px}
-
         #poemDisplay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9997;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:20px}
         #poemDisplay.show{display:flex}
         .poem-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
@@ -286,6 +280,8 @@
                         overlay.querySelector('#authEnterBtn').onclick = function() {
                             overlay.remove();
                             resolve(true);
+                            // 授权成功后播放音乐
+                            setTimeout(startMusic, 300);
                         };
                     } else {
                         input.style.borderColor = '#ff6b6b';
@@ -309,6 +305,8 @@
                 demoBtn.onclick = function() {
                     overlay.remove();
                     resolve(false);
+                    // 演示模式也播放音乐
+                    setTimeout(startMusic, 300);
                 };
             });
         }
@@ -317,24 +315,21 @@
         //  启动应用
         // ============================================================
         async function startApp() {
-            // 先创建音乐按钮
+            // 创建音乐按钮
             createMusicBtn();
 
             if (isAuthorized()) {
                 document.getElementById('stage1').style.display = 'block';
-                // 已授权用户自动播放音乐
                 setTimeout(startMusic, 300);
                 return;
             }
             const result = await showAuthDialog();
             if (result) {
                 document.getElementById('stage1').style.display = 'block';
-                // 授权成功后播放音乐
-                setTimeout(startMusic, 300);
+                // 音乐已在验证成功时启动
             } else {
                 document.getElementById('stage1').style.display = 'block';
-                // 演示模式也播放音乐
-                setTimeout(startMusic, 300);
+                // 演示模式已在点击时启动音乐
                 setTimeout(() => {
                     const banner = document.createElement('div');
                     banner.style.cssText =
@@ -360,6 +355,9 @@
             btn.onclick = toggleMusic;
             document.body.appendChild(btn);
         }
+
+        // 启动应用
+        startApp();
 
         // ============================================================
         //  完整互动逻辑
@@ -988,9 +986,6 @@
                 if (e.target === this) this.remove();
             });
         }
-
-        // 启动应用
-        startApp();
 
         console.log('💕 完整旅程已加载！');
         console.log('🗝️ 统一授权码：' + SECRET_KEY);

@@ -53,26 +53,26 @@
         #nameInput.show{display:flex}
         .name-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
         .name-box h2{font-size:22px;color:#5a3d2a;margin-bottom:8px}
-        .name-box p{font-size:14px;color:rgba(90,61,42,.6);margin-bottom:20px}
+        .name-box .sub-hint{font-size:14px;color:rgba(90,61,42,.6);margin-bottom:20px;line-height:1.6}
         .name-box input{width:100%;padding:16px 20px;border:2px solid #d4a86a;border-radius:30px;font-size:20px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;outline:none;background:rgba(255,255,255,.6);transition:all .3s;text-align:center;color:#5a3d2a;letter-spacing:2px}
         .name-box input:focus{border-color:#c89850;background:rgba(255,255,255,.8);box-shadow:0 0 30px rgba(180,130,80,.15)}
-        .name-box input::placeholder{color:rgba(90,61,42,.3);font-size:16px;letter-spacing:0}
+        .name-box input::placeholder{color:rgba(90,61,42,.25);font-size:16px;letter-spacing:0}
         .name-box .btn-group{margin-top:20px;gap:12px}
         .name-box .btn{min-width:120px}
 
-        /* ===== 两首小诗展示 ===== */
+        /* ===== 小诗展示 ===== */
         #poemDisplay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9997;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:20px}
         #poemDisplay.show{display:flex}
-        .poem-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
-        .poem-box h2{font-size:20px;color:#5a3d2a;margin-bottom:6px}
-        .poem-box .sub{font-size:14px;color:rgba(90,61,42,.5);margin-bottom:16px}
-        .poem-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,#d4a86a,transparent);margin:16px auto}
-        .poem-text{font-size:16px;line-height:2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px}
+        .poem-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .poem-box h2{font-size:20px;color:#5a3d2a;margin-bottom:4px}
+        .poem-box .sub{font-size:13px;color:rgba(90,61,42,.5);margin-bottom:12px}
+        .poem-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,#d4a86a,transparent);margin:14px auto}
+        .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px}
         .poem-text .highlight-name{color:#d47a8a;font-weight:700}
         .poem-box .btn{margin-top:18px}
 
-        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}}
-        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}}
+        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}}
+        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}}
     </style>
 </head>
 <body>
@@ -80,4 +80,534 @@
     <!-- ===== 第一阶段 ===== -->
     <div class="card" id="stage1">
         <div class="big-heart" id="bigHeart">❤️</div>
-        <div class="question" id="questionEl
+        <div class="question" id="questionEl">你爱我吗？</div>
+        <div class="hint" id="hintEl">💖 认真回答哦 💖</div>
+        <div class="btn-group">
+            <button class="btn btn-love" id="btnLove">爱你 💕</button>
+            <button class="btn btn-hate" id="btnHate">不爱 😢</button>
+        </div>
+        <div class="result" id="resultMsg"></div>
+        <div class="love-verse" id="verse1">✦ 我们的故事还要继续，<span class="highlight">先不要退出</span> ✦</div>
+    </div>
+
+    <!-- ===== 第二阶段 ===== -->
+    <div class="card card-stage2" id="stage2">
+        <div class="big-heart" id="bigHeart2">💕</div>
+        <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
+        <div class="hint" id="hintEl2">🌹 后面有惊喜哦 🌹</div>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="btnYes">愿意 ❤️</button>
+            <button class="btn btn-hate" id="btnNo">不愿意 😢</button>
+        </div>
+        <div class="result" id="resultMsg2"></div>
+        <div class="love-verse" id="verse2">✦ 每一步都是 <span class="highlight">爱的印记</span>，别走开 ✦</div>
+    </div>
+
+    <!-- ===== 第三阶段 ===== -->
+    <div class="card card-stage3" id="stage3">
+        <div class="big-heart" id="bigHeart3">💕</div>
+        <div class="question" id="questionEl3">点击每条祝福语 💫</div>
+        <div class="hint" id="hintEl3">每条都藏着我想对你说的话 🌸</div>
+        <div class="result" id="resultMsg3"></div>
+        <button class="btn btn-gold" id="btnNext" style="display:none;margin-top:20px;">继续 💕</button>
+    </div>
+
+    <!-- ===== 弹窗 ===== -->
+    <div id="popup">
+        <div class="popup-content">
+            <div class="popup-title" id="popupTitle">💕</div>
+            <div class="popup-body" id="popupBody"></div>
+            <button class="popup-close" onclick="closePopup()">我知道了 💕</button>
+        </div>
+    </div>
+
+    <!-- ===== 手写输入 ===== -->
+    <div id="nameInput">
+        <div class="name-box">
+            <h2 id="nameTitle">✍️ 写出你的名字</h2>
+            <p class="sub-hint" id="nameSub">用手指在下方写下你的名字，我会把它变成一首诗</p>
+            <input type="text" id="nameField" placeholder="输入你的名字..." maxlength="10">
+            <div class="btn-group">
+                <button class="btn btn-gold" id="nameConfirm">✨ 生成小诗</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 小诗展示 ===== -->
+    <div id="poemDisplay">
+        <div class="poem-box">
+            <h2 id="poemTitle">🌹 给独一无二的你</h2>
+            <p class="sub" id="poemSub">—— 你的名字，是我写过最美的诗 ——</p>
+            <div class="poem-divider"></div>
+            <div class="poem-text" id="poemText"></div>
+            <button class="btn btn-gold" id="poemNext">继续 💕</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  祝福语 + 小作文数据
+        // ============================================================
+        const blessingData = [{
+            icon: '✨',
+            title: '愿所有美好都如期而至',
+            text: '遇见你之后，我才真正明白这句话的意义。\n\n你像晨光一样温柔地照进我的生活，让每一个平凡的日子都变得闪闪发光。\n\n美好不必远求，你就在我身边，这就是最好的如期而至。'
+        }, {
+            icon: '🌸',
+            title: '你是我藏在微风里的喜欢',
+            text: '每次风吹过的时候，我都会想起你。\n\n那种喜欢，不是轰轰烈烈的，而是像春天的风，温柔地、悄悄地，渗透进生活的每一个角落。\n\n你是我藏在心底的温柔，也是我写在风里的秘密。'
+        }, {
+            icon: '💫',
+            title: '星星温柔，人间浪漫',
+            text: '我见过凌晨四点的星光，也见过黄昏时分的晚霞。\n\n但所有的风景加起来，都不及你眼底的温柔。\n\n你是人间最浪漫的存在，让我相信星星会说话，石头会开花。'
+        }, {
+            icon: '🌙',
+            title: '月光所至，万事胜意',
+            text: '月亮不会发光，但它借了太阳的光，温柔了整片夜空。\n\n你也是这样，用你的光，照亮了我整个世界。\n\n愿你每一次抬头，都能看见月亮；愿你每一次回头，都能看见我。'
+        }, {
+            icon: '🌺',
+            title: '愿你眼里有光，心中有爱',
+            text: '世界很大，但你的眼睛更亮。\n\n愿你永远保持那份纯真的光，不被世俗磨灭。\n\n愿你心里永远装着爱，像盛开的花一样，温柔而坚定。'
+        }, {
+            icon: '🍀',
+            title: '幸运常伴，笑靥如花',
+            text: '有人说，遇见喜欢的人会花光所有运气。\n\n但我想说，遇见你之后，我的运气反而变得更好了。\n\n因为你就是我最大的幸运。愿你笑靥如花，岁岁年年。'
+        }, {
+            icon: '💖',
+            title: '心动不止，温柔不息',
+            text: '心动不是一瞬间的事，而是看见你时的每一次心跳。\n\n想陪你走过四季，看春华秋实，听夏雨冬雪。\n\n我的心动永远不会停止，像宇宙的呼吸一样绵长。'
+        }, {
+            icon: '🌊',
+            title: '山高水长，来日方长',
+            text: '我们还有很长的路要走，很多的故事要写。\n\n山很高，水很长，但没关系，我们有足够的耐心和温柔。\n\n来日方长，我想慢慢喜欢你，慢慢和你变老。'
+        }, {
+            icon: '🎈',
+            title: '每一天都是新的开始',
+            text: '昨天已经过去，明天还没到来，只有今天是最真实的。\n\n和你在一起的每一天，都是崭新的、值得期待的。\n\n因为你，我学会了珍惜当下的每一刻。'
+        }, {
+            icon: '🌈',
+            title: '生活明朗，万物可爱',
+            text: '你让我的世界变得色彩斑斓。\n\n原来生活可以这么美好，万物可以这么可爱。\n\n而这一切，都是因为有了你。你是我的彩虹，我的晴天。'
+        }, {
+            icon: '🌟',
+            title: '你本身就是最好的礼物',
+            text: '我收过很多礼物，但最珍贵的，是遇见你。\n\n你不需要成为谁，你只需要做你自己。\n\n因为在我心里，你本身就是上天送给我最好的礼物。'
+        }, {
+            icon: '💕',
+            title: '爱意随风起，风止意难平',
+            text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。'
+        }];
+
+        // ============================================================
+        //  名字 → 小诗生成器
+        // ============================================================
+        function generatePoem(name) {
+            if (!name || name.trim() === '') return '请先输入你的名字哦 💕';
+
+            const chars = name.trim().split('');
+            const lines = [];
+
+            const wordMap = {
+                '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
+                '心': ['心之所向皆是你', '心动是最美的风景', '心中有光，眼中有你'],
+                '小': ['小小的世界里只有你', '小确幸都关于你', '小雨落时最想你'],
+                '美': ['美好都因你而起', '美梦里有你同行', '美得像一首诗'],
+                '丽': ['丽日清风皆是你', '丽影入我心', '丽人如画'],
+                '婷': ['婷婷玉立如初见', '婷影摇摇入梦来', '婷立风中只等你'],
+                '玉': ['玉洁冰清是你', '玉兰花开时想你', '玉手轻抚我心'],
+                '兰': ['兰花香里忆你', '兰心蕙质是你', '兰花开时遇见你'],
+                '雪': ['雪落无声念你', '雪白的世界里有你', '雪花开时最想你'],
+                '月': ['月下独酌只为你', '月光照亮你眼眸', '月圆之时最想你'],
+                '星': ['星光不负赶路人', '星星眨眼是你笑', '星河里只有你'],
+                '梦': ['梦里花落知多少', '梦中全是你的笑', '梦醒时分最想你'],
+                '雨': ['雨落时最想你', '雨滴是我想你的声音', '雨中撑着伞等你'],
+                '晴': ['晴空万里皆是你', '晴天里有你的笑', '晴好如你'],
+                '云': ['云卷云舒都像你', '云端里有你的梦', '云淡风轻时想你'],
+                '风': ['风起时最想你', '风中传来你的声音', '风过留痕都是你'],
+                '花': ['花开花落都为你', '花香里全是你的味道', '花间一壶酒，独酌无相亲'],
+                '芳': ['芳华正好遇见你', '芳心暗许只为你', '芳香四溢都是你'],
+                '慧': ['慧心巧思是你', '慧眼如炬看见你', '慧质兰心只为你'],
+                '琳': ['琳琅满目不如你', '琳光闪闪是你的笑', '琳瑯世界只有你'],
+                '瑶': ['瑶台月下遇见你', '瑶琴一曲只为你', '瑶池仙境不如你'],
+                '琪': ['琪花瑶草是你', '琪玉无瑕只为你', '琪树临风想你'],
+                '洁': ['洁白无瑕是你', '洁心如初只为你', '洁身自好等你来'],
+                '欣': ['欣喜若狂见到你', '欣然心动只为你', '欣欣向荣都是你'],
+                '悦': ['悦耳动听你的声音', '悦目赏心是你', '心悦君兮君不知'],
+                '怡': ['怡然自得见到你', '怡心怡情只为你', '怡和如风是你'],
+                '静': ['静水流深等你来', '静夜思你千万遍', '静好如初是你'],
+                '柔': ['柔情似水是你', '柔风细雨都是你', '柔肠百转只为你'],
+                '婉': ['婉转流年遇见你', '婉约如诗是你', '婉然一笑倾城'],
+                '雅': ['雅致如你', '雅韵千年只为你', '雅然一笑很倾城'],
+                '诗': ['诗里行间都是你', '诗意人生因为你', '诗酒趁年华，有你在身旁'],
+                '画': ['画里画外都是你', '画中仙是你', '画屏深处只等你'],
+                '书': ['书里藏着你的名字', '书写不尽的思念', '书香里全是你的味道'],
+                '一': ['一颦一笑都是你', '一眼万年都是你', '一生一世只为你'],
+                '起': ['起风时最想你', '起笔都是你的名字', '起落之间都是你'],
+                '念': ['念你千千万万遍', '念念不忘是你', '念及都是你的好'],
+                '思': ['思君不见君', '思念如马，自别离，未停蹄', '思及你时心会跳'],
+                '君': ['君问归期未有期', '君心似我心', '君不见黄河之水天上来']
+            };
+
+            const romanticLines = [
+                '你是我写过最美的诗',
+                '你的名字，是我见过最温柔的风景',
+                '念你千千万万遍',
+                '余生都是你',
+                '你是我的全世界',
+                '遇见你，花光了我所有运气',
+                '你是人间值得',
+                '一眼万年，都是你',
+                '愿做你一生的读者',
+                '你是我藏不住的欢喜',
+                '星河滚烫，你是人间理想',
+                '你是我所有温柔的来源'
+            ];
+
+            let usedWords = [];
+            chars.forEach((char, index) => {
+                let line = '';
+                if (wordMap[char]) {
+                    const options = wordMap[char];
+                    line = options[index % options.length];
+                } else {
+                    const randomIndex = (index + chars.length) % romanticLines.length;
+                    line = romanticLines[randomIndex];
+                }
+                lines.push(line);
+            });
+
+            if (chars.length <= 2) {
+                const extra = [
+                    '你的名字，是我心中最美的音符',
+                    '每一笔都是心动，每一划都是温柔',
+                    '这个名字，我将用一生去珍藏'
+                ];
+                for (let i = 0; i < extra.length && lines.length < 5; i++) {
+                    lines.push(extra[i]);
+                }
+            }
+
+            const finalLines = [];
+            finalLines.push('✦ ' + name + ' ✦');
+            finalLines.push('');
+            lines.forEach(line => { finalLines.push(line); });
+            finalLines.push('');
+            finalLines.push('—— 你的名字，是我写过最美的诗 ——');
+
+            return finalLines.join('\n');
+        }
+
+        // ============================================================
+        //  第一阶段
+        // ============================================================
+        const btnLove = document.getElementById('btnLove');
+        const btnHate = document.getElementById('btnHate');
+        const resultMsg = document.getElementById('resultMsg');
+        const bigHeart = document.getElementById('bigHeart');
+        const questionEl = document.getElementById('questionEl');
+        const hintEl = document.getElementById('hintEl');
+        const verse1 = document.getElementById('verse1');
+        const stage1 = document.getElementById('stage1');
+        const stage2 = document.getElementById('stage2');
+
+        let hateClickCount = 0;
+        const hateMsgs = ['你再想想？😠', '真的不爱吗？🥺', '再给你一次机会！😡', '呜呜呜我伤心了 💔'];
+
+        btnLove.addEventListener('click', function() {
+            resultMsg.innerHTML = '💕 我也爱你！永远在一起！ 💕';
+            resultMsg.style.color = '#d47a8a';
+            bigHeart.textContent = '💕';
+            questionEl.textContent = '我就知道！';
+            hintEl.textContent = '从今天开始，你是我的全世界！🌍';
+            verse1.innerHTML = '✦ 你是我 <span class="highlight">藏在微风里的喜欢</span> ✦';
+            btnHate.style.display = 'none';
+            btnLove.disabled = true;
+            btnLove.style.opacity = '0.7';
+            stage1.style.display = 'none';
+            stage2.classList.add('active');
+        });
+
+        btnHate.addEventListener('click', function() {
+            hateClickCount++;
+            const index = (hateClickCount - 1) % hateMsgs.length;
+            resultMsg.innerHTML = hateMsgs[index];
+            resultMsg.style.color = '#b08890';
+            bigHeart.textContent = '💔';
+            setTimeout(() => { bigHeart.textContent = '❤️'; }, 400);
+            if (hateClickCount >= 4) {
+                btnHate.textContent = '我错了！爱！❤️';
+                btnHate.style.background = 'linear-gradient(135deg,#f5a0b0,#e88090)';
+                btnHate.style.color = '#fff';
+                btnHate.style.border = 'none';
+                btnHate.onclick = function() { btnLove.click(); };
+            }
+        });
+
+        // ============================================================
+        //  第二阶段
+        // ============================================================
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const resultMsg2 = document.getElementById('resultMsg2');
+        const bigHeart2 = document.getElementById('bigHeart2');
+        const questionEl2 = document.getElementById('questionEl2');
+        const hintEl2 = document.getElementById('hintEl2');
+        const verse2 = document.getElementById('verse2');
+
+        let noClickCount = 0;
+        const noMsgs = ['真的不想看吗？🥺', '再给你一次机会！😠', '求求你了嘛～😭', '最后问一次！💔'];
+
+        btnYes.addEventListener('click', function() {
+            resultMsg2.innerHTML = '🎉 太好了！让我们一起看下去！ 💕';
+            resultMsg2.style.color = '#8a6a5a';
+            bigHeart2.textContent = '🌟';
+            questionEl2.textContent = '你真好！';
+            hintEl2.textContent = '💫 点击每条祝福语，看看我想对你说的话 💫';
+            verse2.innerHTML = '✦ <span class="highlight">星辰大海</span> 不及你眼中光芒 ✦';
+            btnNo.style.display = 'none';
+            btnYes.disabled = true;
+            btnYes.style.opacity = '0.7';
+            stage2.classList.remove('active');
+            stage2.style.display = 'none';
+            document.getElementById('stage3').classList.add('active');
+            startBlessingRain();
+        });
+
+        btnNo.addEventListener('click', function() {
+            noClickCount++;
+            const index = (noClickCount - 1) % noMsgs.length;
+            resultMsg2.innerHTML = noMsgs[index];
+            resultMsg2.style.color = '#b08890';
+            bigHeart2.textContent = '😢';
+            setTimeout(() => { bigHeart2.textContent = '💕'; }, 400);
+            if (noClickCount >= 4) {
+                btnNo.textContent = '我愿意！❤️';
+                btnNo.style.background = 'linear-gradient(135deg,#e8b0c0,#d490a0)';
+                btnNo.style.color = '#fff';
+                btnNo.style.border = 'none';
+                btnNo.onclick = function() { btnYes.click(); };
+            }
+        });
+
+        // ============================================================
+        //  弹窗
+        // ============================================================
+        function openPopup(title, text) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupBody').textContent = text;
+            document.getElementById('popup').classList.add('show');
+        }
+
+        function closePopup() {
+            document.getElementById('popup').classList.remove('show');
+        }
+        document.getElementById('popup').addEventListener('click', function(e) {
+            if (e.target === this) closePopup();
+        });
+
+        // ============================================================
+        //  祝福语
+        // ============================================================
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        let shuffledData = shuffleArray([...blessingData]);
+        let blessIndex = 0;
+        let totalBlessCreated = 0;
+        const TOTAL_BLESS = 12;
+
+        const positions = [];
+        for (let row = 0; row < 6; row++) {
+            positions.push({ left: 3 + (Math.random() - 0.5) * 6, top: 10 + row * 14 + (Math.random() - 0.5) * 3 });
+            positions.push({ left: 45 + (Math.random() - 0.5) * 6, top: 10 + row * 14 + (Math.random() - 0.5) * 3 });
+        }
+        shuffleArray(positions);
+
+        let activeBlessElements = [];
+
+        function createBless() {
+            if (totalBlessCreated >= TOTAL_BLESS || blessIndex >= shuffledData.length) return;
+            const pos = positions[totalBlessCreated];
+            const data = shuffledData[blessIndex];
+            blessIndex++;
+            totalBlessCreated++;
+
+            const el = document.createElement('div');
+            el.className = 'bless';
+            el.textContent = data.icon + ' ' + data.title;
+            el.style.left = Math.max(2, Math.min(55, pos.left)) + 'vw';
+            el.style.top = Math.max(5, Math.min(95, pos.top)) + 'vh';
+            const scale = 0.85 + Math.random() * 0.3;
+            el.style.fontSize = (14 + Math.random() * 8) + 'px';
+            el.style.transform = `scale(${scale})`;
+            const duration = 10 + Math.random() * 4;
+            el.style.animationDuration = duration + 's';
+
+            el.addEventListener('click', function() {
+                openPopup(data.icon + ' ' + data.title, data.text);
+                el.style.opacity = '0.5';
+                setTimeout(() => { el.style.opacity = '1'; }, 300);
+            });
+            el.addEventListener('touchstart', function() {
+                el.style.transform = `scale(${scale * 0.95})`;
+            });
+            el.addEventListener('touchend', function() {
+                el.style.transform = `scale(${scale})`;
+            });
+
+            document.body.appendChild(el);
+            activeBlessElements.push(el);
+
+            setTimeout(() => {
+                if (el.parentNode) {
+                    el.parentNode.removeChild(el);
+                    const idx = activeBlessElements.indexOf(el);
+                    if (idx > -1) activeBlessElements.splice(idx, 1);
+                }
+            }, duration * 1000 + 500);
+        }
+
+        let replenishInterval = null;
+
+        function startBlessingRain() {
+            document.body.classList.add('pink-bg');
+            document.querySelectorAll('.card').forEach(c => c.classList.add('hide'));
+
+            for (let i = 0; i < TOTAL_BLESS; i++) {
+                setTimeout(() => createBless(), i * 500);
+            }
+
+            replenishInterval = setInterval(() => {
+                if (activeBlessElements.length < 6 && totalBlessCreated < TOTAL_BLESS) {
+                    createBless();
+                }
+                if (totalBlessCreated >= TOTAL_BLESS && activeBlessElements.length === 0) {
+                    clearInterval(replenishInterval);
+                    document.getElementById('stage3').style.display = 'block';
+                    document.getElementById('stage3').classList.remove('hide');
+                    document.getElementById('resultMsg3').innerHTML = '💕 点击下方按钮继续 💕';
+                    document.getElementById('btnNext').style.display = 'inline-block';
+                }
+            }, 3000);
+        }
+
+        // ============================================================
+        //  第三阶段：继续按钮 → 名字输入
+        // ============================================================
+        const btnNext = document.getElementById('btnNext');
+
+        btnNext.addEventListener('click', function() {
+            activeBlessElements.forEach(el => { if (el.parentNode) el.parentNode.removeChild(el); });
+            activeBlessElements = [];
+            if (replenishInterval) clearInterval(replenishInterval);
+
+            document.getElementById('stage3').classList.add('hide');
+            document.getElementById('stage3').style.display = 'none';
+
+            showNameInput('✍️ 写出你的名字', '用手指在下方写下你的名字，我会把它变成一首诗', 'nameField', function(name) {
+                if (name.trim() === '') {
+                    alert('请输入你的名字哦 💕');
+                    return;
+                }
+                const poem = generatePoem(name);
+                showPoemDisplay('🌹 给独一无二的你', '—— 你的名字，是我写过最美的诗 ——', poem, function() {
+                    document.getElementById('poemDisplay').classList.remove('show');
+                    showFinalMessage();
+                });
+            });
+        });
+
+        // ============================================================
+        //  名字输入
+        // ============================================================
+        let nameCallback = null;
+
+        function showNameInput(title, sub, fieldId, callback) {
+            const container = document.getElementById('nameInput');
+            document.getElementById('nameTitle').textContent = title;
+            document.getElementById('nameSub').textContent = sub;
+            const input = document.getElementById(fieldId);
+            input.value = '';
+            input.focus();
+            container.classList.add('show');
+            nameCallback = callback;
+
+            const confirmBtn = document.getElementById('nameConfirm');
+            const newBtn = confirmBtn.cloneNode(true);
+            confirmBtn.parentNode.replaceChild(newBtn, confirmBtn);
+            newBtn.addEventListener('click', function() {
+                const val = input.value.trim();
+                if (val) {
+                    container.classList.remove('show');
+                    if (nameCallback) nameCallback(val);
+                } else {
+                    alert('请输入你的名字哦 💕');
+                }
+            });
+            input.onkeydown = function(e) {
+                if (e.key === 'Enter') {
+                    newBtn.click();
+                }
+            };
+        }
+
+        // ============================================================
+        //  小诗展示
+        // ============================================================
+        let poemCallback = null;
+
+        function showPoemDisplay(title, sub, text, callback) {
+            const container = document.getElementById('poemDisplay');
+            document.getElementById('poemTitle').textContent = title;
+            document.getElementById('poemSub').textContent = sub;
+            document.getElementById('poemText').textContent = text;
+            container.classList.add('show');
+            poemCallback = callback;
+
+            const nextBtn = document.getElementById('poemNext');
+            const newBtn = nextBtn.cloneNode(true);
+            nextBtn.parentNode.replaceChild(newBtn, nextBtn);
+            newBtn.textContent = '继续 💕';
+            newBtn.addEventListener('click', function() {
+                container.classList.remove('show');
+                if (poemCallback) poemCallback();
+            });
+        }
+
+        // ============================================================
+        //  最终完成
+        // ============================================================
+        function showFinalMessage() {
+            const card = document.createElement('div');
+            card.style.cssText =
+                'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9996;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);';
+            card.innerHTML = `
+                    <div style="background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 30px;max-width:420px;width:90%;text-align:center;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);">
+                        <div style="font-size:72px;margin-bottom:16px;">💕</div>
+                        <h2 style="font-size:24px;color:#5a3d2a;margin-bottom:8px;">故事还在继续</h2>
+                        <p style="font-size:16px;color:rgba(90,61,42,.6);line-height:1.8;margin-bottom:20px;">
+                            你的名字，已经写进了我的故事里。<br>
+                            每一笔都是心动，每一划都是温柔。<br>
+                            <span style="color:#d47a8a;font-weight:600;">愿所有的美好，都与你环环相扣。</span>
+                        </p>
+                        <button onclick="this.parentElement.parentElement.remove()" style="padding:14px 40px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;">
+                            💕 我会永远记得
+                        </button>
+                    </div>
+                `;
+            document.body.appendChild(card);
+            card.addEventListener('click', function(e) {
+                if (e.target === this) this.remove();
+            });
+        }
+
+        console.log('💕 完整旅程已加载！点击"愿意"开始');
+    </script>
+
+</body>
+</html>

@@ -7,111 +7,132 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         html,body{width:100%;min-height:100vh;overflow:hidden}
-        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;transition:background .8s ease;overflow:hidden}
-        body.pink-bg{background:radial-gradient(ellipse at center,#ffe4ec,#ffd0d8,#ffb8c6)!important}
+        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408);overflow:hidden;position:relative}
+        body.pink-bg{background:radial-gradient(ellipse at center,#1a0a2e,#0d0d1a,#08080e)!important}
         body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
 
         /* 音乐按钮 */
-        .music-btn{position:fixed;top:20px;right:20px;z-index:99999;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);color:rgba(255,255,255,0.6);font-size:20px;cursor:pointer;transition:all .3s ease;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
-        .music-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.25)}
-        .music-btn.playing{animation:musicPulse 1.5s ease-in-out infinite}
-        @keyframes musicPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,157,0.2)}50%{box-shadow:0 0 0 8px rgba(255,107,157,0)}}
+        .music-btn{position:fixed;top:20px;right:20px;z-index:99998;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);color:rgba(255,255,255,0.4);font-size:20px;cursor:pointer;transition:all .3s;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+        .music-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7)}
+        .music-btn.playing{color:#ffb6d9;border-color:rgba(255,182,217,0.25);animation:musicPulse 1.5s ease-in-out infinite}
+        @keyframes musicPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,157,0.1)}50%{box-shadow:0 0 0 10px rgba(255,107,157,0)}}
         .music-btn .note{display:inline-block}
         .music-btn.playing .note{animation:noteDance 0.6s ease-in-out infinite alternate}
         @keyframes noteDance{0%{transform:scale(1)}100%{transform:scale(1.2)}}
 
-        .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
-        .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
+        /* 卡片 */
+        .card{position:relative;z-index:20;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.08);margin:0 auto;transition:all .5s ease}
+        .card.champagne{background:linear-gradient(145deg,#2a1a1a,#1a0a0a)!important;border:2px solid #d4a86a!important}
         .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
         .card.hidden{display:none}
+
         .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-        .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
-        .hint{color:rgba(90,61,74,.6);font-size:14px;margin-bottom:20px}
-        .love-verse{color:rgba(90,61,74,.5);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(200,100,120,.1);padding-top:14px;font-style:italic}
+        .question{font-size:24px;font-weight:700;color:#f0e6ff;margin:10px 0 4px;text-shadow:0 0 30px rgba(255,200,255,0.1)}
+        .hint{color:rgba(255,255,255,0.4);font-size:14px;margin-bottom:20px}
+        .love-verse{color:rgba(255,255,255,0.25);font-size:13px;font-weight:300;letter-spacing:2px;margin-top:14px;border-top:1px solid rgba(255,255,255,0.05);padding-top:14px;font-style:italic}
         .love-verse .highlight{color:#d47a8a;font-weight:500}
         .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
         .btn{padding:14px 32px;border:none;border-radius:60px;font-size:18px;font-weight:700;cursor:pointer;transition:all .2s;min-width:100px;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent}
         .btn:active{transform:scale(.94)}
         .btn-love{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff}
-        .btn-hate{background:rgba(200,150,160,.15);color:rgba(90,61,74,.5);border:1px solid rgba(200,150,160,.15)}
+        .btn-hate{background:rgba(200,150,160,.12);color:rgba(255,255,255,.4);border:1px solid rgba(200,150,160,.12)}
         .btn-primary{background:linear-gradient(135deg,#e8b0c0,#d490a0);color:#fff}
-        .btn-gold{background:linear-gradient(135deg,#d4a86a,#c89850);color:#fff;box-shadow:0 6px 30px rgba(180,130,80,.3)}
-        .result{margin-top:18px;font-size:18px;font-weight:600;color:#5a3d4a;min-height:44px}
+        .btn-gold{background:linear-gradient(135deg,#d4a86a,#c89850);color:#fff;box-shadow:0 6px 30px rgba(180,130,80,.2)}
+        .result{margin-top:18px;font-size:18px;font-weight:600;color:#f0e6ff;min-height:44px}
         .card-stage2{display:none}.card-stage2.active{display:block}
         .card-stage3{display:none}.card-stage3.active{display:block}
-        .bless{position:fixed;z-index:25;font-size:16px;font-weight:600;color:#5a3d2a;padding:10px 22px;border-radius:30px;background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0);border:2px solid #d4a86a;box-shadow:0 4px 20px rgba(180,130,80,.2);white-space:nowrap;animation:floatBless linear forwards;opacity:0;cursor:pointer;transition:all .3s ease;user-select:none;-webkit-tap-highlight-color:transparent}
+
+        .bless{position:fixed;z-index:25;font-size:16px;font-weight:600;color:#d4a86a;padding:10px 22px;border-radius:30px;background:rgba(255,255,255,0.05);border:1px solid rgba(212,168,106,0.2);backdrop-filter:blur(4px);white-space:nowrap;animation:floatBless linear forwards;opacity:0;cursor:pointer;transition:all .3s;user-select:none;-webkit-tap-highlight-color:transparent}
         .bless:active{transform:scale(.95)}
         @keyframes floatBless{0%{opacity:0;transform:translateY(20px) scale(.9)}12%{opacity:1;transform:translateY(0) scale(1)}85%{opacity:1;transform:translateY(-100px) scale(1)}100%{opacity:0;transform:translateY(-160px) scale(.9)}}
-        #popup{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+
+        #popup{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(8px)}
         #popup.show{display:flex}
-        .popup-content{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:30px;padding:36px 28px;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.3);border:2px solid #d4a86a;animation:popUp .4s cubic-bezier(.34,1.56,.64,1)}
-        @keyframes popUp{0%{opacity:0;transform:scale(.8) translateY(30px)}100%{opacity:1;transform:scale(1) translateY(0)}}
-        .popup-title{font-size:22px;font-weight:700;color:#5a3d2a;margin-bottom:12px;text-align:center}
-        .popup-body{font-size:16px;line-height:1.8;color:#4a3d3a;text-align:left;white-space:pre-wrap;word-break:break-word}
+        .popup-content{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:30px;padding:36px 28px;max-width:420px;width:90%;max-height:80vh;overflow-y:auto;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .popup-title{font-size:22px;font-weight:700;color:#d4a86a;margin-bottom:12px}
+        .popup-body{font-size:16px;line-height:1.8;color:rgba(255,255,255,0.7);text-align:left;white-space:pre-wrap;word-break:break-word}
         .popup-close{display:block;margin:18px auto 0;padding:12px 40px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s}
         .popup-close:active{transform:scale(.94)}
-        #nameInput{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9998;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+        #nameInput{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9998;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.6);backdrop-filter:blur(10px)}
         #nameInput.show{display:flex}
-        .name-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
-        .name-box h2{font-size:22px;color:#5a3d2a;margin-bottom:8px}
-        .name-box .sub-hint{font-size:14px;color:rgba(90,61,42,.6);margin-bottom:20px;line-height:1.6}
-        .name-box input{width:100%;padding:16px 20px;border:2px solid #d4a86a;border-radius:30px;font-size:20px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;outline:none;background:rgba(255,255,255,.6);transition:all .3s;text-align:center;color:#5a3d2a;letter-spacing:2px}
-        .name-box input:focus{border-color:#c89850;background:rgba(255,255,255,.8);box-shadow:0 0 30px rgba(180,130,80,.15)}
-        .name-box input::placeholder{color:rgba(90,61,42,.25);font-size:16px;letter-spacing:0}
-        .name-box .btn-group{margin-top:20px;gap:12px}
+        .name-box{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:36px 28px;max-width:420px;width:90%;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .name-box h2{font-size:22px;color:#d4a86a;margin-bottom:8px}
+        .name-box .sub-hint{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:20px;line-height:1.6}
+        .name-box input{width:100%;padding:16px 20px;border:2px solid rgba(212,168,106,0.2);border-radius:30px;font-size:20px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;outline:none;background:rgba(255,255,255,0.06);transition:all .3s;text-align:center;color:#f0e6ff;letter-spacing:2px}
+        .name-box input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.1)}
+        .name-box input::placeholder{color:rgba(255,255,255,0.2);font-size:16px;letter-spacing:0}
+        .name-box .btn-group{margin-top:20px;gap:12px;display:flex;justify-content:center;flex-wrap:wrap}
         .name-box .btn{min-width:120px}
-        #poemDisplay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9997;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:20px}
+
+        #poemDisplay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9997;display:none;justify-content:center;align-items:center;background:rgba(0,0,0,.7);backdrop-filter:blur(12px);padding:20px}
         #poemDisplay.show{display:flex}
-        .poem-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:36px 28px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
-        .poem-box h2{font-size:20px;color:#5a3d2a;margin-bottom:4px}
-        .poem-box .sub{font-size:13px;color:rgba(90,61,42,.5);margin-bottom:12px}
+        .poem-box{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:36px 28px;max-width:500px;width:100%;max-height:85vh;overflow-y:auto;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);text-align:center}
+        .poem-box h2{font-size:20px;color:#d4a86a;margin-bottom:4px}
+        .poem-box .sub{font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:12px}
         .poem-divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,#d4a86a,transparent);margin:14px auto}
-        .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px}
+        .poem-text{font-size:16px;line-height:2.2;color:rgba(255,255,255,0.7);white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px;text-align:left}
         .poem-box .btn{margin-top:18px}
 
-        /* 授权弹窗 */
-        .auth-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:fadeInAuth .6s ease}
-        @keyframes fadeInAuth{0%{opacity:0}100%{opacity:1}}
-        @keyframes floatUpAuth{0%{opacity:0;transform:translateY(40px) scale(0.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
-        @keyframes shakeAuth{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
-        .auth-box{background:linear-gradient(145deg,rgba(255,245,240,0.98),rgba(252,232,224,0.98),rgba(245,216,208,0.98));border-radius:48px;padding:44px 36px;max-width:440px;width:92%;border:2px solid rgba(212,168,106,0.25);box-shadow:0 40px 100px rgba(0,0,0,0.3);text-align:center;animation:floatUpAuth 0.7s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden}
-        .auth-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%,rgba(255,182,193,0.06),transparent 60%);pointer-events:none}
-        .auth-icon{font-size:52px;margin-bottom:10px;display:block}
-        .auth-title{font-size:22px;font-weight:700;color:#5a3d2a;margin-bottom:6px;letter-spacing:1px}
-        .auth-desc{font-size:14px;color:rgba(90,61,42,0.6);margin-bottom:8px;line-height:1.7}
-        .auth-secret{font-size:12px;color:rgba(90,61,42,0.3);margin-bottom:22px;letter-spacing:3px;font-style:italic}
-        .auth-input{width:100%;padding:16px 22px;border:2px solid rgba(212,168,106,0.2);border-radius:60px;font-size:18px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;outline:none;background:rgba(255,255,255,0.4);transition:all .3s;text-align:center;color:#5a3d2a;letter-spacing:3px;box-sizing:border-box}
-        .auth-input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.7);box-shadow:0 0 0 4px rgba(212,168,106,0.08)}
-        .auth-input::placeholder{color:rgba(90,61,42,0.2);font-size:15px;letter-spacing:0}
-        .auth-btn-group{display:flex;gap:12px;justify-content:center;margin-top:18px;flex-wrap:wrap}
-        .auth-btn{padding:14px 40px;border:none;border-radius:60px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;flex:1;min-width:120px}
-        .auth-btn:active{transform:scale(.94)}
-        .auth-btn-primary{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;box-shadow:0 6px 30px rgba(232,128,144,0.2)}
-        .auth-btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.35);border:1px solid rgba(200,150,160,0.08)}
-        .auth-footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:16px;letter-spacing:1px}
+        /* 星门弹窗 */
+        #authOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.8);backdrop-filter:blur(16px)}
+        #authOverlay.hidden{display:none}
+        .auth-box{background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:40px 32px;max-width:420px;width:90%;border:2px solid rgba(212,168,106,0.2);box-shadow:0 40px 100px rgba(0,0,0,0.3);text-align:center}
+        .auth-box .icon{font-size:48px;display:block;margin-bottom:8px}
+        .auth-box h2{font-size:20px;color:#d4a86a;margin-bottom:6px}
+        .auth-box p{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:6px;line-height:1.6}
+        .auth-box input{width:100%;padding:14px 20px;border:2px solid rgba(212,168,106,0.2);border-radius:60px;font-size:18px;outline:none;background:rgba(255,255,255,0.06);text-align:center;color:#f0e6ff;margin-bottom:14px;box-sizing:border-box;transition:all .3s}
+        .auth-box input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.1)}
+        .auth-box input::placeholder{color:rgba(255,255,255,0.2)}
+        .auth-box .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+        .auth-box .btn{padding:12px 36px;border:none;border-radius:60px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;min-width:120px}
+        .auth-box .btn:active{transform:scale(.94)}
+        .auth-box .btn-primary{background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff}
+        .auth-box .btn-secondary{background:rgba(200,150,160,0.08);color:rgba(255,255,255,0.3);border:1px solid rgba(200,150,160,0.08)}
+        .auth-box .footer{font-size:11px;color:rgba(255,255,255,0.15);margin-top:14px}
 
-        /* 情侣名展示 - 颜色加深 */
-        .couple-box{background:rgba(255,255,255,0.05);border-radius:24px;padding:24px 20px;margin:12px 0;border:1px solid rgba(255,255,255,0.08)}
-        .couple-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-        .couple-item{flex:1;min-width:80px;text-align:center}
-        .couple-item .icon{font-size:20px;color:rgba(255,255,255,0.2);margin-bottom:4px}
-        .couple-item .name{font-size:26px;font-weight:900;letter-spacing:2px}
-        .couple-item .name.pink{background:linear-gradient(135deg,#ff4d7a,#d6336b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,77,122,0.2))}
-        .couple-item .name.gold{background:linear-gradient(135deg,#f5a623,#d4891a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(245,166,35,0.2))}
-        .couple-item .desc{font-size:11px;color:rgba(255,255,255,0.2);margin-top:4px;letter-spacing:2px}
-        .couple-divider{font-size:20px;color:rgba(255,255,255,0.1);font-weight:300;padding:0 4px}
-        .couple-tagline{font-size:13px;color:rgba(255,200,180,0.35);font-style:italic;margin-top:12px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.04);padding-top:12px}
-        .couple-intro{font-size:14px;color:rgba(255,200,180,0.5);margin-bottom:12px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px}
+        /* 情侣名展示 */
+        .couple-box{background:rgba(255,255,255,0.03);border-radius:24px;padding:20px;margin:12px 0;border:1px solid rgba(255,255,255,0.05)}
+        .couple-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+        .couple-item{flex:1;min-width:70px;text-align:center}
+        .couple-item .icon{font-size:18px;color:rgba(255,255,255,0.15);margin-bottom:2px}
+        .couple-item .name{font-size:24px;font-weight:900;letter-spacing:2px}
+        .couple-item .name.pink{background:linear-gradient(135deg,#ff4d7a,#d6336b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,77,122,0.15))}
+        .couple-item .name.gold{background:linear-gradient(135deg,#f5a623,#d4891a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(245,166,35,0.12))}
+        .couple-item .desc{font-size:10px;color:rgba(255,255,255,0.15);margin-top:2px;letter-spacing:2px}
+        .couple-divider{font-size:18px;color:rgba(255,255,255,0.08);font-weight:300}
+        .couple-tagline{font-size:12px;color:rgba(255,200,180,0.25);font-style:italic;margin-top:10px;text-align:center;letter-spacing:1px;border-top:1px solid rgba(255,255,255,0.03);padding-top:10px}
+        .couple-intro{font-size:13px;color:rgba(255,200,180,0.35);margin-bottom:10px;text-align:center;letter-spacing:2px;font-style:italic;border-bottom:1px solid rgba(255,255,255,0.03);padding-bottom:10px}
 
-        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-title{font-size:19px}.couple-item .name{font-size:20px}}
-        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-title{font-size:17px}.couple-item .name{font-size:16px}}
+        @media(max-width:420px){.card{padding:24px 16px;max-width:100%}.big-heart{font-size:44px}.question{font-size:20px}.btn{padding:12px 20px;font-size:16px;min-width:80px}.bless{font-size:13px;padding:8px 16px}.popup-content{padding:28px 20px}.name-box{padding:28px 20px}.poem-box{padding:28px 20px}.poem-text{font-size:15px}.auth-box{padding:32px 24px}.auth-box h2{font-size:19px}.couple-item .name{font-size:20px}}
+        @media(max-width:370px){.card{padding:20px 12px}.big-heart{font-size:36px}.question{font-size:18px}.btn{padding:10px 16px;font-size:14px;min-width:70px}.bless{font-size:11px;padding:6px 12px}.poem-text{font-size:14px}.auth-box{padding:26px 18px}.auth-box h2{font-size:17px}.couple-item .name{font-size:16px}}
     </style>
 </head>
 <body>
 
+    <!-- ===== 音乐按钮 ===== -->
+    <button class="music-btn" id="musicBtn" title="播放/暂停背景音乐">
+        <span class="note">♪</span>
+    </button>
+
+    <!-- ===== 星门弹窗 ===== -->
+    <div id="authOverlay">
+        <div class="auth-box">
+            <span class="icon">💌</span>
+            <h2>你收到了一封来自星星的信件</h2>
+            <p>轻轻输入星星告诉我的秘密口令，<br>就可以打开这扇通往星海的门 ✨</p>
+            <input type="text" id="authInput" placeholder="请输入秘密口令..." autofocus>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="authBtn">✨ 开启星门</button>
+                <button class="btn btn-secondary" id="demoBtn">🌙 先看星星的倒影</button>
+            </div>
+            <p class="footer">✦ 口令正确，星星为你点亮 ✦</p>
+        </div>
+    </div>
+
     <!-- ===== 第一阶段 ===== -->
-    <div class="card" id="stage1">
+    <div class="card" id="stage1" style="display:none;">
         <div class="big-heart" id="bigHeart">❤️</div>
         <div class="question" id="questionEl">你爱我吗？</div>
         <div class="hint" id="hintEl">💖 认真回答哦 💖</div>
@@ -124,7 +145,7 @@
     </div>
 
     <!-- ===== 第二阶段 ===== -->
-    <div class="card card-stage2" id="stage2">
+    <div class="card card-stage2" id="stage2" style="display:none;">
         <div class="big-heart" id="bigHeart2">💕</div>
         <div class="question" id="questionEl2">你愿意继续往下看吗？</div>
         <div class="hint" id="hintEl2">🌹 后面有惊喜哦 🌹</div>
@@ -137,7 +158,7 @@
     </div>
 
     <!-- ===== 第三阶段 ===== -->
-    <div class="card card-stage3" id="stage3">
+    <div class="card card-stage3" id="stage3" style="display:none;">
         <div class="big-heart" id="bigHeart3">💕</div>
         <div class="question" id="questionEl3">点击每条祝福语 💫</div>
         <div class="hint" id="hintEl3">每条都藏着我想对你说的话 🌸</div>
@@ -179,26 +200,13 @@
 
     <script>
         // ============================================================
-        //  🎵 背景音乐（免费可商用）
-        //  曲名：Daydream · 作者：Steve Combs · 授权：CC0
+        //  🎵 背景音乐
         // ============================================================
         const MUSIC_URL = 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Steve_Combs/Transitions/Steve_Combs_-_Daydream.mp3';
-
-        // ============================================================
-        //  统一授权码
-        // ============================================================
         const SECRET_KEY = 'ROSE2026';
 
-        function isAuthorized() {
-            return localStorage.getItem('azy_romantic_auth') === 'true';
-        }
-
-        // ============================================================
-        //  音乐控制
-        // ============================================================
         let audio = null;
         let isMusicPlaying = false;
-        let musicReady = false;
 
         function initAudio() {
             if (!audio) {
@@ -206,14 +214,13 @@
                 audio.loop = true;
                 audio.volume = 0.4;
                 audio.load();
-                musicReady = true;
             }
             return audio;
         }
 
         function toggleMusic() {
             const btn = document.getElementById('musicBtn');
-            if (!musicReady) initAudio();
+            initAudio();
 
             if (isMusicPlaying) {
                 audio.pause();
@@ -225,206 +232,156 @@
                     isMusicPlaying = true;
                     btn.classList.add('playing');
                     btn.innerHTML = '<span class="note">♫</span>';
-                }).catch(e => console.log('播放被拦截'));
+                }).catch(() => {
+                    alert('🎵 请点击页面任意位置后重试播放音乐');
+                });
             }
         }
 
-        function startMusic() {
-            if (!musicReady) initAudio();
-            if (isMusicPlaying) return;
+        // ============================================================
+        //  星门验证
+        // ============================================================
+        const authOverlay = document.getElementById('authOverlay');
+        const authInput = document.getElementById('authInput');
+        const authBtn = document.getElementById('authBtn');
+        const demoBtn = document.getElementById('demoBtn');
+
+        function showMainContent() {
+            authOverlay.classList.add('hidden');
+            document.getElementById('stage1').style.display = 'block';
+            initAudio();
             audio.play().then(() => {
                 isMusicPlaying = true;
-                const btn = document.getElementById('musicBtn');
-                if (btn) {
-                    btn.classList.add('playing');
-                    btn.innerHTML = '<span class="note">♫</span>';
-                }
-            }).catch(() => console.log('音乐播放被拦截，请点击页面任意位置'));
+                document.getElementById('musicBtn').classList.add('playing');
+                document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
+            }).catch(() => {});
         }
 
-        // ============================================================
-        //  星门验证弹窗
-        // ============================================================
-        function showAuthDialog() {
-            return new Promise((resolve) => {
-                const overlay = document.createElement('div');
-                overlay.className = 'auth-overlay';
-                overlay.innerHTML = `
-                        <div class="auth-box">
-                            <span class="auth-icon">💌</span>
-                            <h2 class="auth-title">你收到了一封来自星星的信件</h2>
-                            <p class="auth-desc">轻轻输入星星告诉我的秘密口令，<br>就可以打开这扇通往星海的门 ✨</p>
-                            <p class="auth-secret">✦ 口令藏在每一朵玫瑰的花蕊里 ✦</p>
-                            <input type="text" class="auth-input" id="authKeyInput" placeholder="请输入秘密口令..." autofocus>
-                            <div class="auth-btn-group">
-                                <button class="auth-btn auth-btn-primary" id="authSubmitBtn">✨ 开启星门</button>
-                                <button class="auth-btn auth-btn-secondary" id="authDemoBtn">🌙 先看星星的倒影</button>
-                            </div>
-                            <p class="auth-footer">✦ 口令正确，星星为你点亮 ✦</p>
-                        </div>
-                    `;
-                document.body.appendChild(overlay);
-
-                const input = overlay.querySelector('#authKeyInput');
-                const submitBtn = overlay.querySelector('#authSubmitBtn');
-                const demoBtn = overlay.querySelector('#authDemoBtn');
-
-                setTimeout(() => input.focus(), 400);
-
-                function validateKey() {
-                    const val = input.value.trim().toUpperCase();
-                    if (val === SECRET_KEY) {
-                        localStorage.setItem('azy_romantic_auth', 'true');
-                        overlay.innerHTML = `
-                                <div class="auth-box" style="animation:floatUpAuth 0.6s cubic-bezier(0.34,1.56,0.64,1);">
-                                    <span class="auth-icon" style="font-size:60px;">🌟</span>
-                                    <h2 class="auth-title" style="color:#d47a8a;">✨ 星门已开启 ✨</h2>
-                                    <p style="font-size:16px;color:rgba(90,61,42,0.7);line-height:1.8;margin-bottom:20px;">✨ 口令正确！星星为你点亮 🌟</p>
-                                    <button class="auth-btn auth-btn-primary" id="authEnterBtn" style="padding:14px 50px;">💕 进入星海</button>
-                                </div>
-                            `;
-                        overlay.querySelector('#authEnterBtn').onclick = function() {
-                            overlay.remove();
-                            resolve(true);
-                            // 授权成功后播放音乐
-                            startMusic();
-                        };
-                    } else {
-                        input.style.borderColor = '#ff6b6b';
-                        input.style.animation = 'shakeAuth 0.4s ease';
-                        input.value = '';
-                        input.placeholder = '🌙 口令不对哦，再试一次 💫';
-                        setTimeout(() => {
-                            input.style.borderColor = 'rgba(212,168,106,0.2)';
-                            input.style.animation = '';
-                            input.placeholder = '请输入秘密口令...';
-                            input.focus();
-                        }, 1200);
-                    }
-                }
-
-                submitBtn.onclick = validateKey;
-                input.onkeydown = function(e) {
-                    if (e.key === 'Enter') validateKey();
-                };
-
-                demoBtn.onclick = function() {
-                    overlay.remove();
-                    resolve(false);
-                    // 演示模式也播放音乐
-                    startMusic();
-                };
-            });
-        }
-
-        // ============================================================
-        //  启动应用
-        // ============================================================
-        async function startApp() {
-            // 创建音乐按钮
-            createMusicBtn();
-
-            if (isAuthorized()) {
-                document.getElementById('stage1').style.display = 'block';
-                startMusic();
-                return;
-            }
-            const result = await showAuthDialog();
-            if (result) {
-                document.getElementById('stage1').style.display = 'block';
-                // 音乐已在验证成功时启动
+        function validateKey() {
+            const val = authInput.value.trim().toUpperCase();
+            if (val === SECRET_KEY) {
+                localStorage.setItem('azy_romantic_auth', 'true');
+                showMainContent();
             } else {
-                document.getElementById('stage1').style.display = 'block';
-                // 演示模式已在点击时启动音乐
+                authInput.style.borderColor = '#ff6b6b';
+                authInput.value = '';
+                authInput.placeholder = '🌙 口令不对哦，再试一次 💫';
                 setTimeout(() => {
-                    const banner = document.createElement('div');
-                    banner.style.cssText =
-                        'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99998;background:linear-gradient(135deg,rgba(255,107,129,0.92),rgba(238,90,111,0.92));color:#fff;padding:12px 24px;border-radius:60px;font-size:14px;font-weight:500;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);box-shadow:0 10px 40px rgba(255,107,129,0.3);cursor:pointer;transition:all .3s;text-align:center;max-width:90%;';
-                    banner.innerHTML =
-                        '🌷 星星的倒影 · <span style="text-decoration:underline;font-weight:600;">点击输入口令解锁完整星海</span>';
-                    banner.onclick = function() {
-                        localStorage.removeItem('azy_romantic_auth');
-                        location.reload();
-                    };
-                    document.body.appendChild(banner);
-                }, 600);
+                    authInput.style.borderColor = 'rgba(212,168,106,0.2)';
+                    authInput.placeholder = '请输入秘密口令...';
+                    authInput.focus();
+                }, 1200);
             }
         }
 
-        function createMusicBtn() {
-            if (document.getElementById('musicBtn')) return;
-            const btn = document.createElement('button');
-            btn.id = 'musicBtn';
-            btn.className = 'music-btn';
-            btn.innerHTML = '<span class="note">♪</span>';
-            btn.title = '播放/暂停背景音乐';
-            btn.onclick = toggleMusic;
-            document.body.appendChild(btn);
-        }
+        authBtn.onclick = validateKey;
+        authInput.onkeydown = function(e) { if (e.key === 'Enter') validateKey(); };
+        demoBtn.onclick = function() {
+            localStorage.setItem('azy_romantic_auth', 'demo');
+            showMainContent();
+            setTimeout(() => {
+                const banner = document.createElement('div');
+                banner.style.cssText =
+                    'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99998;background:rgba(255,107,129,0.85);color:#fff;padding:10px 22px;border-radius:60px;font-size:13px;font-weight:500;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);box-shadow:0 10px 40px rgba(255,107,129,0.15);cursor:pointer;transition:all .3s;text-align:center;max-width:90%;';
+                banner.innerHTML =
+                    '🌷 星星的倒影 · <span style="text-decoration:underline;font-weight:600;">点击输入口令解锁完整星海</span>';
+                banner.onclick = function() {
+                    localStorage.removeItem('azy_romantic_auth');
+                    location.reload();
+                };
+                document.body.appendChild(banner);
+            }, 500);
+        };
 
-        // ============================================================
-        //  启动应用（只调用一次）
-        // ============================================================
-        // 页面加载完成后启动
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', startApp);
-        } else {
-            startApp();
-        }
+        document.getElementById('musicBtn').onclick = toggleMusic;
 
         // ============================================================
         //  完整互动逻辑
         // ============================================================
 
-        const blessingData = [{
-            icon: '✨',
-            title: '愿所有美好都如期而至',
-            text: '遇见你之后，我才真正明白这句话的意义。\n\n你像晨光一样温柔地照进我的生活，让每一个平凡的日子都变得闪闪发光。\n\n美好不必远求，你就在我身边，这就是最好的如期而至。'
-        }, {
-            icon: '🌸',
-            title: '你是我藏在微风里的喜欢',
-            text: '每次风吹过的时候，我都会想起你。\n\n那种喜欢，不是轰轰烈烈的，而是像春天的风，温柔地、悄悄地，渗透进生活的每一个角落。\n\n你是我藏在心底的温柔，也是我写在风里的秘密。'
-        }, {
-            icon: '💫',
-            title: '星星温柔，人间浪漫',
-            text: '我见过凌晨四点的星光，也见过黄昏时分的晚霞。\n\n但所有的风景加起来，都不及你眼底的温柔。\n\n你是人间最浪漫的存在，让我相信星星会说话，石头会开花。'
-        }, {
-            icon: '🌙',
-            title: '月光所至，万事胜意',
-            text: '月亮不会发光，但它借了太阳的光，温柔了整片夜空。\n\n你也是这样，用你的光，照亮了我整个世界。\n\n愿你每一次抬头，都能看见月亮；愿你每一次回头，都能看见我。'
-        }, {
-            icon: '🌺',
-            title: '愿你眼里有光，心中有爱',
-            text: '世界很大，但你的眼睛更亮。\n\n愿你永远保持那份纯真的光，不被世俗磨灭。\n\n愿你心里永远装着爱，像盛开的花一样，温柔而坚定。'
-        }, {
-            icon: '🍀',
-            title: '幸运常伴，笑靥如花',
-            text: '有人说，遇见喜欢的人会花光所有运气。\n\n但我想说，遇见你之后，我的运气反而变得更好了。\n\n因为你就是我最大的幸运。愿你笑靥如花，岁岁年年。'
-        }, {
-            icon: '💖',
-            title: '心动不止，温柔不息',
-            text: '心动不是一瞬间的事，而是看见你时的每一次心跳。\n\n想陪你走过四季，看春华秋实，听夏雨冬雪。\n\n我的心动永远不会停止，像宇宙的呼吸一样绵长。'
-        }, {
-            icon: '🌊',
-            title: '山高水长，来日方长',
-            text: '我们还有很长的路要走，很多的故事要写。\n\n山很高，水很长，但没关系，我们有足够的耐心和温柔。\n\n来日方长，我想慢慢喜欢你，慢慢和你变老。'
-        }, {
-            icon: '🎈',
-            title: '每一天都是新的开始',
-            text: '昨天已经过去，明天还没到来，只有今天是最真实的。\n\n和你在一起的每一天，都是崭新的、值得期待的。\n\n因为你，我学会了珍惜当下的每一刻。'
-        }, {
-            icon: '🌈',
-            title: '生活明朗，万物可爱',
-            text: '你让我的世界变得色彩斑斓。\n\n原来生活可以这么美好，万物可以这么可爱。\n\n而这一切，都是因为有了你。你是我的彩虹，我的晴天。'
-        }, {
-            icon: '🌟',
-            title: '你本身就是最好的礼物',
-            text: '我收过很多礼物，但最珍贵的，是遇见你。\n\n你不需要成为谁，你只需要做你自己。\n\n因为在我心里，你本身就是上天送给我最好的礼物。'
-        }, {
-            icon: '💕',
-            title: '爱意随风起，风止意难平',
-            text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。'
-        }];
+        const blessingData = [
+            { icon: '✨', title: '愿所有美好都如期而至', text: '遇见你之后，我才真正明白这句话的意义。\n\n你像晨光一样温柔地照进我的生活，让每一个平凡的日子都变得闪闪发光。\n\n美好不必远求，你就在我身边，这就是最好的如期而至。' },
+            { icon: '🌸', title: '你是我藏在微风里的喜欢', text: '每次风吹过的时候，我都会想起你。\n\n那种喜欢，不是轰轰烈烈的，而是像春天的风，温柔地、悄悄地，渗透进生活的每一个角落。\n\n你是我藏在心底的温柔，也是我写在风里的秘密。' },
+            { icon: '💫', title: '星星温柔，人间浪漫', text: '我见过凌晨四点的星光，也见过黄昏时分的晚霞。\n\n但所有的风景加起来，都不及你眼底的温柔。\n\n你是人间最浪漫的存在，让我相信星星会说话，石头会开花。' },
+            { icon: '🌙', title: '月光所至，万事胜意', text: '月亮不会发光，但它借了太阳的光，温柔了整片夜空。\n\n你也是这样，用你的光，照亮了我整个世界。\n\n愿你每一次抬头，都能看见月亮；愿你每一次回头，都能看见我。' },
+            { icon: '🌺', title: '愿你眼里有光，心中有爱', text: '世界很大，但你的眼睛更亮。\n\n愿你永远保持那份纯真的光，不被世俗磨灭。\n\n愿你心里永远装着爱，像盛开的花一样，温柔而坚定。' },
+            { icon: '🍀', title: '幸运常伴，笑靥如花', text: '有人说，遇见喜欢的人会花光所有运气。\n\n但我想说，遇见你之后，我的运气反而变得更好了。\n\n因为你就是我最大的幸运。愿你笑靥如花，岁岁年年。' },
+            { icon: '💖', title: '心动不止，温柔不息', text: '心动不是一瞬间的事，而是看见你时的每一次心跳。\n\n想陪你走过四季，看春华秋实，听夏雨冬雪。\n\n我的心动永远不会停止，像宇宙的呼吸一样绵长。' },
+            { icon: '🌊', title: '山高水长，来日方长', text: '我们还有很长的路要走，很多的故事要写。\n\n山很高，水很长，但没关系，我们有足够的耐心和温柔。\n\n来日方长，我想慢慢喜欢你，慢慢和你变老。' },
+            { icon: '🎈', title: '每一天都是新的开始', text: '昨天已经过去，明天还没到来，只有今天是最真实的。\n\n和你在一起的每一天，都是崭新的、值得期待的。\n\n因为你，我学会了珍惜当下的每一刻。' },
+            { icon: '🌈', title: '生活明朗，万物可爱', text: '你让我的世界变得色彩斑斓。\n\n原来生活可以这么美好，万物可以这么可爱。\n\n而这一切，都是因为有了你。你是我的彩虹，我的晴天。' },
+            { icon: '🌟', title: '你本身就是最好的礼物', text: '我收过很多礼物，但最珍贵的，是遇见你。\n\n你不需要成为谁，你只需要做你自己。\n\n因为在我心里，你本身就是上天送给我最好的礼物。' },
+            { icon: '💕', title: '爱意随风起，风止意难平', text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。' }
+        ];
+
+        // ============================================================
+        //  情侣名生成词库（扩展版）
+        // ============================================================
+        const coupleNameMap = {
+            '伟': ['岸', '屹', '峰', '岳', '峦'],
+            '婷': ['汀', '停', '亭', '静', '立'],
+            '浩': ['远', '阔', '瀚', '渺', '航'],
+            '雪': ['初', '落', '清', '白', '素'],
+            '阳': ['光', '暖', '晴', '煦', '明'],
+            '月': ['光', '色', '影', '华', '清'],
+            '晨': ['光', '曦', '露', '微', '晓'],
+            '曦': ['光', '晨', '微', '阳', '暖'],
+            '磊': ['石', '山', '嶙', '峻', '稳'],
+            '雨': ['落', '水', '霁', '润', '泽'],
+            '航': ['行', '远', '舟', '帆', '济'],
+            '梦': ['归', '里', '中', '乡', '寻'],
+            '明': ['光', '月', '朗', '澈', '亮'],
+            '辰': ['星', '光', '夜', '曜', '辉'],
+            '枫': ['晚', '落', '岸', '红', '秋'],
+            '烟': ['波', '雨', '水', '云', '雾'],
+            '舟': ['同', '行', '归', '济', '远'],
+            '晚': ['风', '安', '宁', '静', '和'],
+            '安': ['静', '宁', '暖', '和', '平'],
+            '念': ['忘', '想', '归', '怀', '思'],
+            '风': ['起', '落', '过', '云', '烟'],
+            '云': ['端', '间', '外', '深', '落'],
+            '海': ['天', '阔', '深', '蓝', '航'],
+            '山': ['间', '外', '高', '远', '青'],
+            '林': ['间', '深', '木', '幽', '静'],
+            '溪': ['流', '水', '清', '浅', '潺'],
+            '瑶': ['光', '台', '池', '华', '月'],
+            '琳': ['琅', '瑯', '玉', '光', '音'],
+            '琪': ['瑶', '玉', '光', '华', '彩'],
+            '洁': ['白', '净', '明', '清', '素'],
+            '欣': ['然', '悦', '喜', '欢', '笑'],
+            '悦': ['然', '欣', '喜', '欢', '心'],
+            '怡': ['然', '心', '情', '悦', '和'],
+            '静': ['水', '心', '夜', '思', '安'],
+            '柔': ['光', '水', '情', '心', '风'],
+            '婉': ['约', '转', '然', '情', '心'],
+            '雅': ['韵', '致', '然', '心', '情'],
+            '诗': ['韵', '意', '心', '情', '章'],
+            '画': ['意', '心', '情', '境', '卷'],
+            '书': ['香', '卷', '情', '心', '韵'],
+            '一': ['念', '生', '世', '心', '意'],
+            '念': ['一', '生', '心', '意', '思'],
+            '思': ['念', '一', '心', '意', '情'],
+            '君': ['心', '意', '情', '念', '一'],
+            '佳': ['人', '期', '音', '影', '话'],
+            '乐': ['心', '意', '情', '欢', '悦'],
+            '欢': ['乐', '心', '情', '喜', '悦'],
+            '甜': ['蜜', '心', '情', '意', '梦'],
+            '安': ['暖', '心', '意', '情', '静'],
+            '宁': ['静', '心', '安', '意', '和'],
+            '春': ['风', '雨', '花', '光', '暖'],
+            '夏': ['夜', '风', '雨', '荷', '光'],
+            '秋': ['月', '风', '色', '叶', '光'],
+            '冬': ['雪', '风', '夜', '光', '暖']
+        };
+
+        const defaultImagery = ['光', '风', '月', '雨', '星', '梦', '雪', '云', '水', '山'];
+
+        function getCoupleImage(char) {
+            if (coupleNameMap[char]) return coupleNameMap[char];
+            // 尝试用最后一位
+            if (coupleNameMap[char]) return coupleNameMap[char];
+            return defaultImagery;
+        }
 
         const wordMap = {
             '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
@@ -515,46 +472,13 @@
         function generateCoupleNames(name1, name2) {
             const n1 = name1.trim();
             const n2 = name2.trim();
-
-            if (!n1 || !n2) return { his: '✨', hers: '✨', tagline: '请先输入两个名字哦', intro: '' };
+            if (!n1 || !n2) return { his: '✨', hers: '✨', tagline: '', intro: '' };
 
             const first1 = n1.charAt(0);
             const first2 = n2.charAt(0);
 
-            const imagery = {
-                '伟': ['岸', '屹', '峰'],
-                '婷': ['汀', '停', '亭'],
-                '浩': ['远', '阔', '瀚'],
-                '雪': ['初', '落', '清'],
-                '阳': ['光', '暖', '晴'],
-                '月': ['光', '色', '影'],
-                '晨': ['光', '曦', '露'],
-                '曦': ['光', '晨', '微'],
-                '磊': ['石', '山', '嶙'],
-                '雨': ['落', '水', '霁'],
-                '航': ['行', '远', '舟'],
-                '梦': ['归', '里', '中'],
-                '明': ['光', '月', '朗'],
-                '辰': ['星', '光', '夜'],
-                '枫': ['晚', '落', '岸'],
-                '烟': ['波', '雨', '水'],
-                '舟': ['同', '行', '归'],
-                '晚': ['风', '安', '宁'],
-                '安': ['静', '宁', '暖'],
-                '念': ['忘', '想', '归']
-            };
-
-            const defaultImagery = ['光', '风', '月', '雨', '星', '梦', '雪'];
-
-            const getImage = (char) => {
-                if (imagery[char]) return imagery[char];
-                const lastChar = char;
-                if (imagery[lastChar]) return imagery[lastChar];
-                return defaultImagery;
-            };
-
-            const img1 = getImage(first1);
-            const img2 = getImage(first2);
+            const img1 = getCoupleImage(first1);
+            const img2 = getCoupleImage(first2);
             const img1_1 = img1[Math.floor(Math.random() * img1.length)];
             const img2_1 = img2[Math.floor(Math.random() * img2.length)];
 
@@ -565,16 +489,16 @@
             }
 
             const styles = [];
-            styles.push({ his: final1, hers: final2, tagline: `${final1}与${final2}，一个在左，一个在右` });
-            const prefix1 = ['长', '清', '微', '轻', '晚', '初', '向', '南'][Math.floor(Math.random() * 8)];
-            const prefix2 = ['长', '清', '微', '轻', '晚', '初', '向', '北'][Math.floor(Math.random() * 8)];
-            styles.push({ his: prefix1 + final1, hers: prefix2 + final2, tagline: `${prefix1}${final1}，${prefix2}${final2}——遥遥相望，各自安好` });
-            const mod1 = ['落', '入', '有', '无', '在', '若'][Math.floor(Math.random() * 6)];
-            const mod2 = ['落', '入', '有', '无', '在', '若'][Math.floor(Math.random() * 6)];
-            styles.push({ his: mod1 + final1, hers: mod2 + final2, tagline: `${mod1}${final1}，${mod2}${final2}——有风有月，有你有我` });
-            const space1 = ['山', '水', '云', '风', '月', '星'][Math.floor(Math.random() * 6)];
-            const space2 = ['山', '水', '云', '风', '月', '星'][Math.floor(Math.random() * 6)];
-            styles.push({ his: space1 + '间' + final1, hers: space2 + '中' + final2, tagline: `${space1}间${final1}，${space2}中${final2}——山高水长，来日方长` });
+            styles.push({ his: final1, hers: final2, tagline: `${final1}与${final2}` });
+            const prefix1 = ['长', '清', '微', '轻', '晚', '初', '向', '南', '若', '如'][Math.floor(Math.random() * 10)];
+            const prefix2 = ['长', '清', '微', '轻', '晚', '初', '向', '北', '若', '如'][Math.floor(Math.random() * 10)];
+            styles.push({ his: prefix1 + final1, hers: prefix2 + final2, tagline: `${prefix1}${final1} · ${prefix2}${final2}` });
+            const mod1 = ['落', '入', '有', '无', '在', '若', '似', '如', '已', '未'][Math.floor(Math.random() * 10)];
+            const mod2 = ['落', '入', '有', '无', '在', '若', '似', '如', '已', '未'][Math.floor(Math.random() * 10)];
+            styles.push({ his: mod1 + final1, hers: mod2 + final2, tagline: `${mod1}${final1} · ${mod2}${final2}` });
+            const space1 = ['山', '水', '云', '风', '月', '星', '海', '天', '林', '雪'][Math.floor(Math.random() * 10)];
+            const space2 = ['山', '水', '云', '风', '月', '星', '海', '天', '林', '雪'][Math.floor(Math.random() * 10)];
+            styles.push({ his: space1 + '间' + final1, hers: space2 + '中' + final2, tagline: `${space1}间${final1} · ${space2}中${final2}` });
 
             const selected = styles[Math.floor(Math.random() * styles.length)];
 
@@ -980,14 +904,14 @@
             card.style.cssText =
                 'position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9996;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);';
             card.innerHTML = `
-                    <div style="background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 30px;max-width:420px;width:90%;text-align:center;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,.3);">
+                    <div style="background:linear-gradient(145deg,#2a1a1a,#1a0a0a);border-radius:40px;padding:40px 30px;max-width:420px;width:90%;text-align:center;border:2px solid rgba(212,168,106,0.2);box-shadow:0 30px 80px rgba(0,0,0,.3);">
                         <div style="font-size:72px;margin-bottom:16px;">💕</div>
-                        <h2 style="font-size:24px;color:#5a3d2a;margin-bottom:8px;">故事还在继续</h2>
-                        <p style="font-size:16px;color:rgba(90,61,42,.6);line-height:1.8;margin-bottom:20px;">
+                        <h2 style="font-size:24px;color:#d4a86a;margin-bottom:8px;">故事还在继续</h2>
+                        <p style="font-size:16px;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:20px;">
                             <strong style="color:#d47a8a;">${myName}</strong> 和 <strong style="color:#d47a8a;">${loverName}</strong><br>
                             两个名字，已经写进了同一个故事里。<br>
                             每一笔都是心动，每一划都是温柔。<br>
-                            <span style="color:#d47a8a;font-weight:600;">愿所有的美好，都与你们环环相扣。</span>
+                            <span style="color:#d4a86a;font-weight:600;">愿所有的美好，都与你们环环相扣。</span>
                         </p>
                         <button onclick="this.parentElement.parentElement.remove()" style="padding:14px 40px;border:none;border-radius:60px;background:linear-gradient(135deg,#f5a0b0,#e88090);color:#fff;font-size:18px;font-weight:600;cursor:pointer;transition:all .2s;">
                             💕 我会永远记得
@@ -1000,10 +924,8 @@
             });
         }
 
-        // 所有逻辑都在上面，没有重复调用
         console.log('💕 完整旅程已加载！');
-        console.log('🗝️ 统一授权码：' + SECRET_KEY);
-        console.log('🎵 背景音乐：Daydream · 免费可商用');
+        console.log('🗝️ 授权码：' + SECRET_KEY);
     </script>
 
 </body>

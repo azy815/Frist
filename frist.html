@@ -11,7 +11,6 @@
         body.pink-bg{background:radial-gradient(ellipse at center,#ffe4ec,#ffd0d8,#ffb8c6)!important}
         body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
 
-        /* 音乐按钮（可手动开关） */
         .music-btn{position:fixed;top:20px;right:20px;z-index:99998;width:44px;height:44px;border-radius:50%;border:2px solid rgba(200,100,120,0.12);background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);color:rgba(90,61,74,0.4);font-size:20px;cursor:pointer;transition:all .3s;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
         .music-btn:hover{background:rgba(255,255,255,0.25);border-color:rgba(200,100,120,0.2);color:rgba(90,61,74,0.7)}
         .music-btn.playing{color:#d47a8a;border-color:rgba(200,100,120,0.2);animation:musicPulse 1.5s ease-in-out infinite}
@@ -20,7 +19,6 @@
         .music-btn.playing .note{animation:noteDance 0.6s ease-in-out infinite alternate}
         @keyframes noteDance{0%{transform:scale(1)}100%{transform:scale(1.2)}}
 
-        /* 卡片 */
         .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
         .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
         .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
@@ -75,7 +73,6 @@
         .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px;text-align:left}
         .poem-box .btn{margin-top:18px}
 
-        /* 星门弹窗 */
         #authOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px)}
         #authOverlay.hidden{display:none}
         .auth-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 32px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 40px 100px rgba(0,0,0,0.2);text-align:center}
@@ -92,7 +89,6 @@
         .auth-box .btn-secondary{background:rgba(200,150,160,0.08);color:rgba(90,61,42,0.3);border:1px solid rgba(200,150,160,0.08)}
         .auth-box .footer{font-size:11px;color:rgba(90,61,42,0.2);margin-top:14px}
 
-        /* 情侣名展示 */
         .couple-box{background:rgba(255,255,255,0.05);border-radius:24px;padding:20px;margin:12px 0;border:1px solid rgba(255,255,255,0.06)}
         .couple-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
         .couple-item{flex:1;min-width:70px;text-align:center}
@@ -111,12 +107,10 @@
 </head>
 <body>
 
-    <!-- ===== 音乐按钮 ===== -->
     <button class="music-btn" id="musicBtn" title="点击开关音乐">
         <span class="note">♫</span>
     </button>
 
-    <!-- ===== 星门弹窗 ===== -->
     <div id="authOverlay">
         <div class="auth-box">
             <span class="icon">💌</span>
@@ -166,7 +160,6 @@
         <button class="btn btn-gold" id="btnNext" style="display:none;margin-top:20px;">继续 💕</button>
     </div>
 
-    <!-- ===== 弹窗 ===== -->
     <div id="popup">
         <div class="popup-content">
             <div class="popup-title" id="popupTitle">💕</div>
@@ -175,7 +168,6 @@
         </div>
     </div>
 
-    <!-- ===== 名字输入 ===== -->
     <div id="nameInput">
         <div class="name-box">
             <h2 id="nameTitle">✍️ 写出你的名字</h2>
@@ -187,7 +179,6 @@
         </div>
     </div>
 
-    <!-- ===== 小诗展示 ===== -->
     <div id="poemDisplay">
         <div class="poem-box">
             <h2 id="poemTitle">🌹 给独一无二的你</h2>
@@ -200,7 +191,7 @@
 
     <script>
         // ============================================================
-        //  🎵 背景音乐（自动播放 + 循环）
+        // 🎵 音乐
         // ============================================================
         const MUSIC_URL = 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Steve_Combs/Transitions/Steve_Combs_-_Daydream.mp3';
         const SECRET_KEY = 'ROSE2026';
@@ -225,7 +216,6 @@
                 document.getElementById('musicBtn').classList.add('playing');
                 document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
             }).catch(() => {
-                // 浏览器拦截，点击页面任意位置后重试
                 document.addEventListener('click', function playOnClick() {
                     audio.play().then(() => {
                         isMusicPlaying = true;
@@ -240,7 +230,6 @@
         function toggleMusic() {
             const btn = document.getElementById('musicBtn');
             initAudio();
-
             if (isMusicPlaying) {
                 audio.pause();
                 isMusicPlaying = false;
@@ -256,23 +245,19 @@
         }
 
         // ============================================================
-        //  星门验证
+        // 星门验证
         // ============================================================
         const authOverlay = document.getElementById('authOverlay');
         const authInput = document.getElementById('authInput');
         const authBtn = document.getElementById('authBtn');
         const demoBtn = document.getElementById('demoBtn');
 
-        // 页面加载后立即尝试播放音乐
         startMusic();
 
         function showMainContent() {
             authOverlay.classList.add('hidden');
             document.getElementById('stage1').style.display = 'block';
-            // 确保音乐播放
-            if (!isMusicPlaying) {
-                startMusic();
-            }
+            if (!isMusicPlaying) startMusic();
         }
 
         function validateKey() {
@@ -310,13 +295,11 @@
                 document.body.appendChild(banner);
             }, 500);
         };
-
         document.getElementById('musicBtn').onclick = toggleMusic;
 
         // ============================================================
-        //  完整互动逻辑
+        // 祝福语数据
         // ============================================================
-
         const blessingData = [
             { icon: '✨', title: '愿所有美好都如期而至', text: '遇见你之后，我才真正明白这句话的意义。\n\n你像晨光一样温柔地照进我的生活，让每一个平凡的日子都变得闪闪发光。\n\n美好不必远求，你就在我身边，这就是最好的如期而至。' },
             { icon: '🌸', title: '你是我藏在微风里的喜欢', text: '每次风吹过的时候，我都会想起你。\n\n那种喜欢，不是轰轰烈烈的，而是像春天的风，温柔地、悄悄地，渗透进生活的每一个角落。\n\n你是我藏在心底的温柔，也是我写在风里的秘密。' },
@@ -332,6 +315,9 @@
             { icon: '💕', title: '爱意随风起，风止意难平', text: '有些爱是突然发生的，像一阵风，吹过就再也停不下来。\n\n我对你的爱也是这样。即使风停了，心里的涟漪依然在荡漾。\n\n爱意随风起，风止意难平。你就是我这一生，最难平的那阵风。' }
         ];
 
+        // ============================================================
+        // 情侣名词库
+        // ============================================================
         const coupleNameMap = {
             '伟': ['岸', '屹', '峰', '岳', '峦'],
             '婷': ['汀', '停', '亭', '静', '立'],
@@ -395,6 +381,9 @@
             return defaultImagery;
         }
 
+        // ============================================================
+        // 词库
+        // ============================================================
         const wordMap = {
             '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
             '心': ['心之所向皆是你', '心动是最美的风景', '心中有光，眼中有你'],
@@ -750,7 +739,7 @@
         }
 
         // ============================================================
-        //  第三阶段：继续 → 名字输入流程
+        //  第三阶段
         // ============================================================
         const btnNext = document.getElementById('btnNext');
         let myName = '';
@@ -938,7 +927,6 @@
 
         console.log('💕 完整旅程已加载！');
         console.log('🗝️ 授权码：' + SECRET_KEY);
-        console.log('🎵 音乐已自动播放');
     </script>
 
 </body>

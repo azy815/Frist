@@ -362,8 +362,15 @@
             document.body.appendChild(btn);
         }
 
-        // 启动应用
-        startApp();
+        // ============================================================
+        //  启动应用（只调用一次）
+        // ============================================================
+        // 页面加载完成后启动
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startApp);
+        } else {
+            startApp();
+        }
 
         // ============================================================
         //  完整互动逻辑
@@ -993,6 +1000,7 @@
             });
         }
 
+        // 所有逻辑都在上面，没有重复调用
         console.log('💕 完整旅程已加载！');
         console.log('🗝️ 统一授权码：' + SECRET_KEY);
         console.log('🎵 背景音乐：Daydream · 免费可商用');

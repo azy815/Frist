@@ -7,23 +7,13 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         html,body{width:100%;min-height:100vh;overflow:hidden}
-        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;transition:background .8s ease;overflow:hidden;position:relative}
+        body{min-height:100vh;display:flex;justify-content:center;align-items:center;font-family:'PingFang SC','Microsoft YaHei',sans-serif;padding:16px;background:radial-gradient(ellipse at center,#fff5f7,#ffe8ee,#ffdce6);background-size:100% 100%;overflow:hidden;position:relative}
         body.pink-bg{background:radial-gradient(ellipse at center,#ffe4ec,#ffd0d8,#ffb8c6)!important}
-        body.dark-bg{background:radial-gradient(ellipse at center,#0d0d1a,#08080e,#040408)!important}
 
-        .music-btn{position:fixed;top:20px;right:20px;z-index:99998;width:44px;height:44px;border-radius:50%;border:2px solid rgba(200,100,120,0.12);background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);color:rgba(90,61,74,0.4);font-size:20px;cursor:pointer;transition:all .3s;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
-        .music-btn:hover{background:rgba(255,255,255,0.25);border-color:rgba(200,100,120,0.2);color:rgba(90,61,74,0.7)}
-        .music-btn.playing{color:#d47a8a;border-color:rgba(200,100,120,0.2);animation:musicPulse 1.5s ease-in-out infinite}
-        @keyframes musicPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,100,120,0.1)}50%{box-shadow:0 0 0 10px rgba(200,100,120,0)}}
-        .music-btn .note{display:inline-block}
-        .music-btn.playing .note{animation:noteDance 0.6s ease-in-out infinite alternate}
-        @keyframes noteDance{0%{transform:scale(1)}100%{transform:scale(1.2)}}
-
+        /* 卡片 */
         .card{position:relative;z-index:20;background:rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:32px 20px;border-radius:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.4);margin:0 auto;transition:all .5s ease}
         .card.champagne{background:linear-gradient(145deg,#f5e6d3,#ecd4c0,#e8c8b0)!important;backdrop-filter:none!important;border:2px solid #d4a86a!important}
         .card.hide{opacity:0;transform:scale(.9) translateY(20px);pointer-events:none}
-        .card.hidden{display:none}
-
         .big-heart{font-size:56px;animation:pulse 1.6s ease-in-out infinite;display:inline-block}
         @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
         .question{font-size:24px;font-weight:700;color:#5a3d4a;margin:10px 0 4px}
@@ -73,14 +63,15 @@
         .poem-text{font-size:16px;line-height:2.2;color:#4a3d3a;white-space:pre-wrap;font-family:'PingFang SC','Microsoft YaHei',serif;letter-spacing:1px;text-align:left}
         .poem-box .btn{margin-top:18px}
 
-        #authOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(10,10,26,0.7);backdrop-filter:blur(16px)}
+        /* ===== 粉色星门弹窗 ===== */
+        #authOverlay{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;display:flex;justify-content:center;align-items:center;background:rgba(255,240,242,0.92);backdrop-filter:blur(16px)}
         #authOverlay.hidden{display:none}
-        .auth-box{background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 32px;max-width:420px;width:90%;border:2px solid #d4a86a;box-shadow:0 40px 100px rgba(0,0,0,0.2);text-align:center}
+        .auth-box{background:linear-gradient(145deg,#fff5f7,#ffe8ee,#ffdce6);border-radius:40px;padding:40px 32px;max-width:420px;width:90%;border:2px solid rgba(200,100,120,0.15);box-shadow:0 40px 80px rgba(200,100,120,0.08);text-align:center}
         .auth-box .icon{font-size:48px;display:block;margin-bottom:8px}
         .auth-box h2{font-size:20px;color:#5a3d2a;margin-bottom:6px}
         .auth-box p{font-size:14px;color:rgba(90,61,42,0.5);margin-bottom:6px;line-height:1.6}
-        .auth-box input{width:100%;padding:14px 20px;border:2px solid rgba(212,168,106,0.2);border-radius:60px;font-size:18px;outline:none;background:rgba(255,255,255,0.4);text-align:center;color:#5a3d2a;margin-bottom:14px;box-sizing:border-box;transition:all .3s}
-        .auth-box input:focus{border-color:#d4a86a;background:rgba(255,255,255,0.7)}
+        .auth-box input{width:100%;padding:14px 20px;border:2px solid rgba(200,100,120,0.15);border-radius:60px;font-size:18px;outline:none;background:rgba(255,255,255,0.5);text-align:center;color:#5a3d2a;margin-bottom:14px;box-sizing:border-box;transition:all .3s}
+        .auth-box input:focus{border-color:#d47a8a;background:rgba(255,255,255,0.7)}
         .auth-box input::placeholder{color:rgba(90,61,42,0.2)}
         .auth-box .btn-group{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
         .auth-box .btn{padding:12px 36px;border:none;border-radius:60px;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;min-width:120px}
@@ -107,10 +98,7 @@
 </head>
 <body>
 
-    <button class="music-btn" id="musicBtn" title="点击开关音乐">
-        <span class="note">♫</span>
-    </button>
-
+    <!-- ===== 粉色星门弹窗 ===== -->
     <div id="authOverlay">
         <div class="auth-box">
             <span class="icon">💌</span>
@@ -191,73 +179,24 @@
 
     <script>
         // ============================================================
-        // 🎵 音乐
+        //  授权码
         // ============================================================
-        const MUSIC_URL = 'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Steve_Combs/Transitions/Steve_Combs_-_Daydream.mp3';
         const SECRET_KEY = 'ROSE2026';
 
-        let audio = null;
-        let isMusicPlaying = false;
-
-        function initAudio() {
-            if (!audio) {
-                audio = new Audio(MUSIC_URL);
-                audio.loop = true;
-                audio.volume = 0.4;
-                audio.load();
-            }
-            return audio;
-        }
-
-        function startMusic() {
-            initAudio();
-            audio.play().then(() => {
-                isMusicPlaying = true;
-                document.getElementById('musicBtn').classList.add('playing');
-                document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
-            }).catch(() => {
-                document.addEventListener('click', function playOnClick() {
-                    audio.play().then(() => {
-                        isMusicPlaying = true;
-                        document.getElementById('musicBtn').classList.add('playing');
-                        document.getElementById('musicBtn').innerHTML = '<span class="note">♫</span>';
-                    }).catch(() => {});
-                    document.removeEventListener('click', playOnClick);
-                });
-            });
-        }
-
-        function toggleMusic() {
-            const btn = document.getElementById('musicBtn');
-            initAudio();
-            if (isMusicPlaying) {
-                audio.pause();
-                isMusicPlaying = false;
-                btn.classList.remove('playing');
-                btn.innerHTML = '<span class="note">♪</span>';
-            } else {
-                audio.play().then(() => {
-                    isMusicPlaying = true;
-                    btn.classList.add('playing');
-                    btn.innerHTML = '<span class="note">♫</span>';
-                }).catch(() => {});
-            }
-        }
-
         // ============================================================
-        // 星门验证
+        //  星门验证
         // ============================================================
         const authOverlay = document.getElementById('authOverlay');
         const authInput = document.getElementById('authInput');
         const authBtn = document.getElementById('authBtn');
         const demoBtn = document.getElementById('demoBtn');
-
-        startMusic();
+        const stage1 = document.getElementById('stage1');
+        const stage2 = document.getElementById('stage2');
+        const stage3 = document.getElementById('stage3');
 
         function showMainContent() {
             authOverlay.classList.add('hidden');
-            document.getElementById('stage1').style.display = 'block';
-            if (!isMusicPlaying) startMusic();
+            stage1.style.display = 'block';
         }
 
         function validateKey() {
@@ -270,7 +209,7 @@
                 authInput.value = '';
                 authInput.placeholder = '🌙 口令不对哦，再试一次 💫';
                 setTimeout(() => {
-                    authInput.style.borderColor = 'rgba(212,168,106,0.2)';
+                    authInput.style.borderColor = 'rgba(200,100,120,0.15)';
                     authInput.placeholder = '请输入秘密口令...';
                     authInput.focus();
                 }, 1200);
@@ -295,11 +234,11 @@
                 document.body.appendChild(banner);
             }, 500);
         };
-        document.getElementById('musicBtn').onclick = toggleMusic;
 
         // ============================================================
-        // 祝福语数据
+        //  完整互动逻辑
         // ============================================================
+
         const blessingData = [
             { icon: '✨', title: '愿所有美好都如期而至', text: '遇见你之后，我才真正明白这句话的意义。\n\n你像晨光一样温柔地照进我的生活，让每一个平凡的日子都变得闪闪发光。\n\n美好不必远求，你就在我身边，这就是最好的如期而至。' },
             { icon: '🌸', title: '你是我藏在微风里的喜欢', text: '每次风吹过的时候，我都会想起你。\n\n那种喜欢，不是轰轰烈烈的，而是像春天的风，温柔地、悄悄地，渗透进生活的每一个角落。\n\n你是我藏在心底的温柔，也是我写在风里的秘密。' },
@@ -316,7 +255,7 @@
         ];
 
         // ============================================================
-        // 情侣名词库
+        //  情侣名词库
         // ============================================================
         const coupleNameMap = {
             '伟': ['岸', '屹', '峰', '岳', '峦'],
@@ -382,7 +321,7 @@
         }
 
         // ============================================================
-        // 词库
+        //  词库
         // ============================================================
         const wordMap = {
             '爱': ['爱是晨光里的温柔', '爱在心底开出花', '爱意绵绵无绝期'],
@@ -549,8 +488,6 @@
         const questionEl = document.getElementById('questionEl');
         const hintEl = document.getElementById('hintEl');
         const verse1 = document.getElementById('verse1');
-        const stage1 = document.getElementById('stage1');
-        const stage2 = document.getElementById('stage2');
 
         let hateClickCount = 0;
         const hateMsgs = ['你再想想？😠', '真的不爱吗？🥺', '再给你一次机会！😡', '呜呜呜我伤心了 💔'];
@@ -611,7 +548,7 @@
             btnYes.style.opacity = '0.7';
             stage2.classList.remove('active');
             stage2.style.display = 'none';
-            document.getElementById('stage3').classList.add('active');
+            stage3.classList.add('active');
             startBlessingRain();
         });
 
@@ -730,8 +667,8 @@
                 }
                 if (totalBlessCreated >= TOTAL_BLESS && activeBlessElements.length === 0) {
                     clearInterval(replenishInterval);
-                    document.getElementById('stage3').style.display = 'block';
-                    document.getElementById('stage3').classList.remove('hide');
+                    stage3.style.display = 'block';
+                    stage3.classList.remove('hide');
                     document.getElementById('resultMsg3').innerHTML = '💕 点击下方按钮继续 💕';
                     document.getElementById('btnNext').style.display = 'inline-block';
                 }
@@ -739,7 +676,7 @@
         }
 
         // ============================================================
-        //  第三阶段
+        //  第三阶段：继续 → 名字输入流程
         // ============================================================
         const btnNext = document.getElementById('btnNext');
         let myName = '';
@@ -750,8 +687,8 @@
             activeBlessElements = [];
             if (replenishInterval) clearInterval(replenishInterval);
 
-            document.getElementById('stage3').classList.add('hide');
-            document.getElementById('stage3').style.display = 'none';
+            stage3.classList.add('hide');
+            stage3.style.display = 'none';
 
             showNameInput(
                 '✍️ 写出你的名字',

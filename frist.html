@@ -6,9 +6,11 @@
     <title>你爱我吗 💕 粉金玫瑰</title>
 
     <!-- ============================================================ -->
-    <!--  🛡️ 浪漫授权系统 v1.0                                          -->
+    <!--  🛡️ 浪漫授权系统 v2.0                                          -->
     <!--  作者：azy815                                                   -->
     <!--  专属口令：AZY-MASTER-2026（星星的约定）                       -->
+    <!--  管理员入口：连续点击页面5次                                    -->
+    <!--  管理员密码：azy2026                                           -->
     <!-- ============================================================ -->
     <script>
         /**
@@ -70,17 +72,34 @@
             }
 
             // ============================================================
-            //  3. 星语口令验证（浪漫版）
+            //  3. 从 localStorage 加载授权码列表
             // ============================================================
-            const MASTER_CODE = 'AZY-MASTER-2026';
+            function getCodeList() {
+                try {
+                    const data = localStorage.getItem('azy_codes');
+                    return data ? JSON.parse(data) : {};
+                } catch {
+                    return {};
+                }
+            }
 
-            const VALID_CODES = {
-                'AZY-MASTER-2026': '🌟 星星的主人',
-                // 给用户生成新口令时，在这里添加：
-                // 'AZY-2026-001': '💫 张三的星轨',
-                // 'AZY-2026-002': '🌙 李四的月光',
+            // 默认授权码（硬编码 + 从 localStorage 扩展）
+            const DEFAULT_CODES = {
+                'AZY-MASTER-2026': '🌟 星星的主人'
             };
 
+            // 合并授权码
+            const storedCodes = getCodeList();
+            const VALID_CODES = { ...DEFAULT_CODES, ...storedCodes };
+
+            // 保存到全局，供管理员后台使用
+            window.__VALID_CODES = VALID_CODES;
+
+            console.log('🔑 已加载 ' + Object.keys(VALID_CODES).length + ' 个授权码');
+
+            // ============================================================
+            //  4. 星语口令验证（浪漫版）
+            // ============================================================
             const romanticMessages = {
                 welcome: '💌 你收到了一封来自星星的信件',
                 hint: '请输入信件中的秘密口令 ✨',
@@ -108,6 +127,7 @@
                             @keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
                             @keyframes floatUp{0%{opacity:0;transform:translateY(30px) scale(0.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
                             @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+                            @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
                         `;
                     document.head.appendChild(style);
 
@@ -186,7 +206,9 @@
 
                     function validateCode() {
                         const code = input.value.trim().toUpperCase();
-                        if (VALID_CODES[code]) {
+                        // 从合并的授权码中验证
+                        const allCodes = window.__VALID_CODES || VALID_CODES;
+                        if (allCodes[code]) {
                             localStorage.setItem('azy_license_valid', 'true');
                             localStorage.setItem('azy_license_code', code);
                             overlay.innerHTML = `
@@ -259,9 +281,10 @@
             async function startRomanticAuth() {
                 const stored = localStorage.getItem('azy_license_valid');
                 const storedCode = localStorage.getItem('azy_license_code');
+                const allCodes = window.__VALID_CODES || VALID_CODES;
 
-                if (stored === 'true' && storedCode && VALID_CODES[storedCode]) {
-                    console.log('✅ 已授权：' + storedCode + ' (' + VALID_CODES[storedCode] + ')');
+                if (stored === 'true' && storedCode && allCodes[storedCode]) {
+                    console.log('✅ 已授权：' + storedCode + ' (' + allCodes[storedCode] + ')');
                     window.__isAuthorized = true;
                     window.__licenseCode = storedCode;
                     return true;
@@ -459,10 +482,192 @@
         </div>
     </div>
 
+    <!-- ============================================================ -->
+    <!--  管理员后台（仅作者可见）                                     -->
+    <!--  入口：页面任意位置点击 5 次 → 弹出管理面板                   -->
+    <!--  密码：azy2026                                                 -->
+    <!-- ============================================================ -->
+    <div id="adminPanel" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);justify-content:center;align-items:center;">
+        <div style="background:linear-gradient(145deg,#fff5f0,#fce8e0,#f5d8d0);border-radius:40px;padding:40px 32px;max-width:500px;width:90%;border:2px solid #d4a86a;box-shadow:0 30px 80px rgba(0,0,0,0.3);max-height:80vh;overflow-y:auto;">
+            <h2 style="font-size:22px;color:#5a3d2a;margin-bottom:4px;">🔑 授权码管理</h2>
+            <p style="font-size:13px;color:rgba(90,61,42,0.5);margin-bottom:16px;">当前授权码列表</p>
+            <div id="codeList" style="background:rgba(255,255,255,0.3);border-radius:16px;padding:12px;margin-bottom:16px;max-height:200px;overflow-y:auto;font-size:14px;font-family:monospace;">
+                <!-- 授权码列表动态生成 -->
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+                <input type="text" id="newCode" placeholder="自定义授权码（留空自动生成）" style="flex:1;min-width:150px;padding:12px 16px;border:2px solid rgba(212,168,106,0.3);border-radius:30px;font-size:14px;outline:none;background:rgba(255,255,255,0.5);">
+                <input type="text" id="newUser" placeholder="用户备注" style="flex:1;min-width:100px;padding:12px 16px;border:2px solid rgba(212,168,106,0.3);border-radius:30px;font-size:14px;outline:none;background:rgba(255,255,255,0.5);">
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button onclick="addCode()" style="padding:12px 28px;border:none;border-radius:60px;background:linear-gradient(135deg,#d4a86a,#c89850);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;">✨ 生成授权码</button>
+                <button onclick="refreshCodeList()" style="padding:12px 20px;border:none;border-radius:60px;background:rgba(200,150,160,0.1);color:rgba(90,61,42,0.5);font-size:14px;cursor:pointer;transition:all .2s;">🔄 刷新</button>
+                <button onclick="closeAdmin()" style="padding:12px 20px;border:none;border-radius:60px;background:rgba(255,80,80,0.1);color:#ff6b6b;font-size:14px;cursor:pointer;transition:all .2s;">✕ 关闭</button>
+            </div>
+            <p style="font-size:11px;color:rgba(90,61,42,0.3);margin-top:12px;">💡 授权码格式：AZY-2026-XXX（自动生成）或自定义</p>
+        </div>
+    </div>
+
     <script>
         // ============================================================
-        //  祝福语 + 小作文数据
+        //  管理员后台 - 授权码管理
         // ============================================================
+
+        // 从 localStorage 读取授权码列表
+        function getCodeList() {
+            try {
+                const data = localStorage.getItem('azy_codes');
+                return data ? JSON.parse(data) : {};
+            } catch {
+                return {};
+            }
+        }
+
+        // 保存授权码列表到 localStorage
+        function saveCodeList(codes) {
+            localStorage.setItem('azy_codes', JSON.stringify(codes));
+            // 同步更新到全局
+            window.__VALID_CODES = { ...window.__VALID_CODES, ...codes };
+            refreshCodeList();
+        }
+
+        // 生成新的授权码
+        function generateCode() {
+            const existing = getCodeList();
+            const keys = Object.keys(existing);
+            let num = keys.length + 1;
+            keys.forEach(key => {
+                if (key.startsWith('AZY-2026-')) {
+                    const n = parseInt(key.replace('AZY-2026-', ''));
+                    if (n >= num) num = n + 1;
+                }
+            });
+            return 'AZY-2026-' + String(num).padStart(3, '0');
+        }
+
+        // 添加授权码
+        function addCode() {
+            const codeInput = document.getElementById('newCode');
+            const userInput = document.getElementById('newUser');
+            let code = codeInput.value.trim().toUpperCase();
+            const user = userInput.value.trim() || '💫 新用户';
+
+            if (!code) {
+                code = generateCode();
+            }
+
+            const codes = getCodeList();
+            if (codes[code]) {
+                alert('⚠️ 授权码 ' + code + ' 已存在！');
+                return;
+            }
+
+            codes[code] = user;
+            saveCodeList(codes);
+            codeInput.value = '';
+            userInput.value = '';
+            alert('✅ 授权码生成成功！\n\n授权码：' + code + '\n用户：' + user);
+            refreshCodeList();
+
+            // 同步到全局验证
+            window.__VALID_CODES = { ...window.__VALID_CODES, ...codes };
+        }
+
+        // 删除授权码
+        function deleteCode(code) {
+            if (!confirm('确定要删除授权码 ' + code + ' 吗？')) return;
+            const codes = getCodeList();
+            delete codes[code];
+            saveCodeList(codes);
+            refreshCodeList();
+            window.__VALID_CODES = { ...window.__VALID_CODES, ...codes };
+        }
+
+        // 刷新授权码列表显示
+        function refreshCodeList() {
+            const codes = getCodeList();
+            const container = document.getElementById('codeList');
+            const keys = Object.keys(codes);
+            if (keys.length === 0) {
+                container.innerHTML = '<div style="color:rgba(90,61,42,0.3);text-align:center;padding:20px;">暂无授权码</div>';
+                return;
+            }
+            let html = '';
+            keys.forEach(key => {
+                html += `
+                        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid rgba(200,150,160,0.1);">
+                            <span><span style="color:#d47a8a;font-weight:600;">${key}</span> <span style="color:rgba(90,61,42,0.4);font-size:12px;">→ ${codes[key]}</span></span>
+                            <button onclick="deleteCode('${key}')" style="padding:4px 12px;border:none;border-radius:20px;background:rgba(255,80,80,0.1);color:#ff6b6b;font-size:12px;cursor:pointer;">✕</button>
+                        </div>
+                    `;
+            });
+            container.innerHTML = html;
+        }
+
+        // 关闭管理面板
+        function closeAdmin() {
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        // 打开管理面板（需要验证）
+        function openAdmin() {
+            const panel = document.getElementById('adminPanel');
+            if (panel.style.display === 'flex') {
+                closeAdmin();
+                return;
+            }
+            // 简单密码验证
+            const pwd = prompt('🔑 请输入管理员密码：');
+            if (pwd === 'azy2026') {
+                panel.style.display = 'flex';
+                refreshCodeList();
+            } else if (pwd !== null) {
+                alert('❌ 密码错误');
+            }
+        }
+
+        // ============================================================
+        //  管理员入口：连续点击页面 5 次触发
+        // ============================================================
+        let clickCount = 0;
+        let clickTimer = null;
+
+        document.addEventListener('click', function(e) {
+            // 不干扰授权弹窗的正常操作
+            if (e.target.closest('#romanticSubmitBtn') || 
+                e.target.closest('#romanticDemoBtn') || 
+                e.target.closest('#romanticEnterBtn') ||
+                e.target.closest('#adminPanel')) {
+                return;
+            }
+            
+            clickCount++;
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 1000);
+
+            if (clickCount >= 5) {
+                clickCount = 0;
+                openAdmin();
+            }
+        });
+
+        // 页面加载时，从 localStorage 恢复授权码列表
+        document.addEventListener('DOMContentLoaded', function() {
+            const codes = getCodeList();
+            if (Object.keys(codes).length > 0) {
+                window.__VALID_CODES = { ...window.__VALID_CODES, ...codes };
+            }
+            console.log('🔑 已加载 ' + Object.keys(codes).length + ' 个授权码');
+        });
+
+        console.log('💡 管理员入口：点击页面 5 次，输入密码 azy2026');
+
+        // ============================================================
+        //  完整互动逻辑
+        // ============================================================
+
+        // 祝福语 + 小作文数据
         const blessingData = [{
             icon: '✨',
             title: '愿所有美好都如期而至',
@@ -664,9 +869,6 @@
             '家': ['家是温暖的港湾', '家庭幸福只为你', '家乡的味道是你', '家书抵万金']
         };
 
-        // ============================================================
-        //  浪漫词库（备用）
-        // ============================================================
         const romanticLines = [
             '你是我写过最美的诗',
             '你的名字，是我见过最温柔的风景',
@@ -685,16 +887,11 @@
             '此心安处是你'
         ];
 
-        // ============================================================
-        //  名字→小诗生成器
-        // ============================================================
         function generatePoem(name, title) {
             if (!name || name.trim() === '') return '请先输入你的名字哦 💕';
-
             const chars = name.trim().split('');
             const lines = [];
             let foundWords = 0;
-
             chars.forEach((char) => {
                 if (wordMap[char]) {
                     const options = wordMap[char];
@@ -703,7 +900,6 @@
                     foundWords++;
                 }
             });
-
             if (foundWords < chars.length) {
                 const extraCount = chars.length - foundWords + 2;
                 for (let i = 0; i < extraCount && lines.length < 8; i++) {
@@ -713,21 +909,16 @@
                     }
                 }
             }
-
             while (lines.length < 3) {
                 lines.push(romanticLines[Math.floor(Math.random() * romanticLines.length)]);
             }
-
             const finalLines = [];
             finalLines.push('✦ ' + title + ' ✦');
             finalLines.push('');
             const shuffledLines = shuffleArray([...lines]);
-            shuffledLines.forEach(line => {
-                finalLines.push(line);
-            });
+            shuffledLines.forEach(line => { finalLines.push(line); });
             finalLines.push('');
             finalLines.push('—— 你的名字，是我写过最美的诗 ——');
-
             return finalLines.join('\n');
         }
 
@@ -739,25 +930,18 @@
             return arr;
         }
 
-        // ============================================================
-        //  算命名报告（吉利浪漫版）
-        // ============================================================
         function generateFortuneReport(name1, name2) {
             if (!name1 || !name1.trim() || !name2 || !name2.trim()) {
                 return '请先输入两个名字哦 💕';
             }
-
             const n1 = name1.trim();
             const n2 = name2.trim();
-
-            // 吉祥的八字用词
             const fortuneWords = [
                 '天作之合', '琴瑟和鸣', '比翼双飞', '心有灵犀', '相濡以沫',
                 '白头偕老', '岁月静好', '一生所爱', '深情不渝', '良缘天定',
                 '花好月圆', '百年好合', '珠联璧合', '佳偶天成', '情深似海',
                 '不离不弃', '朝朝暮暮', '天长地久', '执子之手', '与子偕老'
             ];
-
             const loveQuotes = [
                 '你们的相遇，是星辰写下的诗篇',
                 '两个名字，一段缘分，一生故事',
@@ -767,7 +951,6 @@
                 '愿有岁月可回首，且以深情共白头',
                 '春风十里，不如你。夏雨绵绵，不如你。秋月无边，不如你。冬雪皑皑，不如你。'
             ];
-
             const blessings = [
                 '愿你们的爱情，如春日的暖阳，温暖而不灼热',
                 '愿你们的岁月，如夏夜的星空，璀璨而宁静',
@@ -775,24 +958,16 @@
                 '愿你们的未来，如冬日的炉火，温暖而长存',
                 '愿时光善待你们，愿岁月温柔以待'
             ];
-
-            // 随机选取吉祥语
             const randomWords = shuffleArray([...fortuneWords]).slice(0, 3);
             const randomQuote = loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
             const randomBless = blessings[Math.floor(Math.random() * blessings.length)];
-
-            // 计算笔画数（简单模拟，但全部用吉利数字）
             const getStrokeCount = (name) => {
-                // 模拟笔画数，保证是吉利数字
                 const base = name.length * 5 + 3;
                 return base + Math.floor(Math.random() * 3);
             };
-
             const stroke1 = getStrokeCount(n1);
             const stroke2 = getStrokeCount(n2);
             const totalStroke = stroke1 + stroke2;
-
-            // 构建报告
             const report = [
                 '═══════════════════════',
                 '  💕 命 名 吉 祥 笺  💕',
@@ -828,7 +1003,6 @@
                 '  💕 愿所有美好都如期而至 💕',
                 '═══════════════════════'
             ];
-
             return report.join('\n');
         }
 
@@ -1080,7 +1254,6 @@
                                         '—— ' + loverName + '，你也是我写过最美的诗 ——',
                                         poem2,
                                         function() {
-                                            // 第三步：算命名报告（吉利版）+ 结尾致辞
                                             const report = generateFortuneReport(myName,
                                             loverName);
                                             const ending = [
@@ -1204,6 +1377,7 @@
         }
 
         console.log('💕 完整旅程已加载！');
+        console.log('💡 管理员入口：点击页面 5 次，输入密码 azy2026');
     </script>
 
 </body>
